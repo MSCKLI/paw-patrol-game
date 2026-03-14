@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>API 调试</title>
+<style>
+  body { font-family: monospace; padding: 20px; background: #1a1a2e; color: #0f0; }
+  .step { margin: 20px 0; padding: 15px; background: #000; border-radius: 8px; }
+  button { padding: 15px 30px; font-size: 16px; cursor: pointer; margin: 5px; }
+  pre { white-space: pre-wrap; word-break: break-all; }
+  .ok { color: #0f0; }
+  .err { color: #f00; }
+</style>
+</head>
+<body>
+  <h1>🔍 API 调试工具</h1>
+  
+  <div class="step">
+    <h3>步骤 1：测试 API 健康检查</h3>
+    <button onclick="test1()">测试 GET 请求</button>
+    <pre id="result1">等待测试...</pre>
+  </div>
+  
+  <div class="step">
+    <h3>步骤 2：测试图片生成</h3>
+    <button onclick="test2()">测试 POST 请求</button>
+    <pre id="result2">等待测试...</pre>
+  </div>
+  
+  <div class="step">
+    <h3>步骤 3：查看生成的图片</h3>
+    <div id="imageArea"></div>
+  </div>
+
+  <script>
+    const API_BASE = 'https://paw-patrol-game-2lb3.vercel.app';
+    
+    async function test1() {
+      const el = document.getElementById('result1');
+      el.innerHTML = '正在请求...\n';
+      
+      try {
+        const url = `${API_BASE}/api/generate-pet`;
+        el.innerHTML += `URL: ${url}\n\n`;
+        
+        const res = await fetch(url, { method: 'GET' });
+        el.innerHTML += `状态码: ${res.status}\n`;
+        
+        const text = await res.text();
+        el.innerHTML += `响应: ${text}\n`;
+        
+        if (res.ok) {
+          el.innerHTML += '\n<span class="ok">✅ API 连接正常!</span>';
+        } else {
+          el.innerHTML += `\n<span class="err">❌ HTTP 错误 ${res.status}</span>`;
+        }
+      } catch (e) {
+        el.innerHTML += `\n<span class="err">❌ 错误: ${e.message}</span>`;
+      }
+    }
+    
+    async function test2() {
+      const el = document.getElementById('result2');
+      el.innerHTML = '正在请求...\n';
+      
+      try {
+        const url = `${API_BASE}/api/generate-pet`;
+        el.innerHTML += `URL: ${url}\n`;
+        el.innerHTML += `Method: POST\n`;
+        el.innerHTML += `Body: {"prompt":"可爱小狗"}\n\n`;
+        
+        const res = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ prompt: '可爱的小狗', petName: '测试' })
+        });
+        
+        el.innerHTML += `状态码: ${res.status}\n`;
+        
+        const text = await res.text();
+        el.innerHTML += `响应: ${text}\n`;
+        
+        try {
+          const data = JSON.parse(text);
+          if (data.success && data.imageUrl) {
+            el.innerHTML += '\n<span class="ok">✅ 生成成功!</span>';
+            document.getElementById('imageArea').innerHTML = 
+              `<img src="${data.imageUrl}" style="max-width:100%;border-radius:8px;">`;
+          } else if (data.error) {
+            el.innerHTML += `\n<span class="err">❌ API 返回错误: ${data.error}</span>`;
+          }
+        } catch (parseErr) {
+          el.innerHTML += `\n<span class="err">❌ JSON 解析失败</span>`;
+        }
+      } catch (e) {
+        el.innerHTML += `\n<span class="err">❌ 网络错误: ${e.message}</span>`;
+        el.innerHTML += '\n\n可能原因:\n';
+        el.innerHTML += '1. Vercel 项目未正确部署\n';
+        el.innerHTML += '2. API 路径配置错误\n';
+        el.innerHTML += '3. 网络问题\n';
+      }
+    }
+  </script>
+</body>
+</html>
