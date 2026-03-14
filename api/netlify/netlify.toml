@@ -1,0 +1,27 @@
+[build]
+  command = "npm install"
+  functions = "functions"
+  publish = "public"
+
+[functions]
+  node_bundler = "esbuild"
+  directory = "functions"
+
+# 重定向规则 - 让前端可以更方便地调用 API
+[[redirects]]
+  from = "/api/generate-pet"
+  to = "/.netlify/functions/generate-pet"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/generate-captain"
+  to = "/.netlify/functions/generate-captain"
+  status = 200
+  force = true
+
+# 静态文件
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

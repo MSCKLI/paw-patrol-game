@@ -1,0 +1,3813 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>🎬 汪汪队立大功：电影级救援行动</title>
+<style>
+  /* ==================== 电影级全局样式 ==================== */
+  * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-user-select: none; font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif; }
+  
+  body { 
+    background: linear-gradient(135deg, #0a0e27 0%, #1a1a3e 30%, #0d1b2a 60%, #0a1628 100%);
+    overflow: hidden; height: 100vh; width: 100vw;
+    position: relative;
+  }
+  
+  /* 科技感动态网格背景 */
+  .tech-grid {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+    background-image: 
+      linear-gradient(rgba(52, 152, 219, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(52, 152, 219, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    animation: gridMove 20s linear infinite;
+  }
+  @keyframes gridMove {
+    0% { background-position: 0 0; }
+    100% { background-position: 50px 50px; }
+  }
+  
+  /* 动态背景星星 */
+  .stars-bg {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+    background: radial-gradient(2px 2px at 20px 30px, rgba(0,255,255,0.8), transparent),
+                radial-gradient(2px 2px at 40px 70px, rgba(52,152,219,0.8), transparent),
+                radial-gradient(1px 1px at 50px 160px, rgba(255,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 90px 40px, rgba(0,255,255,0.8), transparent),
+                radial-gradient(1px 1px at 130px 80px, rgba(52,152,219,0.7), transparent),
+                radial-gradient(3px 3px at 160px 120px, rgba(0,255,255,0.6), transparent),
+                radial-gradient(2px 2px at 200px 50px, rgba(255,255,255,0.5), transparent),
+                radial-gradient(1px 1px at 250px 150px, rgba(0,255,255,0.7), transparent);
+    background-size: 300px 200px;
+    animation: twinkle 4s ease-in-out infinite;
+  }
+  @keyframes twinkle { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+
+  /* ==================== 电影级顶部导航 ==================== */
+  header {
+    position: absolute; top: 0; left: 0; right: 0; height: 60px;
+    background: linear-gradient(180deg, rgba(8,18,38,0.95) 0%, rgba(5,15,30,0.85) 100%);
+    backdrop-filter: blur(15px);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 25px; z-index: 100;
+    border-bottom: 1px solid rgba(0, 255, 255, 0.35);
+    box-shadow: 0 3px 20px rgba(0, 255, 255, 0.08), inset 0 -1px 0 rgba(0, 255, 255, 0.08);
+  }
+  header::before {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, #00ffff, #3498db, #00ffff, transparent);
+    animation: headerLine 3s linear infinite;
+  }
+  @keyframes headerLine {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  
+  .title-area { display: flex; align-items: center; gap: 15px; }
+  .logo { 
+    font-size: 2.2rem; 
+    filter: drop-shadow(0 0 15px rgba(255,215,0,0.8));
+    animation: logoFloat 3s ease-in-out infinite;
+  }
+  @keyframes logoFloat { 0%, 100% { transform: translateY(0) rotate(-5deg); } 50% { transform: translateY(-8px) rotate(5deg); } }
+  
+  .class-name-input {
+    font-size: 1.5rem; font-weight: bold; color: #fff;
+    border: none; border-bottom: 2px solid transparent;
+    background: transparent; outline: none; width: 280px;
+    text-shadow: 0 0 25px rgba(52, 152, 219, 0.8);
+    background: linear-gradient(90deg, #3498db, #e74c3c, #f1c40f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .header-btns { display: flex; gap: 10px; }
+  .btn {
+    padding: 8px 16px; border: none; border-radius: 20px;
+    font-weight: bold; cursor: pointer; color: white;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 0.85rem; position: relative; overflow: hidden;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+  .btn::before {
+    content: ''; position: absolute; top: 0; left: -100%; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+    transition: left 0.5s;
+  }
+  .btn:hover::before { left: 100%; }
+  .btn:hover { transform: translateY(-2px) scale(1.03); box-shadow: 0 8px 25px rgba(0,0,0,0.35); }
+  .btn:active { transform: translateY(0) scale(0.98); }
+  
+  .btn-pk { background: linear-gradient(135deg, #e67e22 0%, #d35400 100%); }
+  .btn-set { background: linear-gradient(135deg, #34495e 0%, #2c3e50 100%); }
+  .btn-gallery { background: linear-gradient(135deg, #9b59b6 0%, #8e44ad 100%); }
+  .btn-shop { background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); }
+  .btn-effect { background: linear-gradient(135deg, #f39c12 0%, #e67e22 100%); }
+  .btn-action { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); }
+  .btn-skill { background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); }
+  .btn-ai { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+
+  /* ==================== 电影级主网格 ==================== */
+  #petGrid {
+    display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(5, 1fr);
+    gap: 5px; padding: 5px 10px;
+    height: calc(100vh - 135px); width: 100%;
+    position: absolute; top: 60px; left: 0; z-index: 1;
+  }
+  
+  .pet-card {
+    background: linear-gradient(145deg, rgba(15,35,70,0.7) 0%, rgba(5,20,45,0.85) 100%);
+    border-radius: 8px; position: relative;
+    cursor: pointer; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(0, 255, 255, 0.25);
+    overflow: hidden; 
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.1), inset 0 0 20px rgba(0, 255, 255, 0.03);
+    backdrop-filter: blur(5px);
+    transform-style: preserve-3d;
+    perspective: 500px;
+    animation: cardFloat 4s ease-in-out infinite;
+  }
+  @keyframes cardFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+  }
+  /* 科技感扫描线 */
+  .pet-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(180deg, 
+      transparent 0%, 
+      rgba(0, 255, 255, 0.05) 50%, 
+      transparent 100%);
+    pointer-events: none;
+    animation: scanLine 2.5s linear infinite;
+  }
+  @keyframes scanLine {
+    0% { transform: translateY(-100%); }
+    100% { transform: translateY(100%); }
+  }
+  /* 科技感边框光效 */
+  .pet-card::after {
+    content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px;
+    border: 2px solid transparent;
+    border-radius: 14px;
+    background: linear-gradient(135deg, rgba(0,255,255,0.5), transparent 40%, transparent 60%, rgba(0,255,255,0.3)) border-box;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  .pet-card:hover::after { opacity: 1; }
+  .pet-card:hover { 
+    transform: translateY(-5px) rotateX(5deg) scale(1.03); 
+    z-index: 10;
+    border-color: rgba(0, 255, 255, 0.6);
+    box-shadow: 0 0 30px rgba(0, 255, 255, 0.3), 0 0 60px rgba(0, 255, 255, 0.15), inset 0 0 20px rgba(0, 255, 255, 0.08);
+  }
+  .pet-card.selected {
+    border-color: #00ffff; 
+    transform: translateY(-6px) rotateX(3deg) scale(1.05); 
+    z-index: 20;
+    box-shadow: 0 0 0 2px rgba(0, 255, 255, 0.4), 0 0 40px rgba(0, 255, 255, 0.5),
+                0 0 80px rgba(0, 255, 255, 0.2), inset 0 0 25px rgba(0, 255, 255, 0.1);
+    animation: selectedPulse 1.5s ease-in-out infinite;
+  }
+  @keyframes selectedPulse {
+    0%, 100% { box-shadow: 0 0 0 3px rgba(0, 255, 255, 0.3), 0 0 60px rgba(0, 255, 255, 0.5), 0 0 100px rgba(0, 255, 255, 0.3); }
+    50% { box-shadow: 0 0 0 6px rgba(0, 255, 255, 0.5), 0 0 80px rgba(0, 255, 255, 0.7), 0 0 150px rgba(0, 255, 255, 0.4); }
+  }
+
+  /* 队伍颜色 - 科技感增强 */
+  .team-red { border-bottom: 2px solid #ff4757; box-shadow: 0 0 15px rgba(255, 71, 87, 0.3); }
+  .team-blue { border-bottom: 2px solid #00bfff; box-shadow: 0 0 15px rgba(0, 191, 255, 0.3); }
+  .team-yellow { border-bottom: 2px solid #ffc107; box-shadow: 0 0 15px rgba(255, 193, 7, 0.3); }
+  .team-green { border-bottom: 2px solid #00ff88; box-shadow: 0 0 15px rgba(0, 255, 136, 0.3); }
+  .team-purple { border-bottom: 2px solid #a855f7; box-shadow: 0 0 15px rgba(168, 85, 247, 0.3); }
+
+  .canvas-container { 
+    width: 100%; height: 100%; 
+    background: radial-gradient(ellipse at center, rgba(0,255,255,0.08) 0%, transparent 70%);
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 10px;
+  }
+  
+  /* 宠物动态呼吸动画 */
+  .canvas-container::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: radial-gradient(ellipse at center, rgba(0,255,255,0.1) 0%, transparent 60%);
+    animation: petBreathe 3s ease-in-out infinite;
+    pointer-events: none;
+    border-radius: 10px;
+  }
+  @keyframes petBreathe {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.02); }
+  }
+  
+  .info-area {
+    display: none;  /* 完全隐藏信息区域 */
+  }
+  .pet-name { 
+    display: none;
+  }
+  .pet-role { 
+    display: none;
+  }
+  .level-badge {
+    position: absolute; top: 3px; right: 3px;
+    background: linear-gradient(135deg, #00ffff 0%, #0099cc 100%);
+    color: #000; font-size: 0.5rem; font-weight: bold;
+    padding: 1px 4px; border-radius: 5px; z-index: 10;
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.6);
+    animation: badgePulse 2s ease-in-out infinite;
+  }
+  @keyframes badgePulse {
+    0%, 100% { box-shadow: 0 0 8px rgba(0, 255, 255, 0.5); }
+    50% { box-shadow: 0 0 15px rgba(0, 255, 255, 0.8); }
+  }
+  .xp-bar { display: none; }
+  .xp-fill { display: none; }
+
+  /* ==================== 电影级底部控制台 ==================== */
+  footer {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 75px; 
+    background: linear-gradient(180deg, rgba(5,15,30,0.85) 0%, rgba(0,8,20,0.98) 100%);
+    backdrop-filter: blur(15px);
+    border-top: 1px solid rgba(0, 255, 255, 0.4);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 20px; z-index: 100;
+    box-shadow: 0 -3px 20px rgba(0, 255, 255, 0.15);
+  }
+  footer::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,255,255,0.6), transparent);
+  }
+
+  .selected-panel {
+    width: 160px; padding: 8px 12px;
+    background: linear-gradient(145deg, rgba(0,40,70,0.6) 0%, rgba(0,25,50,0.8) 100%);
+    border: 1px solid rgba(0, 255, 255, 0.35);
+    border-radius: 12px; text-align: center;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+  }
+  .selected-panel h3 { font-size: 0.9rem; color: #00ffff; margin-bottom: 3px; text-shadow: 0 0 8px rgba(0,255,255,0.5); }
+  .selected-panel p { font-size: 0.7rem; color: rgba(255,255,255,0.7); }
+
+  .score-buttons {
+    display: flex; gap: 6px; flex: 1; justify-content: center;
+    overflow-x: auto; padding: 8px;
+  }
+  .s-btn {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    width: 58px; height: 58px;
+    border: 1px solid rgba(0, 255, 255, 0.3); border-radius: 10px;
+    background: linear-gradient(145deg, rgba(0,40,70,0.5) 0%, rgba(0,25,50,0.7) 100%);
+    cursor: pointer; position: relative;
+    backdrop-filter: blur(8px);
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .s-btn:hover { transform: translateY(-2px); box-shadow: 0 3px 15px rgba(0,255,255,0.25); border-color: rgba(0,255,255,0.5); }
+  .s-btn:active { transform: translateY(0) scale(0.95); }
+  .s-btn.plus { border-color: rgba(0, 255, 150, 0.4); background: linear-gradient(145deg, rgba(0, 200, 120, 0.15) 0%, rgba(0, 150, 80, 0.1) 100%); }
+  .s-btn.minus { border-color: rgba(255, 100, 100, 0.4); background: linear-gradient(145deg, rgba(200, 80, 80, 0.15) 0%, rgba(150, 50, 50, 0.1) 100%); }
+  .s-icon { font-size: 1.3rem; margin-bottom: 1px; }
+  .s-label { font-size: 0.55rem; font-weight: bold; text-align: center; color: rgba(255,255,255,0.85); }
+  .s-val {
+    position: absolute; top: -6px; right: -6px;
+    background: linear-gradient(135deg, #00ffff 0%, #0099cc 100%);
+    color: #000; border: none;
+    width: 20px; height: 20px; border-radius: 50%;
+    font-size: 0.65rem; font-weight: bold;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+  }
+
+  /* 右下角快捷按钮 */
+  .quick-btns {
+    display: flex; gap: 8px; padding: 8px;
+    background: linear-gradient(145deg, rgba(0,50,80,0.4) 0%, rgba(0,30,50,0.6) 100%);
+    border: 1px solid rgba(0, 255, 255, 0.25);
+    border-radius: 12px;
+  }
+  .quick-btn {
+    width: 40px; height: 40px; border-radius: 10px;
+    border: 1px solid rgba(0, 255, 255, 0.4); 
+    background: linear-gradient(145deg, rgba(0, 255, 255, 0.12) 0%, rgba(0, 200, 200, 0.05) 100%);
+    cursor: pointer; display: flex; align-items: center;
+    justify-content: center; font-size: 1.2rem;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 10px rgba(0, 255, 255, 0.15);
+  }
+  .quick-btn:hover { 
+    transform: scale(1.08) translateY(-2px); 
+    border-color: #00ffff;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4), inset 0 0 15px rgba(0, 255, 255, 0.08);
+    background: linear-gradient(145deg, rgba(0, 255, 255, 0.2) 0%, rgba(0, 200, 200, 0.08) 100%);
+  }
+  .quick-btn:active { transform: scale(0.95); }
+
+  /* ==================== 电影级状态栏 ==================== */
+  .status-bar {
+    position: absolute; top: 75px; right: 20px;
+    background: linear-gradient(145deg, rgba(10,30,60,0.88) 0%, rgba(5,15,35,0.93) 100%);
+    padding: 12px 16px; border-radius: 12px; 
+    box-shadow: 0 0 25px rgba(0, 255, 255, 0.15), inset 0 0 15px rgba(0, 255, 255, 0.03);
+    backdrop-filter: blur(12px); z-index: 50;
+    border: 1px solid rgba(0, 255, 255, 0.25);
+  }
+  .status-bar::before {
+    content: ''; position: absolute; top: 0; left: 8px; right: 8px; height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(0,255,255,0.4), transparent);
+  }
+  .status-item { 
+    display: flex; align-items: center; gap: 6px; 
+    margin-bottom: 8px; font-size: 0.9rem; color: #fff; 
+    text-shadow: 0 0 8px rgba(0,255,255,0.3);
+  }
+  .status-item:last-child { margin-bottom: 0; }
+  .status-icon { font-size: 1.3rem; filter: drop-shadow(0 0 4px currentColor); }
+  .status-value { 
+    font-weight: bold; 
+    text-shadow: 0 0 15px currentColor;
+    animation: valuePulse 2s ease-in-out infinite;
+  }
+  @keyframes valuePulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.85; text-shadow: 0 0 25px currentColor; }
+  }
+
+  /* ==================== 电影级模态框 ==================== */
+  .modal {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0,0,0,0.85); backdrop-filter: blur(10px);
+    z-index: 1000; display: none; justify-content: center; align-items: center;
+    animation: modalFadeIn 0.3s ease-out;
+  }
+  @keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .modal.show { display: flex; }
+  .modal-content {
+    background: linear-gradient(145deg, rgba(20,30,50,0.98) 0%, rgba(10,20,35,0.98) 100%);
+    border-radius: 25px; padding: 30px;
+    width: 95%; max-width: 1000px; max-height: 92vh; overflow-y: auto;
+    border: 2px solid rgba(52, 152, 219, 0.3);
+    position: relative;
+    box-shadow: 0 30px 100px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.1);
+  }
+  .close-modal {
+    position: absolute; top: 15px; right: 25px;
+    font-size: 2.5rem; cursor: pointer; color: rgba(255,255,255,0.6);
+    transition: all 0.3s; text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  }
+  .close-modal:hover { color: #e74c3c; transform: rotate(90deg); }
+
+  /* ==================== 展示馆终极形态样式 ==================== */
+  .ultimate-showcase {
+    background: linear-gradient(145deg, rgba(0,0,0,0.9) 0%, rgba(20,20,40,0.9) 100%);
+    border-radius: 20px; padding: 20px; margin-top: 20px;
+    border: 2px solid rgba(241, 196, 15, 0.3);
+    box-shadow: 0 0 50px rgba(241, 196, 15, 0.2);
+  }
+  .ultimate-title {
+    text-align: center; font-size: 2rem; color: #f1c40f;
+    text-shadow: 0 0 30px rgba(241, 196, 15, 0.5);
+    margin-bottom: 20px; animation: titleGlow 2s ease-in-out infinite;
+  }
+  @keyframes titleGlow { 0%, 100% { text-shadow: 0 0 30px rgba(241, 196, 15, 0.5); } 50% { text-shadow: 0 0 50px rgba(241, 196, 15, 0.8); } }
+  
+  .ultimate-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px;
+  }
+  .ultimate-card {
+    background: linear-gradient(145deg, rgba(241, 196, 15, 0.1) 0%, rgba(0,0,0,0.5) 100%);
+    border-radius: 20px; padding: 20px; text-align: center;
+    border: 2px solid rgba(241, 196, 15, 0.3);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative; overflow: hidden;
+  }
+  .ultimate-card::before {
+    content: ''; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%;
+    background: conic-gradient(from 0deg, transparent, rgba(241, 196, 15, 0.1), transparent 30%);
+    animation: ultimateRotate 4s linear infinite;
+  }
+  @keyframes ultimateRotate { to { transform: rotate(360deg); } }
+  .ultimate-card:hover { transform: scale(1.05); box-shadow: 0 0 60px rgba(241, 196, 15, 0.4); }
+  .ultimate-canvas { width: 150px; height: 150px; margin: 0 auto; position: relative; z-index: 1; }
+  .ultimate-info { position: relative; z-index: 1; margin-top: 15px; }
+  .ultimate-name { font-size: 1.3rem; color: #fff; font-weight: bold; text-shadow: 0 0 20px rgba(255,255,255,0.5); }
+  .ultimate-level { 
+    display: inline-block; margin-top: 8px; padding: 5px 20px;
+    background: linear-gradient(135deg, #f1c40f 0%, #e67e22 100%);
+    border-radius: 20px; color: #fff; font-weight: bold;
+    box-shadow: 0 5px 20px rgba(241, 196, 15, 0.4);
+  }
+
+  .group-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; margin-top: 15px; }
+  .g-col { background: rgba(255,255,255,0.05); border: 2px dashed rgba(255,255,255,0.2); border-radius: 12px; padding: 10px; min-height: 90px; }
+  .g-red { border-color: rgba(231, 76, 60, 0.5); background: rgba(231, 76, 60, 0.1); }
+  .g-blue { border-color: rgba(52, 152, 219, 0.5); background: rgba(52, 152, 219, 0.1); }
+  .g-yellow { border-color: rgba(241, 196, 15, 0.5); background: rgba(241, 196, 15, 0.1); }
+  .g-green { border-color: rgba(46, 204, 113, 0.5); background: rgba(46, 204, 113, 0.1); }
+  .g-purple { border-color: rgba(155, 89, 182, 0.5); background: rgba(155, 89, 182, 0.1); }
+  
+  .student-chip {
+    background: rgba(255,255,255,0.1); padding: 5px 10px; margin: 3px 0;
+    border-radius: 8px; font-size: 0.85rem; font-weight: bold; color: #fff;
+    cursor: pointer; display: flex; justify-content: space-between;
+    backdrop-filter: blur(5px);
+  }
+  .student-chip button {
+    background: #e74c3c; color: white; border: none;
+    width: 18px; height: 18px; border-radius: 50%;
+    font-size: 11px; cursor: pointer;
+  }
+
+  .config-row { display: flex; gap: 10px; margin-bottom: 10px; align-items: center; }
+  .cfg-label { width: 80px; font-weight: bold; font-size: 0.95rem; color: #fff; }
+  .cfg-input { flex: 1; padding: 6px; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; background: rgba(255,255,255,0.1); color: #fff; }
+  .cfg-score { width: 60px; padding: 6px; border: 1px solid rgba(255,255,255,0.2); border-radius: 6px; text-align: center; background: rgba(255,255,255,0.1); color: #fff; }
+
+  .float-text {
+    position: absolute; font-weight: bold; font-size: 1.4rem;
+    pointer-events: none; animation: floatUp 1s forwards;
+    z-index: 2000; text-shadow: 0 0 20px currentColor, 0 4px 0 rgba(0,0,0,0.3);
+  }
+  @keyframes floatUp { to { transform: translateY(-80px) scale(1.2); opacity: 0; } }
+
+  #captain-preview { width: 140px; height: 140px; margin: 0 auto; background: rgba(52, 152, 219, 0.1); border-radius: 50%; border: 4px solid rgba(52, 152, 219, 0.5); box-shadow: 0 0 40px rgba(52, 152, 219, 0.3); }
+  .custom-input { position: absolute; width: 40px; text-align: center; font-weight: bold; border: 2px solid #3498db; border-radius: 8px; z-index: 3000; display: none; font-size: 0.8rem; background: rgba(0,0,0,0.9); color: #fff; }
+
+  /* 商店样式 */
+  .shop-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; max-height: 55vh; overflow-y: auto; padding: 10px; }
+  .shop-item {
+    background: linear-gradient(145deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    border: 2px solid rgba(255,255,255,0.15); border-radius: 15px;
+    padding: 12px; text-align: center; cursor: pointer;
+    transition: all 0.3s; position: relative; backdrop-filter: blur(10px);
+  }
+  .shop-item:hover { border-color: #3498db; transform: translateY(-5px); box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
+  .shop-item.equipped { border-color: #2ecc71; background: rgba(46, 204, 113, 0.2); box-shadow: 0 0 30px rgba(46, 204, 113, 0.3); }
+  .shop-item.locked { opacity: 0.4; cursor: not-allowed; }
+  .item-preview { width: 60px; height: 60px; margin: 0 auto 8px; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+  .item-name { font-weight: bold; font-size: 0.85rem; color: #fff; margin-bottom: 4px; }
+  .item-desc { font-size: 0.7rem; color: rgba(255,255,255,0.6); }
+  .item-price { font-size: 0.8rem; color: #f39c12; font-weight: bold; margin-top: 6px; }
+  
+  .category-tabs { display: flex; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
+  .tab-btn {
+    padding: 8px 16px; border: none; border-radius: 20px;
+    background: rgba(255,255,255,0.1); cursor: pointer; font-size: 0.85rem; color: #fff;
+    transition: all 0.3s; backdrop-filter: blur(5px);
+  }
+  .tab-btn.active { background: linear-gradient(135deg, #3498db 0%, #2980b9 100%); color: white; box-shadow: 0 5px 20px rgba(52, 152, 219, 0.4); }
+  .tab-btn:hover { background: rgba(52, 152, 219, 0.3); }
+
+  /* 技能面板 */
+  .skill-panel {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px;
+  }
+  .skill-card {
+    background: linear-gradient(145deg, rgba(46, 204, 113, 0.2) 0%, rgba(0,0,0,0.3) 100%);
+    border: 2px solid rgba(46, 204, 113, 0.3);
+    border-radius: 15px; padding: 15px; text-align: center;
+    cursor: pointer; transition: all 0.3s;
+  }
+  .skill-card:hover { transform: scale(1.05); box-shadow: 0 0 40px rgba(46, 204, 113, 0.4); }
+  .skill-card.active { border-color: #2ecc71; box-shadow: 0 0 50px rgba(46, 204, 113, 0.5); }
+  .skill-icon { font-size: 2.5rem; margin-bottom: 8px; }
+  .skill-name { font-size: 1rem; color: #fff; font-weight: bold; margin-bottom: 5px; }
+  .skill-desc { font-size: 0.75rem; color: rgba(255,255,255,0.7); }
+  .skill-cooldown { 
+    margin-top: 8px; padding: 4px 12px;
+    background: rgba(0,0,0,0.3); border-radius: 10px;
+    font-size: 0.7rem; color: #f39c12;
+  }
+</style>
+</head>
+<body>
+<div class="tech-grid"></div>
+<div class="stars-bg"></div>
+<header>
+  <div class="title-area">
+    <div class="logo">🎬</div>
+    <input id="classNameInput" class="class-name-input" value="汪汪队·电影救援总部" onchange="updateClassName()">
+  </div>
+  <div class="header-btns">
+    <button class="btn btn-effect" onclick="openEffectsModal()">✨ 特效</button>
+    <button class="btn btn-action" onclick="openActionsModal()">🎭 动作</button>
+    <button class="btn btn-skill" onclick="openSkillsModal()">⚡ 技能</button>
+    <button class="btn btn-shop" onclick="openShop()">🛒 装备店</button>
+    <button class="btn btn-ai" onclick="openAIModal()">🤖 AI换宠</button>
+    <button class="btn btn-pk" onclick="showPK()">🏆 PK榜</button>
+    <button class="btn btn-gallery" onclick="showGallery()">🖼️ 终极展示</button>
+    <button class="btn btn-set" onclick="openSettings()">⚙️ 指挥中心</button>
+  </div>
+</header>
+
+<!-- 状态栏 -->
+<div class="status-bar">
+  <div class="status-item">
+    <span class="status-icon">💎</span>
+    <span>金币：<span class="status-value" id="goldDisplay" style="color:#f1c40f;">0</span></span>
+  </div>
+  <div class="status-item">
+    <span class="status-icon">⭐</span>
+    <span>总分：<span class="status-value" id="totalPoints" style="color:#3498db;">0</span></span>
+  </div>
+  <div class="status-item">
+    <span class="status-icon">⚡</span>
+    <span>能量：<span class="status-value" id="energyDisplay" style="color:#2ecc71;">100</span></span>
+  </div>
+</div>
+
+<main id="petGrid"></main>
+
+<footer>
+  <div class="selected-panel" id="selPanel" style="display:none;">
+    <h3 id="selName">未选择</h3>
+    <p id="selGroup">未分组</p>
+    <p style="margin-top:5px; color:#f1c40f; font-weight:bold;">积分：<span id="selPoints">0</span></p>
+    <div style="margin-top:8px; font-size:0.8rem; color:rgba(255,255,255,0.8);">
+      <span id="selEffect" style="color:#9b59b6;">特效：无</span><br>
+      <span id="selAction" style="color:#3498db;">动作：站立</span><br>
+      <span id="selEquip" style="color:#e74c3c;">装备：无</span><br>
+      <span id="selAI" style="color:#667eea;">AI：原始形态</span>
+    </div>
+  </div>
+
+  <div class="score-buttons">
+    <!-- 加分 -->
+    <div class="s-btn plus" onclick="handleScore('labor')">
+      <div class="s-icon">🧹</div><div class="s-label" id="lbl-labor">爱劳动</div>
+      <div class="s-val" onclick="event.stopPropagation(); showCustomInput(this, 'labor')">5</div>
+    </div>
+    <div class="s-btn plus" onclick="handleScore('study')">
+      <div class="s-icon">📚</div><div class="s-label" id="lbl-study">勤学习</div>
+      <div class="s-val" onclick="event.stopPropagation(); showCustomInput(this, 'study')">5</div>
+    </div>
+    <div class="s-btn plus" onclick="handleScore('eat')">
+      <div class="s-icon">🍚</div><div class="s-label" id="lbl-eat">光盘</div>
+      <div class="s-val" onclick="event.stopPropagation(); showCustomInput(this, 'eat')">5</div>
+    </div>
+    <div class="s-btn plus" onclick="handleScore('sleep')">
+      <div class="s-icon">😴</div><div class="s-label" id="lbl-sleep">午睡</div>
+      <div class="s-val" onclick="event.stopPropagation(); showCustomInput(this, 'sleep')">5</div>
+    </div>
+    
+    <div style="width:2px; background:rgba(255,255,255,0.2); margin:0 8px;"></div>
+
+    <!-- 减分 -->
+    <div class="s-btn minus" onclick="handleScore('listen')">
+      <div class="s-icon">🙉</div><div class="s-label" id="lbl-listen">走神</div>
+      <div class="s-val" onclick="event.stopPropagation(); showCustomInput(this, 'listen')">-5</div>
+    </div>
+    <div class="s-btn minus" onclick="handleScore('talk')">
+      <div class="s-icon">🗣️</div><div class="s-label" id="lbl-talk">说话</div>
+      <div class="s-val" onclick="event.stopPropagation(); showCustomInput(this, 'talk')">-5</div>
+    </div>
+    <div class="s-btn minus" onclick="handleScore('manner')">
+      <div class="s-icon">🙅</div><div class="s-label" id="lbl-manner">礼貌</div>
+      <div class="s-val" onclick="event.stopPropagation(); showCustomInput(this, 'manner')">-5</div>
+    </div>
+    <div class="s-btn minus" onclick="handleScore('clean')">
+      <div class="s-icon">🧼</div><div class="s-label" id="lbl-clean">卫生</div>
+      <div class="s-val" onclick="event.stopPropagation(); showCustomInput(this, 'clean')">-5</div>
+    </div>
+  </div>
+
+  <div class="quick-btns">
+    <button class="quick-btn" onclick="randomEffect()" title="随机特效">🎲</button>
+    <button class="quick-btn" onclick="randomAction()" title="随机动作">💫</button>
+    <button class="quick-btn" onclick="randomEquipment()" title="随机装备">🎁</button>
+    <button class="quick-btn" onclick="activateUltimate()" title="终极觉醒">🌟</button>
+  </div>
+</footer>
+
+<input type="number" id="customInput" class="custom-input" min="1" max="20" onchange="applyCustomScore()">
+
+<!-- 设置模态框 -->
+<div id="settingsModal" class="modal">
+  <div class="modal-content">
+    <span class="close-modal" onclick="closeModal('settingsModal')">&times;</span>
+    <h2 style="text-align:center; color:#3498db; margin-bottom:25px; font-size:1.8rem; text-shadow:0 0 30px rgba(52,152,219,0.5);">🎬 莱德队长指挥中心</h2>
+    
+    <div style="display:grid; grid-template-columns: 1fr 2fr; gap:25px;">
+      <div style="text-align:center;">
+        <div id="captain-preview"></div>
+        <p style="margin-top:15px; font-weight:bold; color:#fff;">电影级3D指挥官</p>
+        <button onclick="openCaptainAIModal()" style="margin-top:10px; padding:8px 20px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); border:none; border-radius:10px; color:#fff; font-weight:bold; cursor:pointer; box-shadow:0 3px 15px rgba(102,126,234,0.4);">🤖 AI换头像</button>
+      </div>
+      
+      <div>
+        <!-- 规则配置 -->
+        <div style="background:rgba(241,196,15,0.1); padding:15px; border-radius:15px; margin-bottom:20px; border:1px solid rgba(241,196,15,0.3);">
+          <h3 style="font-size:1.1rem; margin-bottom:12px; color:#f1c40f;">⚙️ 积分规则 (1-20 分)</h3>
+          <div id="configList"></div>
+          <button onclick="saveConfig()" style="width:100%; margin-top:12px; padding:10px; background:linear-gradient(135deg, #f1c40f 0%, #e67e22 100%); border:none; border-radius:10px; font-weight:bold; cursor:pointer; color:#fff; box-shadow:0 5px 20px rgba(241,196,15,0.3);">💾 保存规则</button>
+        </div>
+
+        <!-- 分组 -->
+        <div style="background:rgba(46,204,113,0.1); padding:15px; border-radius:15px; border:1px solid rgba(46,204,113,0.3);">
+          <h3 style="font-size:1.1rem; margin-bottom:12px; color:#2ecc71;">🚩 小队分组</h3>
+          <div class="group-grid">
+            <div class="g-col g-red" id="g-red"><div style="text-align:center;font-weight:bold;color:#e74c3c;font-size:0.85rem;">🔴天天</div><div id="list-red"></div></div>
+            <div class="g-col g-blue" id="g-blue"><div style="text-align:center;font-weight:bold;color:#3498db;font-size:0.85rem;">🔵阿奇</div><div id="list-blue"></div></div>
+            <div class="g-col g-yellow" id="g-yellow"><div style="text-align:center;font-weight:bold;color:#f1c40f;font-size:0.85rem;">🟡小砾</div><div id="list-yellow"></div></div>
+            <div class="g-col g-green" id="g-green"><div style="text-align:center;font-weight:bold;color:#2ecc71;font-size:0.85rem;">🟢灰灰</div><div id="list-green"></div></div>
+            <div class="g-col g-purple" id="g-purple"><div style="text-align:center;font-weight:bold;color:#9b59b6;font-size:0.85rem;">🟣路马</div><div id="list-purple"></div></div>
+          </div>
+          <div id="ungrouped" style="margin-top:12px; padding:8px; background:rgba(255,255,255,0.05); border-radius:10px; min-height:50px; border:1px dashed rgba(255,255,255,0.2);">
+            <div style="text-align:center;font-size:0.75rem;color:rgba(255,255,255,0.5);">待分配 (点击加入红队)</div>
+          </div>
+          <div style="margin-top:12px; display:flex; gap:12px;">
+            <button onclick="autoBalance()" style="flex:1; padding:8px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.2); border-radius:10px; cursor:pointer; color:#fff;">⚖️ 平衡</button>
+            <button onclick="clearGroups()" style="flex:1; padding:8px; background:rgba(231,76,60,0.2); border:1px solid rgba(231,76,60,0.3); border-radius:10px; cursor:pointer; color:#fff;">❌ 清空</button>
+          </div>
+        </div>
+
+        <!-- 名单 -->
+        <div style="margin-top:20px;">
+          <h3 style="font-size:1.1rem; margin-bottom:10px; color:#fff;">📝 队员名单</h3>
+          <textarea id="studentList" style="width:100%; height:90px; padding:10px; border:1px solid rgba(255,255,255,0.2); border-radius:10px; background:rgba(0,0,0,0.3); color:#fff; resize:none;"></textarea>
+          <div style="margin-top:10px; display:flex; gap:12px;">
+            <button onclick="saveStudents()" style="flex:1; padding:10px; background:linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer; box-shadow:0 5px 20px rgba(46,204,113,0.3);">💾 生成宠物</button>
+            <button onclick="resetAll()" style="padding:10px; background:linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); color:white; border:none; border-radius:10px; font-weight:bold; cursor:pointer; box-shadow:0 5px 20px rgba(231,76,60,0.3);">⚠️ 重置</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PK 模态框 -->
+<div id="pkModal" class="modal">
+  <div class="modal-content" style="max-width:650px; text-align:center;">
+    <span class="close-modal" onclick="closeModal('pkModal')">&times;</span>
+    <h2 style="color:#e67e22; margin-bottom:25px; font-size:1.8rem; text-shadow:0 0 30px rgba(230,126,34,0.5);">🏆 救援小队 PK 榜</h2>
+    <div id="pkList"></div>
+  </div>
+</div>
+
+<!-- 终极展示馆模态框 -->
+<div id="galleryModal" class="modal">
+  <div class="modal-content" style="max-width:98%; max-height:95vh;">
+    <span class="close-modal" onclick="closeModal('galleryModal')">&times;</span>
+    <h2 style="text-align:center; color:#f1c40f; margin-bottom:25px; font-size:2rem; text-shadow:0 0 40px rgba(241,196,15,0.6);">🎬 终极形态展示馆</h2>
+    
+    <div class="category-tabs" style="justify-content:center;">
+      <button class="tab-btn active" onclick="showGalleryTab('all')">全部队员</button>
+      <button class="tab-btn" onclick="showGalleryTab('ultimate')">终极形态</button>
+      <button class="tab-btn" onclick="showGalleryTab('max')">满级精英</button>
+      <button class="tab-btn" onclick="showGalleryTab('team')">队伍展示</button>
+    </div>
+    
+    <div id="galleryContent"></div>
+    
+    <!-- 终极形态展示区 -->
+    <div class="ultimate-showcase" id="ultimateShowcase">
+      <div class="ultimate-title">🌟 终极觉醒形态 🌟</div>
+      <div class="ultimate-grid" id="ultimateGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 特效模态框 -->
+<div id="effectsModal" class="modal">
+  <div class="modal-content" style="max-width:95%; max-height:90vh;">
+    <span class="close-modal" onclick="closeModal('effectsModal')">&times;</span>
+    <h2 style="text-align:center; color:#9b59b6; margin-bottom:25px; font-size:1.8rem; text-shadow:0 0 30px rgba(155,89,182,0.5);">✨ 电影级特效库 (50种)</h2>
+    <div class="category-tabs" id="effectTabs"></div>
+    <div id="effectsList" class="shop-grid"></div>
+  </div>
+</div>
+
+<!-- 动作模态框 -->
+<div id="actionsModal" class="modal">
+  <div class="modal-content" style="max-width:95%; max-height:90vh;">
+    <span class="close-modal" onclick="closeModal('actionsModal')">&times;</span>
+    <h2 style="text-align:center; color:#3498db; margin-bottom:25px; font-size:1.8rem; text-shadow:0 0 30px rgba(52,152,219,0.5);">🎭 流畅动作库 (100种)</h2>
+    <div class="category-tabs" id="actionTabs"></div>
+    <div id="actionsList" class="shop-grid"></div>
+  </div>
+</div>
+
+<!-- 技能模态框 -->
+<div id="skillsModal" class="modal">
+  <div class="modal-content" style="max-width:95%; max-height:90vh;">
+    <span class="close-modal" onclick="closeModal('skillsModal')">&times;</span>
+    <h2 style="text-align:center; color:#2ecc71; margin-bottom:25px; font-size:1.8rem; text-shadow:0 0 30px rgba(46,204,113,0.5);">⚡ 汪汪队专属技能</h2>
+    <div id="skillsContent"></div>
+  </div>
+</div>
+
+<!-- AI换宠模态框 -->
+<div id="aiModal" class="modal">
+  <div class="modal-content" style="max-width:600px; max-height:90vh;">
+    <span class="close-modal" onclick="closeModal('aiModal')">&times;</span>
+    <h2 id="aiTitle" style="text-align:center; color:#667eea; margin-bottom:25px; font-size:1.8rem; text-shadow:0 0 30px rgba(102,126,234,0.5);">🤖 AI智能换宠</h2>
+    
+    <div style="padding:20px;">
+      <!-- 选择宠物类型 -->
+      <div style="margin-bottom:20px;">
+        <label style="color:#fff; font-size:1rem; display:block; margin-bottom:10px;">选择宠物类型：</label>
+        <select id="aiPetType" style="width:100%; padding:12px; border-radius:10px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.3); color:#fff; font-size:1rem;">
+          <option value="阿奇">🐕 阿奇 - 特警</option>
+          <option value="毛毛">🔥 毛毛 - 消防</option>
+          <option value="天天">🦅 天天 - 飞行</option>
+          <option value="小砾">🚜 小砾 - 工程</option>
+          <option value="灰灰">♻️ 灰灰 - 回收</option>
+          <option value="路马">🌊 路马 - 水上</option>
+        </select>
+      </div>
+      
+      <!-- 描述输入 -->
+      <div style="margin-bottom:20px;">
+        <label style="color:#fff; font-size:1rem; display:block; margin-bottom:10px;">描述你想要的效果（可选）：</label>
+        <textarea id="aiDescription" placeholder="例如：穿着特警制服，戴着墨镜，酷炫姿势..." style="width:100%; height:80px; padding:12px; border-radius:10px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.3); color:#fff; font-size:0.9rem; resize:none;"></textarea>
+      </div>
+      
+      <!-- 图片上传 -->
+      <div style="margin-bottom:20px;">
+        <label style="color:#fff; font-size:1rem; display:block; margin-bottom:10px;">上传参考图片（可选）：</label>
+        <input type="file" id="aiImageInput" accept="image/*" onchange="handleAIImageUpload(event)" style="width:100%; padding:10px; border-radius:10px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.3); color:#fff;">
+        <div id="aiImagePreview" style="margin-top:10px; display:none;">
+          <img id="aiPreviewImg" style="max-width:100%; max-height:200px; border-radius:10px;">
+          <button onclick="clearAIImage()" style="margin-top:10px; padding:8px 15px; background:linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); border:none; border-radius:8px; color:#fff; cursor:pointer;">清除图片</button>
+        </div>
+      </div>
+      
+      <!-- 目标宠物选择 -->
+      <div style="margin-bottom:20px;">
+        <label style="color:#fff; font-size:1rem; display:block; margin-bottom:10px;">应用到当前选中的宠物：</label>
+        <div id="aiTargetInfo" style="padding:15px; background:rgba(52,152,219,0.2); border-radius:10px; color:#fff;">
+          <span id="aiTargetName">请先在主页面选择一个宠物</span>
+        </div>
+      </div>
+      
+      <!-- 生成按钮 -->
+      <button onclick="generateAIPet()" id="aiGenerateBtn" style="width:100%; padding:15px; background:linear-gradient(135deg, #667eea 0%, #764ba2 100%); border:none; border-radius:12px; color:#fff; font-size:1.1rem; font-weight:bold; cursor:pointer; box-shadow:0 5px 20px rgba(102,126,234,0.4);">
+        🎨 开始生成
+      </button>
+      
+      <!-- 恢复原始形态按钮 -->
+      <button onclick="removeAIImage()" style="width:100%; padding:12px; margin-top:10px; background:linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); border:none; border-radius:12px; color:#fff; font-size:1rem; font-weight:bold; cursor:pointer; box-shadow:0 5px 20px rgba(231,76,60,0.4);">
+        🔄 恢复原始形态
+      </button>
+      
+      <!-- 加载状态 -->
+      <div id="aiLoading" style="display:none; text-align:center; padding:20px;">
+        <div style="display:inline-block; width:40px; height:40px; border:4px solid rgba(255,255,255,0.3); border-top-color:#667eea; border-radius:50%; animation:spin 1s linear infinite;"></div>
+        <p style="color:#fff; margin-top:15px;">AI正在创作中，请稍候...</p>
+      </div>
+      
+      <!-- 生成结果 -->
+      <div id="aiResult" style="display:none; margin-top:20px;">
+        <h3 style="color:#fff; margin-bottom:15px;">生成结果：</h3>
+        <div id="aiResultImages" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:15px;"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 指挥官AI换头像模态框 -->
+<div id="captainAIModal" class="modal">
+  <div class="modal-content" style="max-width:500px; max-height:80vh;">
+    <span class="close-modal" onclick="closeCaptainAIModal()">&times;</span>
+    <h2 style="text-align:center; color:#3498db; margin-bottom:25px; font-size:1.8rem; text-shadow:0 0 30px rgba(52,152,219,0.5);">🎬 指挥官AI头像</h2>
+    
+    <div style="padding:20px;">
+      <div style="text-align:center; margin-bottom:20px;">
+        <div style="width:120px; height:120px; margin:0 auto; border-radius:50%; background:rgba(52,152,219,0.2); border:3px solid rgba(52,152,219,0.5); display:flex; align-items:center; justify-content:center;">
+          <span style="font-size:3rem;">🎬</span>
+        </div>
+        <p style="color:#fff; margin-top:10px;">莱德队长</p>
+      </div>
+      
+      <div style="margin-bottom:20px;">
+        <label style="color:#fff; font-size:1rem; display:block; margin-bottom:10px;">描述你想要的指挥官形象：</label>
+        <textarea id="captainDescription" placeholder="例如：穿着指挥官制服，戴着帽子，帅气逼人..." style="width:100%; height:80px; padding:12px; border-radius:10px; background:rgba(255,255,255,0.1); border:1px solid rgba(255,255,255,0.3); color:#fff; font-size:0.9rem; resize:none;"></textarea>
+      </div>
+      
+      <button onclick="generateCaptainAI()" id="captainGenerateBtn" style="width:100%; padding:15px; background:linear-gradient(135deg, #3498db 0%, #2980b9 100%); border:none; border-radius:12px; color:#fff; font-size:1.1rem; font-weight:bold; cursor:pointer; box-shadow:0 5px 20px rgba(52,152,219,0.4);">
+        🎨 生成AI头像
+      </button>
+      
+      <button onclick="resetCaptainAI()" style="width:100%; padding:12px; margin-top:10px; background:linear-gradient(135deg, #e74c3c 0%, #c0392b 100%); border:none; border-radius:12px; color:#fff; font-size:1rem; font-weight:bold; cursor:pointer; box-shadow:0 5px 20px rgba(231,76,60,0.4);">
+        🔄 恢复原始头像
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- 商店模态框 -->
+<div id="shopModal" class="modal">
+  <div class="modal-content" style="max-width:95%; max-height:90vh;">
+    <span class="close-modal" onclick="closeModal('shopModal')">&times;</span>
+    <h2 style="text-align:center; color:#e74c3c; margin-bottom:25px; font-size:1.8rem; text-shadow:0 0 30px rgba(231,76,60,0.5);">🛒 电影装备商店 (60件)</h2>
+    <div class="category-tabs" id="shopTabs"></div>
+    <div id="shopList" class="shop-grid"></div>
+  </div>
+</div>
+<script>
+// ==================== 电影级数据配置 ====================
+const PET_TYPES = [
+  { name: "阿奇", role: "特警", color: "#3498db", sub: "chase", ultimate: "警犬狂奔", skill: "超级追踪" },
+  { name: "毛毛", role: "消防", color: "#e74c3c", sub: "marshall", ultimate: "火焰冲刺", skill: "消防喷射" },
+  { name: "天天", role: "飞行", color: "#f1c40f", sub: "skye", ultimate: "天空翱翔", skill: "旋翼飞行" },
+  { name: "小砾", role: "工程", color: "#f39c12", sub: "rubble", ultimate: "钻地冲击", skill: "工程建造" },
+  { name: "灰灰", role: "回收", color: "#2ecc71", sub: "rocky", ultimate: "回收变身", skill: "绿色能量" },
+  { name: "路马", role: "水上", color: "#9b59b6", sub: "zuma", ultimate: "海洋风暴", skill: "水上救援" }
+];
+
+// ==================== 50种电影级特效 ====================
+const EFFECTS_DATA = [
+  // 粒子特效 (15个)
+  { id: 'e1', name: '星尘爆发', icon: '⭐', category: '粒子', color: '#f1c40f', particles: true, type: 'stars', intensity: 1 },
+  { id: 'e2', name: '爱心风暴', icon: '💕', category: '粒子', color: '#e74c3c', particles: true, type: 'hearts', intensity: 1.2 },
+  { id: 'e3', name: '气泡涌动', icon: '🫧', category: '粒子', color: '#3498db', particles: true, type: 'bubbles', intensity: 0.8 },
+  { id: 'e4', name: '冰霜飘雪', icon: '❄️', category: '粒子', color: '#ecf0f1', particles: true, type: 'snow', intensity: 1 },
+  { id: 'e5', name: '电光火花', icon: '✨', category: '粒子', color: '#f39c12', particles: true, type: 'sparks', intensity: 1.5 },
+  { id: 'e6', name: '樱花飞舞', icon: '🌸', category: '粒子', color: '#ff9ff3', particles: true, type: 'sakura', intensity: 0.9 },
+  { id: 'e7', name: '秋叶纷飞', icon: '🍂', category: '粒子', color: '#d35400', particles: true, type: 'leaves', intensity: 0.85 },
+  { id: 'e8', name: '音乐节拍', icon: '🎵', category: '粒子', color: '#9b59b6', particles: true, type: 'music', intensity: 1.1 },
+  { id: 'e9', name: '金币雨', icon: '💰', category: '粒子', color: '#f1c40f', particles: true, type: 'coins', intensity: 1.3 },
+  { id: 'e10', name: '钻石闪烁', icon: '💎', category: '粒子', color: '#00d2d3', particles: true, type: 'diamonds', intensity: 1.2 },
+  { id: 'e11', name: '糖果风暴', icon: '🍬', category: '粒子', color: '#fd79a8', particles: true, type: 'candy', intensity: 1 },
+  { id: 'e12', name: '闪电链', icon: '⚡', category: '粒子', color: '#f39c12', particles: true, type: 'lightning', intensity: 1.8 },
+  { id: 'e13', name: '烈焰燃烧', icon: '🔥', category: '粒子', color: '#e74c3c', particles: true, type: 'flame', intensity: 2 },
+  { id: 'e14', name: '水波荡漾', icon: '💧', category: '粒子', color: '#3498db', particles: true, type: 'water', intensity: 0.9 },
+  { id: 'e15', name: '彩带庆典', icon: '🎊', category: '粒子', color: '#9b59b6', particles: true, type: 'confetti', intensity: 1.5 },
+  
+  // 光环特效 (15个) - 电影级
+  { id: 'e16', name: '黄金圣环', icon: '💫', category: '光环', color: '#f1c40f', ring: true, type: 'gold_ring', intensity: 1.5 },
+  { id: 'e17', name: '七彩彩虹', icon: '🌈', category: '光环', color: '#9b59b6', ring: true, type: 'rainbow_ring', intensity: 1.8 },
+  { id: 'e18', name: '能量力场', icon: '🔋', category: '光环', color: '#2ecc71', ring: true, type: 'energy_ring', intensity: 1.3 },
+  { id: 'e19', name: '烈焰光环', icon: '🔥', category: '光环', color: '#e74c3c', ring: true, type: 'fire_ring', intensity: 2 },
+  { id: 'e20', name: '冰霜领域', icon: '❄️', category: '光环', color: '#3498db', ring: true, type: 'ice_ring', intensity: 1.7 },
+  { id: 'e21', name: '雷霆万钧', icon: '⚡', category: '光环', color: '#f39c12', ring: true, type: 'thunder_ring', intensity: 2.2 },
+  { id: 'e22', name: '生命之环', icon: '💚', category: '光环', color: '#2ecc71', ring: true, type: 'life_ring', intensity: 1.4 },
+  { id: 'e23', name: '暗影领域', icon: '🌑', category: '光环', color: '#2c3e50', ring: true, type: 'shadow_ring', intensity: 1.6 },
+  { id: 'e24', name: '圣光祝福', icon: '✝️', category: '光环', color: '#f1c40f', ring: true, type: 'holy_ring', intensity: 2 },
+  { id: 'e25', name: '龙魂光环', icon: '🐉', category: '光环', color: '#e74c3c', ring: true, type: 'dragon_ring', intensity: 2.5 },
+  { id: 'e26', name: '星辰之力', icon: '🌟', category: '光环', color: '#9b59b6', ring: true, type: 'star_ring', intensity: 1.8 },
+  { id: 'e27', name: '海洋之心', icon: '🌊', category: '光环', color: '#3498db', ring: true, type: 'ocean_ring', intensity: 1.5 },
+  { id: 'e28', name: '森林守护', icon: '🌲', category: '光环', color: '#27ae60', ring: true, type: 'forest_ring', intensity: 1.4 },
+  { id: 'e29', name: '天空领域', icon: '☁️', category: '光环', color: '#87CEEB', ring: true, type: 'sky_ring', intensity: 1.3 },
+  { id: 'e30', name: '地狱烈焰', icon: '😈', category: '光环', color: '#c0392b', ring: true, type: 'hell_ring', intensity: 2.8 },
+  
+  // 动画特效 (20个) - 电影级
+  { id: 'e31', name: '闪烁光辉', icon: '✨', category: '动画', color: '#f1c40f', animation: 'blink', intensity: 1 },
+  { id: 'e32', name: '脉冲冲击', icon: '💓', category: '动画', color: '#e74c3c', animation: 'pulse', intensity: 1.2 },
+  { id: 'e33', name: '旋风旋转', icon: '🔄', category: '动画', color: '#3498db', animation: 'spin', intensity: 1.5 },
+  { id: 'e34', name: '摇摆舞动', icon: '👋', category: '动画', color: '#2ecc71', animation: 'swing', intensity: 0.9 },
+  { id: 'e35', name: '弹跳能量', icon: '⬆️', category: '动画', color: '#f39c12', animation: 'bounce', intensity: 1.3 },
+  { id: 'e36', name: '呼吸韵律', icon: '😮', category: '动画', color: '#9b59b6', animation: 'breathe', intensity: 0.8 },
+  { id: 'e37', name: '波浪涌动', icon: '🌊', category: '动画', color: '#3498db', animation: 'wave', intensity: 1.1 },
+  { id: 'e38', name: '震动冲击', icon: '📳', category: '动画', color: '#e74c3c', animation: 'shake', intensity: 1.8 },
+  { id: 'e39', name: '缩放聚焦', icon: '🔍', category: '动画', color: '#2ecc71', animation: 'scale', intensity: 1 },
+  { id: 'e40', name: '漂浮升空', icon: '🎈', category: '动画', color: '#f1c40f', animation: 'float', intensity: 1.2 },
+  { id: 'e41', name: '彩虹渐变', icon: '🌟', category: '动画', color: '#ff6b6b', animation: 'gradient_blink', intensity: 1.5 },
+  { id: 'e42', name: '螺旋风暴', icon: '🌀', category: '动画', color: '#9b59b6', animation: 'spiral', intensity: 2 },
+  { id: 'e43', name: '电流震动', icon: '⚡', category: '动画', color: '#f39c12', animation: 'vibrate', intensity: 1.6 },
+  { id: 'e44', name: '弹性弹跳', icon: '🏀', category: '动画', color: '#e67e22', animation: 'pop', intensity: 1.4 },
+  { id: 'e45', name: '摇晃舞步', icon: '🎭', category: '动画', color: '#34495e', animation: 'wobble', intensity: 1.1 },
+  { id: 'e46', name: '闪烁弹跳', icon: '💫', category: '动画', color: '#ff6b6b', animation: 'bounce_blink', intensity: 1.7 },
+  { id: 'e47', name: '涟漪扩散', icon: '💧', category: '动画', color: '#3498db', animation: 'ripple', intensity: 1.3 },
+  { id: 'e48', name: '爆炸冲击', icon: '💥', category: '动画', color: '#e74c3c', animation: 'explode', intensity: 2.5 },
+  { id: 'e49', name: '星光闪烁', icon: '⭐', category: '动画', color: '#f1c40f', animation: 'star_blink', intensity: 1.2 },
+  { id: 'e50', name: '彩虹闪光', icon: '🌈', category: '动画', color: '#9b59b6', animation: 'rainbow_flash', intensity: 2 }
+];
+
+// ==================== 100种流畅动作 ====================
+const ACTIONS_DATA = [
+  // 基础动作 (20个)
+  { id: 'a1', name: '站立', icon: '🧍', category: '基础', duration: 1000, ease: 'linear' },
+  { id: 'a2', name: '行走', icon: '🚶', category: '基础', duration: 1000, ease: 'swing' },
+  { id: 'a3', name: '跑步', icon: '🏃', category: '基础', duration: 800, ease: 'fast' },
+  { id: 'a4', name: '跳跃', icon: '🦘', category: '基础', duration: 600, ease: 'bounce' },
+  { id: 'a5', name: '坐下', icon: '🪑', category: '基础', duration: 1000, ease: 'smooth' },
+  { id: 'a6', name: '躺下', icon: '🛏️', category: '基础', duration: 1000, ease: 'smooth' },
+  { id: 'a7', name: '蹲下', icon: '🧎', category: '基础', duration: 1000, ease: 'smooth' },
+  { id: 'a8', name: '转身', icon: '🔄', category: '基础', duration: 500, ease: 'spin' },
+  { id: 'a9', name: '抬头', icon: '👆', category: '基础', duration: 500, ease: 'smooth' },
+  { id: 'a10', name: '低头', icon: '👇', category: '基础', duration: 500, ease: 'smooth' },
+  { id: 'a11', name: '点头', icon: '😊', category: '基础', duration: 500, ease: 'bounce' },
+  { id: 'a12', name: '摇头', icon: '🙄', category: '基础', duration: 600, ease: 'swing' },
+  { id: 'a13', name: '挥手', icon: '👋', category: '基础', duration: 800, ease: 'wave' },
+  { id: 'a14', name: '举手', icon: '🙋', category: '基础', duration: 600, ease: 'smooth' },
+  { id: 'a15', name: '鼓掌', icon: '👏', category: '基础', duration: 800, ease: 'pulse' },
+  { id: 'a16', name: '伸懒腰', icon: '🥱', category: '基础', duration: 1000, ease: 'stretch' },
+  { id: 'a17', name: '打哈欠', icon: '😴', category: '基础', duration: 1000, ease: 'smooth' },
+  { id: 'a18', name: '眨眼', icon: '😉', category: '基础', duration: 300, ease: 'fast' },
+  { id: 'a19', name: '敬礼', icon: '🫡', category: '基础', duration: 800, ease: 'sharp' },
+  { id: 'a20', name: '鞠躬', icon: '🙇', category: '基础', duration: 800, ease: 'smooth' },
+  
+  // 情绪表情 (25个)
+  { id: 'a21', name: '开心', icon: '😄', category: '情绪', duration: 1000, ease: 'bounce' },
+  { id: 'a22', name: '大笑', icon: '🤣', category: '情绪', duration: 1000, ease: 'shake' },
+  { id: 'a23', name: '微笑', icon: '😊', category: '情绪', duration: 1000, ease: 'smooth' },
+  { id: 'a24', name: '害羞', icon: '😳', category: '情绪', duration: 1000, ease: 'wobble' },
+  { id: 'a25', name: '悲伤', icon: '😢', category: '情绪', duration: 1000, ease: 'droop' },
+  { id: 'a26', name: '哭泣', icon: '😭', category: '情绪', duration: 1200, ease: 'shake' },
+  { id: 'a27', name: '愤怒', icon: '😠', category: '情绪', duration: 1000, ease: 'tense' },
+  { id: 'a28', name: '生气', icon: '😡', category: '情绪', duration: 1000, ease: 'shake' },
+  { id: 'a29', name: '惊讶', icon: '😲', category: '情绪', duration: 800, ease: 'pop' },
+  { id: 'a30', name: '震惊', icon: '😱', category: '情绪', duration: 1000, ease: 'explode' },
+  { id: 'a31', name: '害怕', icon: '😨', category: '情绪', duration: 1000, ease: 'shake' },
+  { id: 'a32', name: '紧张', icon: '😬', category: '情绪', duration: 1000, ease: 'wobble' },
+  { id: 'a33', name: '思考', icon: '🤔', category: '情绪', duration: 1000, ease: 'smooth' },
+  { id: 'a34', name: '困惑', icon: '😕', category: '情绪', duration: 1000, ease: 'wobble' },
+  { id: 'a35', name: '得意', icon: '😎', category: '情绪', duration: 1000, ease: 'bounce' },
+  { id: 'a36', name: '骄傲', icon: '😏', category: '情绪', duration: 1000, ease: 'smooth' },
+  { id: 'a37', name: '无聊', icon: '😑', category: '情绪', duration: 1000, ease: 'droop' },
+  { id: 'a38', name: '困倦', icon: '😴', category: '情绪', duration: 1000, ease: 'smooth' },
+  { id: 'a39', name: '兴奋', icon: '🤩', category: '情绪', duration: 1000, ease: 'bounce' },
+  { id: 'a40', name: '期待', icon: '🥺', category: '情绪', duration: 1000, ease: 'pulse' },
+  { id: 'a41', name: '感动', icon: '🥹', category: '情绪', duration: 1000, ease: 'smooth' },
+  { id: 'a42', name: '安心', icon: '😌', category: '情绪', duration: 1000, ease: 'smooth' },
+  { id: 'a43', name: '焦虑', icon: '😰', category: '情绪', duration: 1000, ease: 'shake' },
+  { id: 'a44', name: '失望', icon: '😞', category: '情绪', duration: 1000, ease: 'droop' },
+  { id: 'a45', name: '满足', icon: '😌', category: '情绪', duration: 1000, ease: 'smooth' },
+  
+  // 特殊动作 (30个) - 电影级
+  { id: 'a46', name: '街舞', icon: '💃', category: '特殊', duration: 2000, ease: 'complex' },
+  { id: 'a47', name: '迪斯科', icon: '🕺', category: '特殊', duration: 2000, ease: 'complex' },
+  { id: 'a48', name: '旋转舞', icon: '👯', category: '特殊', duration: 2000, ease: 'spin' },
+  { id: 'a49', name: '欢呼', icon: '🎉', category: '特殊', duration: 1000, ease: 'bounce' },
+  { id: 'a50', name: '庆祝', icon: '🎊', category: '特殊', duration: 1500, ease: 'explode' },
+  { id: 'a51', name: '胜利', icon: '🏆', category: '特殊', duration: 1000, ease: 'bounce' },
+  { id: 'a52', name: '成功', icon: '✅', category: '特殊', duration: 1000, ease: 'pop' },
+  { id: 'a53', name: '失败', icon: '❌', category: '特殊', duration: 1000, ease: 'droop' },
+  { id: 'a54', name: '加油', icon: '💪', category: '特殊', duration: 1000, ease: 'pulse' },
+  { id: 'a55', name: '燃烧', icon: '🔥', category: '特殊', duration: 1000, ease: 'shake' },
+  { id: 'a56', name: '读书', icon: '📖', category: '特殊', duration: 1000, ease: 'smooth' },
+  { id: 'a57', name: '写作', icon: '✍️', category: '特殊', duration: 1000, ease: 'smooth' },
+  { id: 'a58', name: '深思', icon: '💭', category: '特殊', duration: 1500, ease: 'float' },
+  { id: 'a59', name: '发明', icon: '💡', category: '特殊', duration: 1000, ease: 'pop' },
+  { id: 'a60', name: '魔法', icon: '✨', category: '特殊', duration: 1500, ease: 'complex' },
+  { id: 'a61', name: '变身', icon: '🌟', category: '特殊', duration: 2000, ease: 'explode' },
+  { id: 'a62', name: '召唤', icon: '🔮', category: '特殊', duration: 1500, ease: 'pulse' },
+  { id: 'a63', name: '攻击', icon: '⚔️', category: '特殊', duration: 800, ease: 'sharp' },
+  { id: 'a64', name: '防御', icon: '🛡️', category: '特殊', duration: 800, ease: 'tense' },
+  { id: 'a65', name: '闪避', icon: '💨', category: '特殊', duration: 600, ease: 'fast' },
+  { id: 'a66', name: '冲刺', icon: '⚡', category: '特殊', duration: 500, ease: 'fast' },
+  { id: 'a67', name: '飞行', icon: '🦸', category: '特殊', duration: 2000, ease: 'float' },
+  { id: 'a68', name: '游泳', icon: '🏊', category: '特殊', duration: 2000, ease: 'wave' },
+  { id: 'a69', name: '攀爬', icon: '🧗', category: '特殊', duration: 1500, ease: 'smooth' },
+  { id: 'a70', name: '滑行', icon: '⛷️', category: '特殊', duration: 1500, ease: 'smooth' },
+  { id: 'a71', name: '翻滚', icon: '🤸', category: '特殊', duration: 1000, ease: 'spin' },
+  { id: 'a72', name: '空翻', icon: '🤸‍♂️', category: '特殊', duration: 1000, ease: 'spin' },
+  { id: 'a73', name: '踢腿', icon: '🦵', category: '特殊', duration: 600, ease: 'sharp' },
+  { id: 'a74', name: '出拳', icon: '👊', category: '特殊', duration: 500, ease: 'sharp' },
+  { id: 'a75', name: '格挡', icon: '🛡️', category: '特殊', duration: 800, ease: 'tense' },
+  
+  // 组合动作 (25个)
+  { id: 'a76', name: '打招呼', icon: '🙋‍♂️', category: '组合', duration: 1000, ease: 'wave' },
+  { id: 'a77', name: '问好', icon: '🤝', category: '组合', duration: 1000, ease: 'smooth' },
+  { id: 'a78', name: '拥抱', icon: '🤗', category: '组合', duration: 1000, ease: 'pulse' },
+  { id: 'a79', name: '亲吻', icon: '😘', category: '组合', duration: 800, ease: 'smooth' },
+  { id: 'a80', name: '安慰', icon: '🤲', category: '组合', duration: 1000, ease: 'smooth' },
+  { id: 'a81', name: '鼓励', icon: '👏', category: '组合', duration: 1000, ease: 'pulse' },
+  { id: 'a82', name: '感谢', icon: '🙏', category: '组合', duration: 1000, ease: 'smooth' },
+  { id: 'a83', name: '道歉', icon: '🙏', category: '组合', duration: 1000, ease: 'droop' },
+  { id: 'a84', name: '请求', icon: '🥺', category: '组合', duration: 1000, ease: 'pulse' },
+  { id: 'a85', name: '拒绝', icon: '🙅', category: '组合', duration: 800, ease: 'shake' },
+  { id: 'a86', name: '同意', icon: '🙆', category: '组合', duration: 800, ease: 'bounce' },
+  { id: 'a87', name: '决定', icon: '🤔', category: '组合', duration: 1500, ease: 'complex' },
+  { id: 'a88', name: '看表', icon: '⌚', category: '组合', duration: 800, ease: 'smooth' },
+  { id: 'a89', name: '看手机', icon: '📱', category: '组合', duration: 1000, ease: 'smooth' },
+  { id: 'a90', name: '看书', icon: '📚', category: '组合', duration: 1500, ease: 'smooth' },
+  { id: 'a91', name: '画画', icon: '🎨', category: '组合', duration: 1500, ease: 'smooth' },
+  { id: 'a92', name: '弹琴', icon: '🎹', category: '组合', duration: 2000, ease: 'wave' },
+  { id: 'a93', name: '唱歌', icon: '🎤', category: '组合', duration: 2000, ease: 'wave' },
+  { id: 'a94', name: '运动', icon: '🏃‍♂️', category: '组合', duration: 2000, ease: 'fast' },
+  { id: 'a95', name: '游戏', icon: '🎮', category: '组合', duration: 2000, ease: 'complex' },
+  { id: 'a96', name: '电影', icon: '🎬', category: '组合', duration: 2000, ease: 'smooth' },
+  { id: 'a97', name: '旅行', icon: '✈️', category: '组合', duration: 2000, ease: 'float' },
+  { id: 'a98', name: '野餐', icon: '🧺', category: '组合', duration: 2000, ease: 'smooth' },
+  { id: 'a99', name: '派对', icon: '🎉', category: '组合', duration: 2000, ease: 'complex' },
+  { id: 'a100', name: '休息', icon: '😴', category: '组合', duration: 2000, ease: 'smooth' }
+];
+
+// ==================== 汪汪队专属技能 ====================
+const SKILLS_DATA = [
+  // 阿奇技能
+  { id: 'sk1', name: '超级追踪', icon: '🔍', petType: 'chase', desc: '追踪目标，积分+10', effect: 'points', value: 10, cooldown: 30 },
+  { id: 'sk2', name: '警犬冲锋', icon: '🏃', petType: 'chase', desc: '冲锋陷阵，全队+5分', effect: 'team_points', value: 5, cooldown: 60 },
+  { id: 'sk3', name: '终极警觉', icon: '⚡', petType: 'chase', desc: '觉醒形态，特效升级', effect: 'ultimate', value: 0, cooldown: 120 },
+  
+  // 毛毛技能
+  { id: 'sk4', name: '消防喷射', icon: '💧', petType: 'marshall', desc: '灭火救援，积分+10', effect: 'points', value: 10, cooldown: 30 },
+  { id: 'sk5', name: '火焰护盾', icon: '🔥', petType: 'marshall', desc: '保护队友，减半扣分', effect: 'shield', value: 0.5, cooldown: 60 },
+  { id: 'sk6', name: '终极烈焰', icon: '🌟', petType: 'marshall', desc: '火焰觉醒，特效升级', effect: 'ultimate', value: 0, cooldown: 120 },
+  
+  // 天天技能
+  { id: 'sk7', name: '旋翼飞行', icon: '🚁', petType: 'skye', desc: '空中支援，积分+10', effect: 'points', value: 10, cooldown: 30 },
+  { id: 'sk8', name: '天空俯瞰', icon: '👁️', petType: 'skye', desc: '全队金币+20', effect: 'team_gold', value: 20, cooldown: 60 },
+  { id: 'sk9', name: '终极翱翔', icon: '🌈', petType: 'skye', desc: '天空觉醒，特效升级', effect: 'ultimate', value: 0, cooldown: 120 },
+  
+  // 小砾技能
+  { id: 'sk10', name: '工程建造', icon: '🏗️', petType: 'rubble', desc: '建造奖励，积分+10', effect: 'points', value: 10, cooldown: 30 },
+  { id: 'sk11', name: '钻地冲击', icon: '💥', petType: 'rubble', desc: '冲击波，全队+8分', effect: 'team_points', value: 8, cooldown: 60 },
+  { id: 'sk12', name: '终极钻头', icon: '⚙️', petType: 'rubble', desc: '工程觉醒，特效升级', effect: 'ultimate', value: 0, cooldown: 120 },
+  
+  // 灰灰技能
+  { id: 'sk13', name: '绿色能量', icon: '♻️', petType: 'rocky', desc: '回收利用，积分+10', effect: 'points', value: 10, cooldown: 30 },
+  { id: 'sk14', name: '环保护盾', icon: '🌿', petType: 'rocky', desc: '环保之力，全队金币+30', effect: 'team_gold', value: 30, cooldown: 60 },
+  { id: 'sk15', name: '终极回收', icon: '🌱', petType: 'rocky', desc: '绿色觉醒，特效升级', effect: 'ultimate', value: 0, cooldown: 120 },
+  
+  // 路马技能
+  { id: 'sk16', name: '水上救援', icon: '🚤', petType: 'zuma', desc: '水上任务，积分+10', effect: 'points', value: 10, cooldown: 30 },
+  { id: 'sk17', name: '海浪冲击', icon: '🌊', petType: 'zuma', desc: '召唤海浪，全队+6分', effect: 'team_points', value: 6, cooldown: 60 },
+  { id: 'sk18', name: '终极海皇', icon: '🔱', petType: 'zuma', desc: '海洋觉醒，特效升级', effect: 'ultimate', value: 0, cooldown: 120 },
+  
+  // 通用终极技能
+  { id: 'sk19', name: '汪汪队集合', icon: '🐕', petType: 'all', desc: '召唤全队，全员+15分', effect: 'all_points', value: 15, cooldown: 180 },
+  { id: 'sk20', name: '终极觉醒', icon: '🌟', petType: 'all', desc: '全员觉醒，特效升级', effect: 'all_ultimate', value: 0, cooldown: 300 }
+];
+// ==================== 60件电影级装备 ====================
+const EQUIPMENT_DATA = [
+  // 武器类 (15件)
+  { id: 'w1', name: '木质警棍', icon: '🗡️', category: '武器', color: '#8B4513', bonus: 1, price: 10, slot: 'weapon', rarity: '普通' },
+  { id: 'w2', name: '铁质警棍', icon: '⚔️', category: '武器', color: '#708090', bonus: 2, price: 30, slot: 'weapon', rarity: '普通' },
+  { id: 'w3', name: '银光剑', icon: '🗡️', category: '武器', color: '#C0C0C0', bonus: 3, price: 60, slot: 'weapon', rarity: '稀有' },
+  { id: 'w4', name: '黄金剑', icon: '⚔️', category: '武器', color: '#FFD700', bonus: 5, price: 100, slot: 'weapon', rarity: '稀有' },
+  { id: 'w5', name: '钻石剑', icon: '💎', category: '武器', color: '#00CED1', bonus: 8, price: 200, slot: 'weapon', rarity: '史诗' },
+  { id: 'w6', name: '烈焰剑', icon: '🔥', category: '武器', color: '#FF4500', bonus: 10, price: 300, slot: 'weapon', rarity: '史诗' },
+  { id: 'w7', name: '冰霜剑', icon: '❄️', category: '武器', color: '#00BFFF', bonus: 10, price: 300, slot: 'weapon', rarity: '史诗' },
+  { id: 'w8', name: '雷霆剑', icon: '⚡', category: '武器', color: '#FFD700', bonus: 12, price: 400, slot: 'weapon', rarity: '史诗' },
+  { id: 'w9', name: '圣光剑', icon: '✨', category: '武器', color: '#FFFACD', bonus: 15, price: 500, slot: 'weapon', rarity: '传说' },
+  { id: 'w10', name: '暗影剑', icon: '🌑', category: '武器', color: '#2C3E50', bonus: 15, price: 500, slot: 'weapon', rarity: '传说' },
+  { id: 'w11', name: '龙牙剑', icon: '🐉', category: '武器', color: '#8B0000', bonus: 18, price: 700, slot: 'weapon', rarity: '传说' },
+  { id: 'w12', name: '星辰剑', icon: '⭐', category: '武器', color: '#9B59B6', bonus: 20, price: 900, slot: 'weapon', rarity: '传说' },
+  { id: 'w13', name: '彩虹剑', icon: '🌈', category: '武器', color: '#FF69B4', bonus: 25, price: 1200, slot: 'weapon', rarity: '神话' },
+  { id: 'w14', name: '传说之剑', icon: '👑', category: '武器', color: '#FFD700', bonus: 30, price: 1500, slot: 'weapon', rarity: '神话' },
+  { id: 'w15', name: '神话之剑', icon: '🌟', category: '武器', color: '#FFD700', bonus: 40, price: 2000, slot: 'weapon', rarity: '神话' },
+  
+  // 防具类 (15件)
+  { id: 'd1', name: '布制制服', icon: '👕', category: '防具', color: '#DEB887', bonus: 1, price: 10, slot: 'armor', rarity: '普通' },
+  { id: 'd2', name: '皮质护甲', icon: '🧥', category: '防具', color: '#8B4513', bonus: 2, price: 30, slot: 'armor', rarity: '普通' },
+  { id: 'd3', name: '锁子甲', icon: '🛡️', category: '防具', color: '#708090', bonus: 3, price: 60, slot: 'armor', rarity: '稀有' },
+  { id: 'd4', name: '铁制护甲', icon: '⚔️', category: '防具', color: '#2C3E50', bonus: 5, price: 100, slot: 'armor', rarity: '稀有' },
+  { id: 'd5', name: '银光护甲', icon: '🛡️', category: '防具', color: '#C0C0C0', bonus: 7, price: 150, slot: 'armor', rarity: '稀有' },
+  { id: 'd6', name: '黄金护甲', icon: '👑', category: '防具', color: '#FFD700', bonus: 10, price: 250, slot: 'armor', rarity: '史诗' },
+  { id: 'd7', name: '钻石护甲', icon: '💎', category: '防具', color: '#00CED1', bonus: 13, price: 400, slot: 'armor', rarity: '史诗' },
+  { id: 'd8', name: '烈焰护甲', icon: '🔥', category: '防具', color: '#FF4500', bonus: 15, price: 500, slot: 'armor', rarity: '史诗' },
+  { id: 'd9', name: '冰霜护甲', icon: '❄️', category: '防具', color: '#00BFFF', bonus: 15, price: 500, slot: 'armor', rarity: '史诗' },
+  { id: 'd10', name: '雷霆护甲', icon: '⚡', category: '防具', color: '#FFD700', bonus: 18, price: 700, slot: 'armor', rarity: '传说' },
+  { id: 'd11', name: '圣光护甲', icon: '✨', category: '防具', color: '#FFFACD', bonus: 20, price: 800, slot: 'armor', rarity: '传说' },
+  { id: 'd12', name: '暗影护甲', icon: '🌑', category: '防具', color: '#2C3E50', bonus: 20, price: 800, slot: 'armor', rarity: '传说' },
+  { id: 'd13', name: '龙鳞护甲', icon: '🐉', category: '防具', color: '#8B0000', bonus: 25, price: 1000, slot: 'armor', rarity: '传说' },
+  { id: 'd14', name: '传说护甲', icon: '👑', category: '防具', color: '#FFD700', bonus: 30, price: 1500, slot: 'armor', rarity: '神话' },
+  { id: 'd15', name: '神话护甲', icon: '🌟', category: '防具', color: '#FFD700', bonus: 40, price: 2000, slot: 'armor', rarity: '神话' },
+  
+  // 头盔类 (10件)
+  { id: 'h1', name: '布帽', icon: '🎩', category: '头盔', color: '#DEB887', bonus: 1, price: 10, slot: 'helmet', rarity: '普通' },
+  { id: 'h2', name: '铁盔', icon: '⛑️', category: '头盔', color: '#708090', bonus: 2, price: 40, slot: 'helmet', rarity: '普通' },
+  { id: 'h3', name: '银光头盔', icon: '🪖', category: '头盔', color: '#C0C0C0', bonus: 3, price: 80, slot: 'helmet', rarity: '稀有' },
+  { id: 'h4', name: '黄金头盔', icon: '👑', category: '头盔', color: '#FFD700', bonus: 5, price: 150, slot: 'helmet', rarity: '稀有' },
+  { id: 'h5', name: '钻石头盔', icon: '💎', category: '头盔', color: '#00CED1', bonus: 7, price: 300, slot: 'helmet', rarity: '史诗' },
+  { id: 'h6', name: '烈焰头盔', icon: '🔥', category: '头盔', color: '#FF4500', bonus: 10, price: 500, slot: 'helmet', rarity: '史诗' },
+  { id: 'h7', name: '冰霜头盔', icon: '❄️', category: '头盔', color: '#00BFFF', bonus: 10, price: 500, slot: 'helmet', rarity: '史诗' },
+  { id: 'h8', name: '龙角头盔', icon: '🐉', category: '头盔', color: '#8B0000', bonus: 15, price: 800, slot: 'helmet', rarity: '传说' },
+  { id: 'h9', name: '传说头盔', icon: '👑', category: '头盔', color: '#FFD700', bonus: 20, price: 1200, slot: 'helmet', rarity: '神话' },
+  { id: 'h10', name: '神话头盔', icon: '🌟', category: '头盔', color: '#FFD700', bonus: 25, price: 1600, slot: 'helmet', rarity: '神话' },
+  
+  // 饰品类 (10件)
+  { id: 'acc1', name: '力量戒指', icon: '💍', category: '饰品', color: '#E74C3C', bonus: 2, price: 50, slot: 'accessory', rarity: '稀有' },
+  { id: 'acc2', name: '敏捷戒指', icon: '💍', category: '饰品', color: '#3498DB', bonus: 2, price: 50, slot: 'accessory', rarity: '稀有' },
+  { id: 'acc3', name: '智慧项链', icon: '📿', category: '饰品', color: '#9B59B6', bonus: 3, price: 80, slot: 'accessory', rarity: '稀有' },
+  { id: 'acc4', name: '生命项链', icon: '💚', category: '饰品', color: '#2ECC71', bonus: 3, price: 80, slot: 'accessory', rarity: '稀有' },
+  { id: 'acc5', name: '幸运徽章', icon: '🍀', category: '饰品', color: '#2ECC71', bonus: 5, price: 150, slot: 'accessory', rarity: '史诗' },
+  { id: 'acc6', name: '勇气徽章', icon: '🦁', category: '饰品', color: '#F39C12', bonus: 5, price: 150, slot: 'accessory', rarity: '史诗' },
+  { id: 'acc7', name: '守护护符', icon: '🛡️', category: '饰品', color: '#3498DB', bonus: 8, price: 300, slot: 'accessory', rarity: '史诗' },
+  { id: 'acc8', name: '龙心宝石', icon: '❤️', category: '饰品', color: '#E74C3C', bonus: 10, price: 500, slot: 'accessory', rarity: '传说' },
+  { id: 'acc9', name: '传说宝石', icon: '💎', category: '饰品', color: '#FFD700', bonus: 15, price: 800, slot: 'accessory', rarity: '神话' },
+  { id: 'acc10', name: '神话宝石', icon: '🌟', category: '饰品', color: '#FFD700', bonus: 20, price: 1200, slot: 'accessory', rarity: '神话' },
+  
+  // 特殊装备 (10件) - 电影级
+  { id: 's1', name: '天使之翼', icon: '🪽', category: '特殊', color: '#FFFACD', bonus: 5, price: 200, slot: 'special', rarity: '史诗' },
+  { id: 's2', name: '恶魔之翼', icon: '🦇', category: '特殊', color: '#2C3E50', bonus: 5, price: 200, slot: 'special', rarity: '史诗' },
+  { id: 's3', name: '彩虹之翼', icon: '🌈', category: '特殊', color: '#FF69B4', bonus: 8, price: 400, slot: 'special', rarity: '传说' },
+  { id: 's4', name: '烈焰光环', icon: '🔥', category: '特殊', color: '#FF4500', bonus: 10, price: 500, slot: 'special', rarity: '传说' },
+  { id: 's5', name: '冰霜光环', icon: '❄️', category: '特殊', color: '#00BFFF', bonus: 10, price: 500, slot: 'special', rarity: '传说' },
+  { id: 's6', name: '雷霆光环', icon: '⚡', category: '特殊', color: '#FFD700', bonus: 12, price: 600, slot: 'special', rarity: '传说' },
+  { id: 's7', name: '圣光光环', icon: '✨', category: '特殊', color: '#FFFACD', bonus: 15, price: 800, slot: 'special', rarity: '神话' },
+  { id: 's8', name: '暗影光环', icon: '🌑', category: '特殊', color: '#2C3E50', bonus: 15, price: 800, slot: 'special', rarity: '神话' },
+  { id: 's9', name: '龙魂印记', icon: '🐉', category: '特殊', color: '#8B0000', bonus: 20, price: 1000, slot: 'special', rarity: '神话' },
+  { id: 's10', name: '神话光环', icon: '🌟', category: '特殊', color: '#FFD700', bonus: 30, price: 1500, slot: 'special', rarity: '神话' }
+];
+
+// ==================== API 配置 ====================
+// 部署时请根据您的后端平台修改此配置
+// Cloudflare Workers: 'https://your-worker.your-subdomain.workers.dev'
+// Netlify Functions: 'https://your-site.netlify.app'
+// 本地开发: '' (空字符串，使用相对路径)
+const API_BASE_URL = 'https://paw-patrol-ai.812217700.workers.dev';
+
+// API 辅助函数
+async function callAPI(endpoint, data) {
+  const url = API_BASE_URL ? `${API_BASE_URL}${endpoint}` : endpoint;
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  });
+  return response.json();
+}
+
+// ==================== 应用程序状态 ====================
+let appState = {
+  className: "汪汪队·电影救援总部",
+  students: [],
+  selectedId: null,
+  groups: { red:[], blue:[], yellow:[], green:[], purple:[] },
+  gold: 100,
+  energy: 100,
+  config: {
+    labor: { label: "爱劳动", score: 5 },
+    study: { label: "勤学习", score: 5 },
+    eat: { label: "光盘", score: 5 },
+    sleep: { label: "午睡", score: 5 },
+    listen: { label: "走神", score: -5 },
+    talk: { label: "说话", score: -5 },
+    manner: { label: "礼貌", score: -5 },
+    clean: { label: "卫生", score: -5 }
+  },
+  unlockedEffects: ['e1', 'e2', 'e3', 'e4', 'e5'],
+  unlockedActions: ['a1', 'a2', 'a3', 'a4', 'a5'],
+  unlockedEquipment: [],
+  unlockedSkills: ['sk1', 'sk4', 'sk7', 'sk10', 'sk13', 'sk16'],
+  equippedEffects: {},
+  equippedActions: {},
+  equippedGear: {},
+  skillCooldowns: {},
+  ultimateForms: {}, // 终极形态状态
+  captainAIImage: null // 指挥官AI头像
+};
+
+// ==================== 初始化 ====================
+window.onload = function() {
+  loadData();
+  applyConfig();
+  document.getElementById('classNameInput').value = appState.className;
+  updateStatusDisplay();
+  renderGrid();
+  drawCaptain();
+  
+  window.addEventListener('resize', () => {
+    renderGrid();
+    drawCaptain();
+  });
+
+  document.addEventListener('click', e => {
+    if(!e.target.closest('.s-val')) document.getElementById('customInput').style.display = 'none';
+  });
+  
+  // 能量恢复
+  setInterval(() => {
+    if(appState.energy < 100) {
+      appState.energy = Math.min(100, appState.energy + 1);
+      updateStatusDisplay();
+    }
+  }, 3000);
+};
+
+function loadData() {
+  const d = localStorage.getItem('paw_movie_v1');
+  if(d) {
+    const p = JSON.parse(d);
+    appState = { ...appState, ...p };
+  } else {
+    appState.students = ["乐乐","天天","笑笑","可可","朵朵","果果"].map((n,i)=>createStudent(n,i));
+    saveData();
+  }
+}
+
+function saveData() {
+  localStorage.setItem('paw_movie_v1', JSON.stringify(appState));
+}
+
+function createStudent(name, idx) {
+  return {
+    id: 's_'+Date.now()+'_'+idx,
+    name: name,
+    petIdx: Math.floor(Math.random() * PET_TYPES.length),
+    level: 1, xp: 0, maxXp: 100, points: 0,
+    group: null, hasItem: false,
+    isUltimate: false // 是否终极形态
+  };
+}
+
+function updateStatusDisplay() {
+  document.getElementById('goldDisplay').innerText = appState.gold;
+  document.getElementById('energyDisplay').innerText = appState.energy;
+  const total = appState.students.reduce((sum, s) => sum + s.points, 0);
+  document.getElementById('totalPoints').innerText = total;
+}
+// ==================== 电影级绘图引擎 ====================
+
+class MovieParticleSystem {
+  constructor(ctx, type, color, w, h, intensity = 1) {
+    this.ctx = ctx;
+    this.type = type;
+    this.color = color;
+    this.w = w;
+    this.h = h;
+    this.intensity = intensity;
+    this.particles = [];
+    this.init();
+  }
+  
+  init() {
+    const count = Math.floor((20 + Math.random() * 15) * this.intensity);
+    for(let i = 0; i < count; i++) {
+      this.particles.push(this.createParticle());
+    }
+  }
+  
+  createParticle() {
+    return {
+      x: Math.random() * this.w,
+      y: Math.random() * this.h,
+      vx: (Math.random() - 0.5) * 3 * this.intensity,
+      vy: -Math.random() * 3 * this.intensity - 1,
+      size: Math.random() * 5 + 3,
+      life: 1,
+      decay: 0.008 + Math.random() * 0.015,
+      rotation: Math.random() * Math.PI * 2,
+      rotSpeed: (Math.random() - 0.5) * 0.1
+    };
+  }
+  
+  update() {
+    this.particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+      p.vy -= 0.02; // 重力
+      p.life -= p.decay;
+      p.rotation += p.rotSpeed;
+      if(p.life <= 0) Object.assign(p, this.createParticle());
+    });
+  }
+  
+  draw() {
+    const icons = {
+      'stars': '⭐', 'hearts': '💕', 'bubbles': '🫧', 'snow': '❄️',
+      'sparks': '✨', 'sakura': '🌸', 'leaves': '🍂', 'music': '🎵',
+      'coins': '💰', 'diamonds': '💎', 'candy': '🍬', 'lightning': '⚡',
+      'flame': '🔥', 'water': '💧', 'confetti': '🎊'
+    };
+    
+    this.particles.forEach(p => {
+      this.ctx.save();
+      this.ctx.globalAlpha = p.life * 0.9;
+      this.ctx.translate(p.x, p.y);
+      this.ctx.rotate(p.rotation);
+      this.ctx.font = `${p.size * 4}px Arial`;
+      this.ctx.textAlign = 'center';
+      this.ctx.textBaseline = 'middle';
+      
+      // 发光效果
+      this.ctx.shadowColor = this.color;
+      this.ctx.shadowBlur = 15 * this.intensity;
+      this.ctx.fillText(icons[this.type] || '⭐', 0, 0);
+      
+      this.ctx.restore();
+    });
+  }
+}
+
+class MovieEffectRenderer {
+  constructor(ctx, effectData, w, h) {
+    this.ctx = ctx;
+    this.effect = effectData;
+    this.w = w;
+    this.h = h;
+    this.frame = 0;
+    this.particles = null;
+    
+    if(effectData.particles) {
+      this.particles = new MovieParticleSystem(ctx, effectData.type, effectData.color, w, h, effectData.intensity);
+    }
+  }
+  
+  render() {
+    this.frame++;
+    const ctx = this.ctx;
+    const cx = this.w / 2;
+    const cy = this.h / 2;
+    
+    if(this.particles) {
+      this.particles.update();
+      this.particles.draw();
+    }
+    
+    if(this.effect.ring) {
+      ctx.save();
+      const ringType = this.effect.type;
+      const intensity = this.effect.intensity || 1;
+      
+      // 电影级光环效果
+      if(ringType.includes('rainbow')) {
+        for(let i = 0; i < 8; i++) {
+          ctx.beginPath();
+          ctx.strokeStyle = `hsla(${(this.frame * 3 + i * 45) % 360}, 80%, 60%, ${0.6 - i * 0.05})`;
+          ctx.lineWidth = 4 - i * 0.3;
+          ctx.arc(cx, cy, 50 + i * 6 + Math.sin(this.frame * 0.08) * 3, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+      } else if(ringType.includes('fire') || ringType.includes('dragon') || ringType.includes('hell')) {
+        // 火焰环
+        for(let i = 0; i < 12; i++) {
+          const angle = (this.frame * 0.03 + i * Math.PI / 6);
+          const r = 55 + Math.sin(this.frame * 0.15 + i) * 8;
+          const x = cx + Math.cos(angle) * r;
+          const y = cy + Math.sin(angle) * r;
+          
+          ctx.beginPath();
+          ctx.fillStyle = `hsla(${15 + Math.sin(this.frame * 0.2 + i) * 20}, 100%, ${50 + i * 2}%, ${0.8 - i * 0.05})`;
+          ctx.arc(x, y, 8 + Math.sin(this.frame * 0.3 + i) * 4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        
+        // 内部光晕
+        const gradient = ctx.createRadialGradient(cx, cy, 0, cx, cy, 60);
+        gradient.addColorStop(0, 'rgba(255, 100, 0, 0.3)');
+        gradient.addColorStop(1, 'transparent');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, this.w, this.h);
+      } else if(ringType.includes('ice') || ringType.includes('ocean') || ringType.includes('water')) {
+        // 冰霜/海洋环
+        for(let i = 0; i < 16; i++) {
+          const angle = i * Math.PI / 8 + this.frame * 0.02;
+          const r = 55 + Math.sin(this.frame * 0.1 + i * 0.5) * 5;
+          
+          ctx.beginPath();
+          ctx.strokeStyle = `hsla(200, 80%, ${60 + i}%, ${0.7 - i * 0.03})`;
+          ctx.lineWidth = 3;
+          ctx.arc(cx, cy, r, angle, angle + Math.PI / 10);
+          ctx.stroke();
+        }
+        
+        // 冰晶效果
+        for(let i = 0; i < 8; i++) {
+          const angle = i * Math.PI / 4 + this.frame * 0.01;
+          const x = cx + Math.cos(angle) * 50;
+          const y = cy + Math.sin(angle) * 50;
+          ctx.save();
+          ctx.translate(x, y);
+          ctx.rotate(angle);
+          ctx.fillStyle = 'rgba(255,255,255,0.6)';
+          ctx.beginPath();
+          ctx.moveTo(0, -8);
+          ctx.lineTo(3, 0);
+          ctx.lineTo(0, 8);
+          ctx.lineTo(-3, 0);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+        }
+      } else if(ringType.includes('thunder') || ringType.includes('lightning')) {
+        // 雷电环
+        ctx.strokeStyle = '#FFD700';
+        ctx.lineWidth = 3;
+        ctx.shadowColor = '#FFD700';
+        ctx.shadowBlur = 20;
+        
+        for(let i = 0; i < 6; i++) {
+          const startAngle = this.frame * 0.05 + i * Math.PI / 3;
+          const endAngle = startAngle + Math.PI / 6;
+          ctx.beginPath();
+          ctx.arc(cx, cy, 55 + Math.random() * 5, startAngle, endAngle);
+          ctx.stroke();
+        }
+        
+        // 闪电
+        if(this.frame % 10 < 3) {
+          ctx.strokeStyle = '#FFF';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.moveTo(cx - 50, cy - 30);
+          ctx.lineTo(cx - 30, cy);
+          ctx.lineTo(cx - 50, cy + 10);
+          ctx.lineTo(cx - 20, cy + 30);
+          ctx.stroke();
+        }
+      } else if(ringType.includes('star') || ringType.includes('holy') || ringType.includes('gold')) {
+        // 星辰/圣光/黄金环
+        const gradient = ctx.createRadialGradient(cx, cy, 40, cx, cy, 80);
+        gradient.addColorStop(0, 'transparent');
+        gradient.addColorStop(0.5, `${this.effect.color}40`);
+        gradient.addColorStop(1, 'transparent');
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, this.w, this.h);
+        
+        // 光芒
+        for(let i = 0; i < 12; i++) {
+          const angle = i * Math.PI / 6 + this.frame * 0.02;
+          ctx.beginPath();
+          ctx.strokeStyle = this.effect.color;
+          ctx.lineWidth = 2;
+          ctx.globalAlpha = 0.5 + Math.sin(this.frame * 0.1 + i) * 0.3;
+          ctx.moveTo(cx + Math.cos(angle) * 45, cy + Math.sin(angle) * 45);
+          ctx.lineTo(cx + Math.cos(angle) * 70, cy + Math.sin(angle) * 70);
+          ctx.stroke();
+        }
+        ctx.globalAlpha = 1;
+      } else {
+        // 默认光环
+        ctx.strokeStyle = this.effect.color;
+        ctx.lineWidth = 3;
+        ctx.globalAlpha = 0.5 + Math.sin(this.frame * 0.1) * 0.3;
+        ctx.shadowColor = this.effect.color;
+        ctx.shadowBlur = 20;
+        ctx.beginPath();
+        ctx.arc(cx, cy, 55 + Math.sin(this.frame * 0.1) * 5, 0, Math.PI * 2);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.arc(cx, cy, 62 + Math.cos(this.frame * 0.08) * 5, 0, Math.PI * 2);
+        ctx.stroke();
+      }
+      
+      ctx.restore();
+    }
+    
+    if(this.effect.animation) {
+      ctx.save();
+      const animType = this.effect.animation;
+      
+      switch(animType) {
+        case 'blink':
+          ctx.globalAlpha = 0.4 + Math.sin(this.frame * 0.2) * 0.6;
+          break;
+        case 'pulse':
+          const scale = 1 + Math.sin(this.frame * 0.08) * 0.15;
+          ctx.translate(cx, cy);
+          ctx.scale(scale, scale);
+          ctx.translate(-cx, -cy);
+          break;
+        case 'spin':
+          ctx.translate(cx, cy);
+          ctx.rotate(this.frame * 0.03);
+          ctx.translate(-cx, -cy);
+          break;
+        case 'wave':
+          ctx.translate(0, Math.sin(this.frame * 0.08) * 8);
+          break;
+        case 'shake':
+          ctx.translate(Math.sin(this.frame * 0.4) * 4 * intensity, Math.cos(this.frame * 0.4) * 2 * intensity);
+          break;
+        case 'explode':
+          const pulse = Math.sin(this.frame * 0.15) * 0.2;
+          ctx.translate(cx, cy);
+          ctx.scale(1 + pulse, 1 + pulse);
+          ctx.translate(-cx, -cy);
+          break;
+        case 'rainbow_flash':
+          ctx.fillStyle = `hsla(${(this.frame * 2) % 360}, 70%, 50%, 0.15)`;
+          ctx.fillRect(0, 0, this.w, this.h);
+          break;
+        case 'ripple':
+          ctx.strokeStyle = this.effect.color;
+          ctx.lineWidth = 2;
+          for(let i = 0; i < 3; i++) {
+            const r = ((this.frame * 2 + i * 30) % 80);
+            ctx.globalAlpha = 1 - r / 80;
+            ctx.beginPath();
+            ctx.arc(cx, cy, r + 30, 0, Math.PI * 2);
+            ctx.stroke();
+          }
+          break;
+      }
+      ctx.restore();
+    }
+  }
+}
+
+class MovieActionRenderer {
+  constructor(actionData) {
+    this.action = actionData;
+    this.frame = 0;
+  }
+  
+  getTransform() {
+    this.frame++;
+    const anim = this.action.id;
+    let offsetY = 0, rotation = 0, scale = 1, shakeX = 0;
+    
+    // 基础动作
+    if(anim === 'a4') offsetY = -Math.abs(Math.sin(this.frame * 0.12)) * 25;
+    else if(anim === 'a3') { offsetY = Math.sin(this.frame * 0.25) * 4; shakeX = Math.sin(this.frame * 0.5) * 2; }
+    else if(anim === 'a13' || anim === 'a76') rotation = Math.sin(this.frame * 0.15) * 0.4;
+    else if(anim === 'a12') rotation = Math.sin(this.frame * 0.18) * 0.25;
+    else if(anim === 'a11') offsetY = Math.sin(this.frame * 0.2) * 3;
+    else if(anim === 'a15') scale = 1 + Math.abs(Math.sin(this.frame * 0.3)) * 0.08;
+    
+    // 情绪表情
+    else if(anim === 'a22') { scale = 1 + Math.sin(this.frame * 0.25) * 0.08; offsetY = Math.sin(this.frame * 0.2) * 3; }
+    else if(anim === 'a26') { offsetY = Math.sin(this.frame * 0.15) * 3; shakeX = Math.sin(this.frame * 0.3) * 2; }
+    else if(anim === 'a28') { scale = 1 + Math.sin(this.frame * 0.35) * 0.1; rotation = Math.sin(this.frame * 0.2) * 0.1; }
+    else if(anim === 'a29' || anim === 'a30') scale = 1 + Math.sin(this.frame * 0.2) * 0.12;
+    else if(anim === 'a39') { scale = 1 + Math.sin(this.frame * 0.3) * 0.1; offsetY = -Math.abs(Math.sin(this.frame * 0.15)) * 10; }
+    
+    // 特殊动作
+    else if(anim === 'a46' || anim === 'a47') { rotation = Math.sin(this.frame * 0.12) * 0.35; offsetY = Math.sin(this.frame * 0.25) * 8; }
+    else if(anim === 'a49' || anim === 'a50') { offsetY = -Math.abs(Math.sin(this.frame * 0.12)) * 20; scale = 1 + Math.sin(this.frame * 0.2) * 0.15; }
+    else if(anim === 'a51' || anim === 'a52') { offsetY = -Math.abs(Math.sin(this.frame * 0.15)) * 15; scale = 1 + Math.abs(Math.sin(this.frame * 0.2)) * 0.12; }
+    else if(anim === 'a60' || anim === 'a61') { scale = 1 + Math.sin(this.frame * 0.15) * 0.2; rotation = Math.sin(this.frame * 0.1) * 0.3; }
+    else if(anim === 'a67') offsetY = -15 - Math.sin(this.frame * 0.08) * 8;
+    else if(anim === 'a68') { offsetY = Math.sin(this.frame * 0.15) * 10; rotation = Math.sin(this.frame * 0.12) * 0.25; }
+    else if(anim === 'a71' || anim === 'a72') rotation = this.frame * 0.15;
+    else if(anim === 'a63' || anim === 'a74') { shakeX = Math.sin(this.frame * 0.5) * 8; scale = 1 + Math.abs(Math.sin(this.frame * 0.3)) * 0.1; }
+    
+    return { offsetY, rotation, scale, shakeX };
+  }
+}
+
+class MovieEquipmentRenderer {
+  constructor(ctx, equipment, frame) {
+    this.ctx = ctx;
+    this.equipment = equipment;
+    this.frame = frame;
+  }
+  
+  render() {
+    const ctx = this.ctx;
+    const equip = this.equipment;
+    if(!equip) return;
+    
+    ctx.save();
+    const slot = equip.slot;
+    const color = equip.color;
+    
+    // 发光效果
+    ctx.shadowColor = color;
+    ctx.shadowBlur = 15;
+    
+    if(slot === 'weapon') {
+      ctx.fillStyle = color;
+      ctx.font = '24px Arial';
+      ctx.fillText(equip.icon, 55, 15);
+    } else if(slot === 'armor') {
+      ctx.globalAlpha = 0.4;
+      ctx.fillStyle = color;
+      ctx.fillRect(-20, -5, 80, 55);
+      ctx.globalAlpha = 1;
+      // 护甲纹理
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 2;
+      for(let i = 0; i < 4; i++) {
+        ctx.beginPath();
+        ctx.moveTo(-15 + i * 18, 0);
+        ctx.lineTo(-15 + i * 18, 45);
+        ctx.stroke();
+      }
+    } else if(slot === 'helmet') {
+      ctx.font = '22px Arial';
+      ctx.fillText(equip.icon, 10, -40);
+    } else if(slot === 'accessory') {
+      ctx.fillStyle = color;
+      ctx.globalAlpha = 0.6 + Math.sin(this.frame * 0.1) * 0.4;
+      ctx.beginPath();
+      ctx.arc(55, 5, 8, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(55, -5, 6, 0, Math.PI * 2);
+      ctx.fill();
+    } else if(slot === 'special') {
+      // 翅膀动画
+      if(equip.icon.includes('🪽') || equip.icon.includes('🦇') || equip.icon.includes('🌈')) {
+        const wingFlap = Math.sin(this.frame * 0.1) * 0.3;
+        ctx.fillStyle = color;
+        ctx.globalAlpha = 0.8;
+        
+        // 左翅膀
+        ctx.save();
+        ctx.translate(-25, 10);
+        ctx.rotate(-0.5 + wingFlap);
+        ctx.beginPath();
+        ctx.ellipse(0, 0, 30, 18, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+        
+        // 右翅膀
+        ctx.save();
+        ctx.translate(65, 10);
+        ctx.rotate(0.5 - wingFlap);
+        ctx.beginPath();
+        ctx.ellipse(0, 0, 30, 18, 0, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      } else {
+        // 光环效果
+        ctx.strokeStyle = color;
+        ctx.lineWidth = 4;
+        ctx.globalAlpha = 0.6 + Math.sin(this.frame * 0.1) * 0.3;
+        ctx.beginPath();
+        ctx.ellipse(20, -55, 35, 12, 0, 0, Math.PI * 2);
+        ctx.stroke();
+        
+        // 光芒
+        ctx.globalAlpha = 0.4;
+        for(let i = 0; i < 8; i++) {
+          const angle = i * Math.PI / 4 + this.frame * 0.02;
+          ctx.beginPath();
+          ctx.moveTo(20 + Math.cos(angle) * 35, -55 + Math.sin(angle) * 12);
+          ctx.lineTo(20 + Math.cos(angle) * 50, -55 + Math.sin(angle) * 18);
+          ctx.stroke();
+        }
+      }
+    }
+    
+    ctx.restore();
+  }
+}
+// ==================== 电影级宠物绘图函数 ====================
+function drawPet(container, student, isCaptain) {
+  container.innerHTML = '';
+  
+  // 获取装备和特效数据
+  const effectId = appState.equippedEffects[student.id];
+  const actionId = appState.equippedActions[student.id] || 'a1';
+  const gear = appState.equippedGear[student.id] || {};
+  const effect = effectId ? EFFECTS_DATA.find(e => e.id === effectId) : null;
+  const action = ACTIONS_DATA.find(a => a.id === actionId) || ACTIONS_DATA[0];
+  const isUltimate = student.isUltimate || appState.ultimateForms[student.id];
+  const lvl = student.level;  // 统一在此处声明
+  
+  // 如果有AI生成的图片，显示AI图片+动态效果+装备特效
+  if (student.aiImage) {
+    const wrapper = document.createElement('div');
+    wrapper.style.cssText = `
+      width:100%; height:100%; 
+      position:absolute; top:0; left:0; right:0; bottom:0;
+      overflow:hidden; border-radius:10px;
+    `;
+    
+    // AI图片 - 完全铺满容器
+    const img = document.createElement('img');
+    img.src = student.aiImage;
+    img.className = 'ai-pet-image';
+    img.style.cssText = `
+      width:100%; height:100%; object-fit:cover; border-radius:10px;
+      filter: drop-shadow(0 0 15px rgba(102,126,234,0.5));
+    `;
+    img.alt = student.name;
+    wrapper.appendChild(img);
+    
+    // 表情动画Canvas层 - 绘制眼睛、嘴巴、脸红
+    const expressionCanvas = document.createElement('canvas');
+    expressionCanvas.style.cssText = 'position:absolute; top:0; left:0; width:100%; height:100%; z-index:5; pointer-events:none; border-radius:10px;';
+    wrapper.appendChild(expressionCanvas);
+    
+    // 图片加载后初始化表情动画
+    img.onload = function() {
+      const rect = wrapper.getBoundingClientRect();
+      expressionCanvas.width = rect.width;
+      expressionCanvas.height = rect.height;
+      
+      const ctx = expressionCanvas.getContext('2d');
+      const w = rect.width;
+      const h = rect.height;
+      
+      // 从图片采样获取肤色（用于眼皮颜色）
+      const tempCanvas = document.createElement('canvas');
+      tempCanvas.width = w;
+      tempCanvas.height = h;
+      const tempCtx = tempCanvas.getContext('2d');
+      tempCtx.drawImage(img, 0, 0, w, h);
+      
+      // 获取面部肤色（从额头区域采样）
+      const skinColor = tempCtx.getImageData(w * 0.4, h * 0.2, 1, 1).data;
+      const skinR = skinColor[0], skinG = skinColor[1], skinB = skinColor[2];
+      
+      // 表情状态
+      let blinkProgress = 0;  // 0=睁眼, 1=闭眼
+      let smileProgress = 0;  // 0=正常, 1=微笑
+      let blushOpacity = 0;   // 脸红透明度
+      let shyRotation = 0;    // 害羞旋转角度
+      
+      // 眼睛位置（假设在上方1/3处，左右各一）
+      const eyeY = h * 0.32;
+      const leftEyeX = w * 0.35;
+      const rightEyeX = w * 0.65;
+      const eyeWidth = w * 0.12;
+      const eyeHeight = h * 0.06;
+      
+      // 脸颊位置（眼睛下方两侧）
+      const cheekY = h * 0.45;
+      const leftCheekX = w * 0.25;
+      const rightCheekX = w * 0.75;
+      const cheekSize = w * 0.12;
+      
+      // 嘴巴位置（下方1/3处）
+      const mouthY = h * 0.65;
+      const mouthX = w * 0.5;
+      const mouthWidth = w * 0.15;
+      
+      // 绘制表情
+      function drawExpression() {
+        ctx.clearRect(0, 0, w, h);
+        
+        // 脸红效果（红晕圆形）
+        if (blushOpacity > 0) {
+          ctx.save();
+          ctx.globalAlpha = blushOpacity * 0.6;
+          ctx.fillStyle = '#ff6b6b';
+          
+          // 左脸颊
+          ctx.beginPath();
+          ctx.ellipse(leftCheekX, cheekY, cheekSize, cheekSize * 0.7, 0, 0, Math.PI * 2);
+          ctx.fill();
+          
+          // 右脸颊
+          ctx.beginPath();
+          ctx.ellipse(rightCheekX, cheekY, cheekSize, cheekSize * 0.7, 0, 0, Math.PI * 2);
+          ctx.fill();
+          
+          ctx.restore();
+        }
+        
+        // 眨眼效果（绘制眼皮覆盖眼睛）
+        if (blinkProgress > 0) {
+          ctx.save();
+          ctx.fillStyle = `rgb(${skinR}, ${skinG}, ${skinB})`;
+          
+          // 左眼皮
+          ctx.beginPath();
+          ctx.ellipse(leftEyeX, eyeY, eyeWidth, eyeHeight * blinkProgress, 0, 0, Math.PI * 2);
+          ctx.fill();
+          
+          // 右眼皮
+          ctx.beginPath();
+          ctx.ellipse(rightEyeX, eyeY, eyeWidth, eyeHeight * blinkProgress, 0, 0, Math.PI * 2);
+          ctx.fill();
+          
+          ctx.restore();
+        }
+        
+        // 微笑效果（嘴角上扬曲线）
+        if (smileProgress > 0) {
+          ctx.save();
+          ctx.strokeStyle = `rgba(200, 100, 100, ${smileProgress * 0.8})`;
+          ctx.lineWidth = 2;
+          ctx.lineCap = 'round';
+          
+          // 绘制微笑曲线
+          const smileAmount = smileProgress * mouthWidth * 0.3;
+          
+          ctx.beginPath();
+          ctx.moveTo(mouthX - mouthWidth, mouthY);
+          ctx.quadraticCurveTo(mouthX, mouthY + smileAmount, mouthX + mouthWidth, mouthY);
+          ctx.stroke();
+          
+          ctx.restore();
+        }
+        
+        requestAnimationFrame(drawExpression);
+      }
+      
+      drawExpression();
+      
+      // 眨眼动画
+      let isBlinking = false;
+      function doBlink() {
+        if (isBlinking) return;
+        isBlinking = true;
+        
+        // 闭眼动画 (0 -> 1)
+        const closeEye = () => {
+          blinkProgress += 0.3;
+          if (blinkProgress < 1) {
+            requestAnimationFrame(closeEye);
+          } else {
+            // 睁眼动画 (1 -> 0)
+            setTimeout(() => {
+              const openEye = () => {
+                blinkProgress -= 0.3;
+                if (blinkProgress > 0) {
+                  requestAnimationFrame(openEye);
+                } else {
+                  blinkProgress = 0;
+                  isBlinking = false;
+                }
+              };
+              openEye();
+            }, 80);
+          }
+        };
+        closeEye();
+        
+        // 随机3-6秒后再次眨眼
+        setTimeout(doBlink, 3000 + Math.random() * 3000);
+      }
+      setTimeout(doBlink, 500 + Math.random() * 1500);
+      
+      // 微笑动画
+      let isSmiling = false;
+      function doSmile() {
+        if (isSmiling) return;
+        isSmiling = true;
+        
+        // 微笑展开
+        const smile = () => {
+          smileProgress += 0.1;
+          if (smileProgress < 1) {
+            requestAnimationFrame(smile);
+          } else {
+            // 保持微笑一会儿
+            setTimeout(() => {
+              // 收回微笑
+              const unsmile = () => {
+                smileProgress -= 0.08;
+                if (smileProgress > 0) {
+                  requestAnimationFrame(unsmile);
+                } else {
+                  smileProgress = 0;
+                  isSmiling = false;
+                }
+              };
+              unsmile();
+            }, 800);
+          }
+        };
+        smile();
+        
+        // 随机5-10秒后再次微笑
+        setTimeout(doSmile, 5000 + Math.random() * 5000);
+      }
+      setTimeout(doSmile, 2000 + Math.random() * 3000);
+      
+      // 脸红动画
+      let isBlushing = false;
+      function doBlush() {
+        if (isBlushing) return;
+        isBlushing = true;
+        
+        // 脸红出现
+        const blush = () => {
+          blushOpacity += 0.05;
+          if (blushOpacity < 1) {
+            requestAnimationFrame(blush);
+          } else {
+            // 保持脸红一会儿
+            setTimeout(() => {
+              // 脸红消退
+              const unblush = () => {
+                blushOpacity -= 0.03;
+                if (blushOpacity > 0) {
+                  requestAnimationFrame(unblush);
+                } else {
+                  blushOpacity = 0;
+                  isBlushing = false;
+                }
+              };
+              unblush();
+            }, 1500);
+          }
+        };
+        blush();
+        
+        // 随机8-15秒后再次脸红
+        setTimeout(doBlush, 8000 + Math.random() * 7000);
+      }
+      setTimeout(doBlush, 4000 + Math.random() * 4000);
+      
+      // 害羞动画（偶尔触发）
+      function doShy() {
+        const wrapper = expressionCanvas.parentElement;
+        wrapper.style.transition = 'transform 0.3s ease';
+        wrapper.style.transform = 'scale(0.97) rotate(-3deg)';
+        
+        // 同时脸红
+        if (!isBlushing) {
+          blushOpacity = 0.5;
+        }
+        
+        setTimeout(() => {
+          wrapper.style.transform = 'scale(1) rotate(0deg)';
+          blushOpacity = 0;
+        }, 1200);
+      }
+      setInterval(doShy, 15000 + Math.random() * 10000);
+    };
+    
+    // 创建Canvas叠加层用于特效和装备
+    const effectCanvas = document.createElement('canvas');
+    effectCanvas.width = container.clientWidth || 100;
+    effectCanvas.height = container.clientHeight || 100;
+    effectCanvas.style.cssText = 'position:absolute; top:0; left:0; width:100%; height:100%; z-index:2; pointer-events:none;';
+    wrapper.appendChild(effectCanvas);
+    
+    // 终极形态光环
+    if (isUltimate || lvl >= 8) {
+      const ultimateRing = document.createElement('div');
+      ultimateRing.style.cssText = `
+        position:absolute; width:100%; height:100%;
+        border: 2px solid transparent;
+        border-radius: 50%;
+        background: linear-gradient(45deg, transparent, rgba(241,196,15,0.4), transparent) border-box;
+        animation: ultimateRotate 3s linear infinite;
+        z-index:0;
+      `;
+      wrapper.appendChild(ultimateRing);
+      
+      // 终极光粒子
+      for(let i = 0; i < 6; i++) {
+        const particle = document.createElement('div');
+        particle.style.cssText = `
+          position:absolute; width:3px; height:3px; background:#f1c40f;
+          border-radius:50%; box-shadow: 0 0 8px #f1c40f;
+          top:${20 + Math.random() * 60}%; left:${20 + Math.random() * 60}%;
+          animation: particleFloat ${1.5 + Math.random()}s ease-in-out infinite;
+        `;
+        wrapper.appendChild(particle);
+      }
+      
+      // 终极发光效果
+      img.style.filter = `drop-shadow(0 0 25px rgba(241,196,15,0.8)) brightness(1.2)`;
+      img.style.border = `2px solid rgba(241, 196, 15, 0.8)`;
+    }
+    
+    // 技能特效叠加
+    if (effect) {
+      const effectOverlay = document.createElement('div');
+      effectOverlay.style.cssText = `
+        position:absolute; top:0; left:0; width:100%; height:100%;
+        background: radial-gradient(circle, ${effect.color}40 0%, transparent 70%);
+        animation: effectOverlay 1.5s ease-in-out infinite;
+        z-index:1;
+        pointer-events:none;
+      `;
+      wrapper.appendChild(effectOverlay);
+    }
+    
+    // 科技感扫描线效果
+    const scanLine = document.createElement('div');
+    scanLine.style.cssText = `
+      position:absolute; top:0; left:0; width:100%; height:100%;
+      background: linear-gradient(180deg, transparent 0%, rgba(0,255,255,0.15) 50%, transparent 100%);
+      animation: aiScan 2s linear infinite;
+      pointer-events: none; z-index:3;
+    `;
+    
+    // 等级发光边框
+    if (lvl >= 3 && !isUltimate) {
+      img.style.boxShadow = `0 0 ${8 + lvl * 2}px rgba(52, 152, 219, ${0.3 + lvl * 0.05})`;
+    }
+    if (lvl >= 5 && !isUltimate) {
+      img.style.border = `2px solid rgba(241, 196, 15, ${0.4 + lvl * 0.05})`;
+    }
+    if (lvl >= 7 && !isUltimate) {
+      img.style.filter = `drop-shadow(0 0 15px rgba(241, 196, 15, 0.5)) brightness(1.1)`;
+    }
+    
+    wrapper.appendChild(scanLine);
+    
+    // AI标签
+    const aiLabel = document.createElement('div');
+    aiLabel.style.cssText = `
+      position:absolute; top:2px; right:2px; 
+      background:linear-gradient(135deg,#667eea,#764ba2); 
+      color:#fff; font-size:9px; padding:1px 5px; 
+      border-radius:8px; z-index:10;
+      box-shadow: 0 0 10px rgba(102,126,234,0.5);
+      animation: labelPulse 2s ease-in-out infinite;
+    `;
+    aiLabel.innerText = '🤖';
+    wrapper.appendChild(aiLabel);
+    
+    // 等级标签 - 始终显示
+    const levelBadge = document.createElement('div');
+    levelBadge.style.cssText = `
+      position:absolute; top:2px; left:2px;
+      background: ${isUltimate ? 'linear-gradient(135deg,#f1c40f,#e67e22)' : 'linear-gradient(135deg,#00ffff,#0099cc)'};
+      color:#000; font-size:8px; font-weight:bold; padding:1px 4px;
+      border-radius:5px; z-index:10;
+      box-shadow: 0 0 8px ${isUltimate ? 'rgba(241,196,15,0.5)' : 'rgba(0,255,255,0.5)'};
+    `;
+    levelBadge.innerText = `${isUltimate ? '⭐' : ''}Lv.${lvl}`;
+    wrapper.appendChild(levelBadge);
+    
+    // 装备图标显示 - 与AI宠物联动
+    const gearIcons = Object.values(gear).map(gid => {
+      const g = EQUIPMENT_DATA.find(e => e.id === gid);
+      return g ? g.icon : '';
+    }).filter(icon => icon).join('');
+    
+    if (gearIcons) {
+      const gearBadge = document.createElement('div');
+      gearBadge.style.cssText = `
+        position:absolute; bottom:2px; left:2px;
+        background:rgba(0,0,0,0.7);
+        color:#fff; font-size:10px; padding:1px 4px;
+        border-radius:5px; z-index:10;
+        backdrop-filter: blur(3px);
+        border: 1px solid rgba(255,255,255,0.2);
+      `;
+      gearBadge.innerText = gearIcons;
+      wrapper.appendChild(gearBadge);
+      
+      // 装备光效叠加到AI图片
+      const gearGlow = document.createElement('div');
+      gearGlow.style.cssText = `
+        position:absolute; top:0; left:0; width:100%; height:100%;
+        background: radial-gradient(ellipse at bottom left, rgba(241,196,15,0.2) 0%, transparent 50%);
+        pointer-events:none; z-index:1;
+      `;
+      wrapper.appendChild(gearGlow);
+    }
+    
+    // 特效图标 - 与AI宠物联动
+    if (effect) {
+      const effectBadge = document.createElement('div');
+      effectBadge.style.cssText = `
+        position:absolute; bottom:2px; right:2px;
+        background:${effect.color}90;
+        color:#fff; font-size:10px; padding:1px 5px;
+        border-radius:5px; z-index:10;
+        animation: effectPulse 1s ease-in-out infinite;
+      `;
+      effectBadge.innerText = effect.icon;
+      wrapper.appendChild(effectBadge);
+    }
+    
+    container.appendChild(wrapper);
+    
+    // 渲染特效到Canvas
+    if (effect) {
+      const ctx = effectCanvas.getContext('2d');
+      let frame = 0;
+      const effectRenderer = new MovieEffectRenderer(ctx, effect, effectCanvas.width, effectCanvas.height);
+      
+      function animateEffect() {
+        frame++;
+        ctx.clearRect(0, 0, effectCanvas.width, effectCanvas.height);
+        effectRenderer.frame = frame;
+        effectRenderer.render();
+        requestAnimationFrame(animateEffect);
+      }
+      animateEffect();
+    }
+    
+    return;
+  }
+  
+  const canvas = document.createElement('canvas');
+  canvas.width = container.clientWidth || 120;
+  canvas.height = container.clientHeight || 100;
+  container.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width;
+  const h = canvas.height;
+  const cx = w/2;
+  const cy = h/2 + 12;
+
+  const petData = PET_TYPES[student.petIdx];
+  const color = isCaptain ? '#e74c3c' : petData.color;
+  const sub = isCaptain ? 'ryder' : petData.sub;
+  // lvl 和 isUltimate 已在函数开头声明
+
+  // 获取效果 - effectId, actionId, gear 已在函数开头声明
+  const effect2 = effectId ? EFFECTS_DATA.find(e => e.id === effectId) : null;
+  const action2 = ACTIONS_DATA.find(a => a.id === actionId) || ACTIONS_DATA[0];
+  
+  let effectRenderer = effect2 ? new MovieEffectRenderer(ctx, effect2, w, h) : null;
+  let actionRenderer = new MovieActionRenderer(action2);
+  
+  let frame = 0;
+  function animate() {
+    frame++;
+    ctx.clearRect(0, 0, w, h);
+    
+    // 渲染特效背景
+    if(effectRenderer) effectRenderer.render();
+    
+    const actionTransform = actionRenderer.getTransform();
+    const bounce = Math.sin(frame * 0.08) * 3 + actionTransform.offsetY;
+    const baseShake = lvl > 6 ? Math.sin(frame * 0.15) * 1.5 : 0;
+
+    ctx.save();
+    ctx.translate(cx + actionTransform.shakeX, cy + bounce);
+    if(baseShake) ctx.rotate(baseShake * 0.015);
+    ctx.rotate(actionTransform.rotation);
+    ctx.scale(actionTransform.scale, actionTransform.scale);
+
+    // ==================== 电影级宠物模型 ====================
+    
+    // 终极形态光晕
+    if(isUltimate) {
+      const gradient = ctx.createRadialGradient(20, 0, 0, 20, 0, 80);
+      gradient.addColorStop(0, `${color}60`);
+      gradient.addColorStop(0.5, `${color}30`);
+      gradient.addColorStop(1, 'transparent');
+      ctx.fillStyle = gradient;
+      ctx.fillRect(-60, -60, 160, 120);
+    }
+    
+    // 1. 阴影 (更真实)
+    ctx.fillStyle = 'rgba(0,0,0,0.2)';
+    ctx.beginPath();
+    ctx.ellipse(0, 50, 40, 12, 0, 0, Math.PI*2);
+    ctx.fill();
+    
+    // 2. 后腿
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.ellipse(-15, 40, 12, 18, 0.2, 0, Math.PI*2);
+    ctx.ellipse(15, 40, 12, 18, -0.2, 0, Math.PI*2);
+    ctx.fill();
+    
+    // 3. 尾巴 (动态)
+    ctx.fillStyle = color;
+    ctx.save();
+    ctx.translate(-35, 15);
+    ctx.rotate(Math.sin(frame * 0.1) * 0.3 - 0.5);
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 8, 20, 0, 0, Math.PI*2);
+    ctx.fill();
+    // 尾巴尖
+    if(lvl >= 3 || isUltimate) {
+      ctx.fillStyle = '#fff';
+      ctx.beginPath();
+      ctx.ellipse(0, -15, 5, 8, 0, 0, Math.PI*2);
+      ctx.fill();
+    }
+    ctx.restore();
+    
+    // 4. 身体 (电影级渐变)
+    const bodyGrad = ctx.createRadialGradient(-10, 15, 0, 20, 25, 45);
+    bodyGrad.addColorStop(0, lightenColor(color, 30));
+    bodyGrad.addColorStop(0.5, color);
+    bodyGrad.addColorStop(1, darkenColor(color, 20));
+    ctx.fillStyle = bodyGrad;
+    ctx.beginPath();
+    ctx.ellipse(0, 20, 42, 32, 0, 0, Math.PI*2);
+    ctx.fill();
+    
+    // 身体高光
+    ctx.fillStyle = 'rgba(255,255,255,0.15)';
+    ctx.beginPath();
+    ctx.ellipse(-8, 5, 25, 15, -0.3, 0, Math.PI*2);
+    ctx.fill();
+    
+    // 5. 前腿
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.ellipse(-18, 42, 10, 14, 0.1, 0, Math.PI*2);
+    ctx.ellipse(18, 42, 10, 14, -0.1, 0, Math.PI*2);
+    ctx.fill();
+    
+    // 6. 头部 (电影级渐变)
+    const headGrad = ctx.createRadialGradient(25, -20, 0, 20, -5, 40);
+    headGrad.addColorStop(0, lightenColor(color, 40));
+    headGrad.addColorStop(0.4, lightenColor(color, 15));
+    headGrad.addColorStop(1, color);
+    ctx.fillStyle = headGrad;
+    ctx.beginPath();
+    ctx.arc(20, -5, 38, 0, Math.PI*2);
+    ctx.fill();
+    
+    // 头部高光
+    ctx.fillStyle = 'rgba(255,255,255,0.2)';
+    ctx.beginPath();
+    ctx.ellipse(12, -20, 18, 12, -0.4, 0, Math.PI*2);
+    ctx.fill();
+    
+    // 7. 耳朵 (动态)
+    ctx.fillStyle = color;
+    // 左耳
+    ctx.save();
+    ctx.translate(5, -30);
+    ctx.rotate(0.3 + Math.sin(frame * 0.08) * 0.1);
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 13, 22, 0.2, 0, Math.PI*2);
+    ctx.fill();
+    // 内耳
+    ctx.fillStyle = '#ffb6c1';
+    ctx.beginPath();
+    ctx.ellipse(0, 2, 7, 12, 0.2, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+    
+    // 右耳
+    ctx.fillStyle = color;
+    ctx.save();
+    ctx.translate(35, -30);
+    ctx.rotate(-0.3 - Math.sin(frame * 0.08) * 0.1);
+    ctx.beginPath();
+    ctx.ellipse(0, 0, 13, 22, -0.2, 0, Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle = '#ffb6c1';
+    ctx.beginPath();
+    ctx.ellipse(0, 2, 7, 12, -0.2, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+    
+    // 8. 脸部花纹 (品种特征)
+    if(sub === 'chase' || isCaptain) {
+      // 阿奇/莱德：警犬花纹
+      ctx.fillStyle = darkenColor(color, 30);
+      ctx.beginPath();
+      ctx.ellipse(20, -5, 15, 20, 0, 0, Math.PI*2);
+      ctx.fill();
+    } else if(sub === 'marshall') {
+      // 毛毛：大麦町斑点
+      ctx.fillStyle = '#fff';
+      for(let i = 0; i < 5; i++) {
+        ctx.beginPath();
+        ctx.arc(10 + Math.cos(i * 1.2) * 12, -10 + Math.sin(i * 1.5) * 8, 5 + Math.random() * 3, 0, Math.PI*2);
+        ctx.fill();
+      }
+    } else if(sub === 'skye') {
+      // 天天：可爱花纹
+      ctx.fillStyle = '#ffb6c1';
+      ctx.beginPath();
+      ctx.arc(15, -12, 8, 0, Math.PI*2);
+      ctx.arc(30, -10, 6, 0, Math.PI*2);
+      ctx.fill();
+    }
+    
+    // 9. 眼睛 (电影级动画)
+    const eyeAction = action.id;
+    ctx.fillStyle = '#fff';
+    ctx.beginPath();
+    ctx.ellipse(28, -8, 9, 10, 0, 0, Math.PI*2);
+    ctx.ellipse(42, -8, 9, 10, 0, 0, Math.PI*2);
+    ctx.fill();
+    
+    // 瞳孔
+    ctx.fillStyle = '#2c3e50';
+    if(eyeAction === 'a22') { // 大笑 - 眯眼
+      ctx.strokeStyle = '#2c3e50';
+      ctx.lineWidth = 4;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.arc(28, -8, 7, 0.3, Math.PI - 0.3);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(42, -8, 7, 0.3, Math.PI - 0.3);
+      ctx.stroke();
+    } else if(eyeAction === 'a25' || eyeAction === 'a26') { // 悲伤/哭泣
+      ctx.beginPath();
+      ctx.ellipse(28, -6, 5, 6, 0, 0, Math.PI*2);
+      ctx.ellipse(42, -6, 5, 6, 0, 0, Math.PI*2);
+      ctx.fill();
+      // 眼泪
+      ctx.fillStyle = '#3498db';
+      const tearY = Math.sin(frame * 0.1) * 3;
+      ctx.beginPath();
+      ctx.ellipse(28, 5 + tearY, 3, 5, 0, 0, Math.PI*2);
+      ctx.fill();
+      ctx.beginPath();
+      ctx.ellipse(42, 5 + tearY, 3, 5, 0, 0, Math.PI*2);
+      ctx.fill();
+    } else if(eyeAction === 'a27' || eyeAction === 'a28') { // 愤怒
+      ctx.beginPath();
+      ctx.ellipse(28, -6, 6, 7, 0, 0, Math.PI*2);
+      ctx.ellipse(42, -6, 6, 7, 0, 0, Math.PI*2);
+      ctx.fill();
+      // 愤怒眉毛
+      ctx.strokeStyle = darkenColor(color, 40);
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(20, -18);
+      ctx.lineTo(36, -15);
+      ctx.moveTo(50, -18);
+      ctx.lineTo(34, -15);
+      ctx.stroke();
+    } else if(eyeAction === 'a29' || eyeAction === 'a30') { // 惊讶
+      ctx.beginPath();
+      ctx.arc(28, -8, 7, 0, Math.PI*2);
+      ctx.arc(42, -8, 7, 0, Math.PI*2);
+      ctx.fill();
+    } else if(eyeAction === 'a38') { // 困倦
+      ctx.strokeStyle = '#2c3e50';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(21, -8);
+      ctx.quadraticCurveTo(28, -4, 35, -8);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(35, -8);
+      ctx.quadraticCurveTo(42, -4, 49, -8);
+      ctx.stroke();
+    } else {
+      // 正常眼睛
+      ctx.beginPath();
+      ctx.arc(30, -8, 5, 0, Math.PI*2);
+      ctx.arc(44, -8, 5, 0, Math.PI*2);
+      ctx.fill();
+      
+      // 高光
+      ctx.fillStyle = '#fff';
+      ctx.beginPath();
+      ctx.arc(32, -10, 2, 0, Math.PI*2);
+      ctx.arc(46, -10, 2, 0, Math.PI*2);
+      ctx.fill();
+      
+      // 眼睛跟随动作
+      if(eyeAction === 'a11' || eyeAction === 'a9') { // 点头/抬头
+        ctx.fillStyle = '#2c3e50';
+        ctx.beginPath();
+        ctx.arc(30, -6, 5, 0, Math.PI*2);
+        ctx.arc(44, -6, 5, 0, Math.PI*2);
+        ctx.fill();
+      }
+    }
+    
+    // 10. 鼻子
+    ctx.fillStyle = '#2c3e50';
+    ctx.beginPath();
+    ctx.ellipse(50, 2, 7, 5, 0, 0, Math.PI*2);
+    ctx.fill();
+    // 鼻子高光
+    ctx.fillStyle = 'rgba(255,255,255,0.3)';
+    ctx.beginPath();
+    ctx.ellipse(48, 0, 3, 2, -0.3, 0, Math.PI*2);
+    ctx.fill();
+    
+    // 11. 嘴巴
+    ctx.strokeStyle = '#2c3e50';
+    ctx.lineWidth = 2.5;
+    ctx.lineCap = 'round';
+    
+    const mouthAction = action.id;
+    if(mouthAction === 'a22') { // 大笑
+      ctx.beginPath();
+      ctx.arc(45, 8, 10, 0.2, Math.PI - 0.2);
+      ctx.stroke();
+      // 舌头
+      ctx.fillStyle = '#e74c3c';
+      ctx.beginPath();
+      ctx.ellipse(45, 15, 6, 4, 0, 0, Math.PI*2);
+      ctx.fill();
+    } else if(mouthAction === 'a25' || mouthAction === 'a26') { // 悲伤
+      ctx.beginPath();
+      ctx.arc(45, 15, 8, Math.PI + 0.3, -0.3);
+      ctx.stroke();
+    } else if(mouthAction === 'a27' || mouthAction === 'a28') { // 愤怒
+      ctx.beginPath();
+      ctx.moveTo(38, 10);
+      ctx.lineTo(52, 10);
+      ctx.stroke();
+    } else if(mouthAction === 'a29' || mouthAction === 'a30') { // 惊讶
+      ctx.beginPath();
+      ctx.arc(45, 10, 6, 0, Math.PI*2);
+      ctx.stroke();
+    } else {
+      // 微笑
+      ctx.beginPath();
+      ctx.arc(45, 5, 7, 0.2, Math.PI - 0.2);
+      ctx.stroke();
+    }
+    
+    // 12. 胡须
+    if(sub !== 'skye') {
+      ctx.strokeStyle = darkenColor(color, 30);
+      ctx.lineWidth = 1.5;
+      for(let i = 0; i < 3; i++) {
+        ctx.beginPath();
+        ctx.moveTo(55, 5 + i * 4);
+        ctx.lineTo(75, 3 + i * 5);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(55, 5 + i * 4);
+        ctx.lineTo(75, 7 + i * 5);
+        ctx.stroke();
+      }
+    }
+    
+    // 13. 装备渲染
+    if(lvl >= 1 || isCaptain) {
+      // 项圈
+      ctx.strokeStyle = '#f1c40f';
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      ctx.arc(20, 15, 35, 0.3, Math.PI - 0.3);
+      ctx.stroke();
+      
+      // 徽章
+      ctx.fillStyle = '#f1c40f';
+      ctx.beginPath();
+      ctx.arc(20, 45, 8, 0, Math.PI*2);
+      ctx.fill();
+      ctx.fillStyle = darkenColor('#f1c40f', 20);
+      ctx.font = 'bold 10px Arial';
+      ctx.textAlign = 'center';
+      ctx.fillText('★', 20, 49);
+    }
+    
+    if(lvl >= 3 || isCaptain) {
+      // 头盔/帽子
+      let hatColor = '#f1c40f';
+      if(sub === 'chase' || isCaptain) hatColor = '#2c3e50';
+      else if(sub === 'marshall') hatColor = '#e74c3c';
+      else if(sub === 'skye') hatColor = '#ff69b4';
+      
+      ctx.fillStyle = hatColor;
+      ctx.beginPath();
+      ctx.arc(20, -25, 40, Math.PI, 0);
+      ctx.fill();
+      
+      // 帽檐
+      if(sub === 'chase' || isCaptain) {
+        ctx.fillStyle = darkenColor(hatColor, 20);
+        ctx.fillRect(-15, -25, 70, 6);
+        // 警徽
+        ctx.fillStyle = '#f1c40f';
+        ctx.beginPath();
+        ctx.moveTo(20, -38);
+        ctx.lineTo(25, -28);
+        ctx.lineTo(35, -28);
+        ctx.lineTo(27, -22);
+        ctx.lineTo(30, -12);
+        ctx.lineTo(20, -18);
+        ctx.lineTo(10, -12);
+        ctx.lineTo(13, -22);
+        ctx.lineTo(5, -28);
+        ctx.lineTo(15, -28);
+        ctx.closePath();
+        ctx.fill();
+      } else if(sub === 'marshall') {
+        // 消防员头盔
+        ctx.fillStyle = '#f1c40f';
+        ctx.fillRect(5, -35, 30, 5);
+      } else if(sub === 'skye') {
+        // 飞行员帽
+        ctx.fillStyle = '#fff';
+        ctx.beginPath();
+        ctx.arc(20, -35, 15, 0, Math.PI*2);
+        ctx.fill();
+        ctx.fillStyle = '#ff69b4';
+        ctx.beginPath();
+        ctx.arc(20, -40, 8, 0, Math.PI*2);
+        ctx.fill();
+      }
+    }
+    
+    if(lvl >= 5 || isUltimate) {
+      // 大型装备
+      if(sub === 'skye') {
+        // 翅膀
+        ctx.fillStyle = 'rgba(255,255,255,0.8)';
+        ctx.beginPath();
+        ctx.ellipse(-25, 15, 25, 15, 0.5 + Math.sin(frame * 0.08) * 0.2, 0, Math.PI*2);
+        ctx.fill();
+        ctx.beginPath();
+        ctx.ellipse(65, 15, 25, 15, -0.5 - Math.sin(frame * 0.08) * 0.2, 0, Math.PI*2);
+        ctx.fill();
+      } else if(sub === 'marshall') {
+        // 水炮
+        ctx.fillStyle = '#95a5a6';
+        ctx.fillRect(55, -15, 25, 12);
+        ctx.fillStyle = '#3498db';
+        if(Math.random() > 0.7) {
+          ctx.beginPath();
+          ctx.arc(80, -10, 3 + Math.random() * 5, 0, Math.PI*2);
+          ctx.fill();
+        }
+      } else if(sub === 'rubble') {
+        // 钻头
+        ctx.fillStyle = '#f39c12';
+        ctx.beginPath();
+        ctx.moveTo(55, 0);
+        ctx.lineTo(75, 10);
+        ctx.lineTo(55, 20);
+        ctx.closePath();
+        ctx.fill();
+      } else {
+        // 背包
+        ctx.fillStyle = '#95a5a6';
+        ctx.fillRect(-50, -5, 25, 45);
+        ctx.fillStyle = darkenColor('#95a5a6', 20);
+        ctx.fillRect(-50, 5, 25, 10);
+        ctx.fillRect(-50, 25, 25, 10);
+      }
+    }
+    
+    if(lvl >= 7 || isUltimate) {
+      // 光环
+      ctx.strokeStyle = isUltimate ? '#f1c40f' : color;
+      ctx.lineWidth = 3;
+      ctx.setLineDash([8, 4]);
+      ctx.globalAlpha = 0.7;
+      ctx.beginPath();
+      ctx.arc(20, 0, 70, 0, Math.PI*2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.globalAlpha = 1;
+      
+      // 徽章
+      ctx.fillStyle = '#f1c40f';
+      ctx.shadowColor = '#f1c40f';
+      ctx.shadowBlur = 15;
+      ctx.beginPath();
+      ctx.moveTo(30, 25);
+      ctx.lineTo(35, 40); ctx.lineTo(52, 40);
+      ctx.lineTo(40, 52); ctx.lineTo(45, 70);
+      ctx.lineTo(30, 58); ctx.lineTo(15, 70);
+      ctx.lineTo(20, 52); ctx.lineTo(8, 40);
+      ctx.lineTo(25, 40);
+      ctx.closePath();
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+    
+    // 渲染装备
+    Object.values(gear).forEach(equipId => {
+      const equip = EQUIPMENT_DATA.find(e => e.id === equipId);
+      if(equip) {
+        const equipRenderer = new MovieEquipmentRenderer(ctx, equip, frame);
+        equipRenderer.render();
+      }
+    });
+    
+    // 终极形态特效
+    if(isUltimate) {
+      ctx.save();
+      ctx.globalAlpha = 0.3 + Math.sin(frame * 0.1) * 0.2;
+      const grad = ctx.createRadialGradient(20, 10, 0, 20, 10, 80);
+      grad.addColorStop(0, color);
+      grad.addColorStop(1, 'transparent');
+      ctx.fillStyle = grad;
+      ctx.fillRect(-60, -60, 160, 140);
+      ctx.restore();
+    }
+
+    ctx.restore();
+    requestAnimationFrame(animate);
+  }
+  animate();
+}
+
+// 颜色辅助函数
+function lightenColor(color, percent) {
+  const num = parseInt(color.replace('#', ''), 16);
+  const amt = Math.round(2.55 * percent);
+  const R = Math.min(255, (num >> 16) + amt);
+  const G = Math.min(255, ((num >> 8) & 0x00FF) + amt);
+  const B = Math.min(255, (num & 0x0000FF) + amt);
+  return `#${(0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1)}`;
+}
+
+function darkenColor(color, percent) {
+  const num = parseInt(color.replace('#', ''), 16);
+  const amt = Math.round(2.55 * percent);
+  const R = Math.max(0, (num >> 16) - amt);
+  const G = Math.max(0, ((num >> 8) & 0x00FF) - amt);
+  const B = Math.max(0, (num & 0x0000FF) - amt);
+  return `#${(0x1000000 + R * 0x10000 + G * 0x100 + B).toString(16).slice(1)}`;
+}
+
+function drawCaptain() {
+  const container = document.getElementById('captain-preview');
+  if(container) {
+    // 如果有AI头像，显示AI头像
+    if (appState.captainAIImage) {
+      container.innerHTML = '';
+      const wrapper = document.createElement('div');
+      wrapper.style.cssText = `
+        width:100%; height:100%; display:flex; align-items:center; justify-content:center;
+        position:relative; overflow:hidden; border-radius:50%;
+      `;
+      
+      const img = document.createElement('img');
+      img.src = appState.captainAIImage;
+      img.style.cssText = `
+        width:100%; height:100%; object-fit:cover; border-radius:50%;
+        filter: drop-shadow(0 0 20px rgba(102,126,234,0.6));
+        animation: captainFloat 3s ease-in-out infinite;
+      `;
+      
+      // 添加光环效果
+      const ring = document.createElement('div');
+      ring.style.cssText = `
+        position:absolute; width:100%; height:100%;
+        border: 3px solid rgba(52,152,219,0.6);
+        border-radius:50%;
+        animation: captainRing 2s linear infinite;
+      `;
+      
+      wrapper.appendChild(img);
+      wrapper.appendChild(ring);
+      container.appendChild(wrapper);
+      
+      // 添加表情动画层
+      const expressionLayer = document.createElement('div');
+      expressionLayer.style.cssText = `
+        position:absolute; top:0; left:0; width:100%; height:100%;
+        pointer-events:none; z-index:5; border-radius:50%;
+      `;
+      
+      // 眨眼效果
+      const eyeLayer = document.createElement('div');
+      eyeLayer.style.cssText = `
+        position:absolute; top:30%; left:25%; width:50%; height:15%;
+        background: linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.7) 45%, rgba(0,0,0,0.7) 55%, transparent 60%);
+        border-radius: 50%;
+        opacity: 0;
+        animation: eyeBlink 4s ease-in-out infinite;
+      `;
+      expressionLayer.appendChild(eyeLayer);
+      
+      wrapper.appendChild(expressionLayer);
+    } else {
+      drawPet(container, {petIdx:0, level:8, hasItem:true, id:'captain', isUltimate:true}, true);
+    }
+  }
+}
+// ==================== 业务逻辑 ====================
+
+function renderGrid() {
+  const grid = document.getElementById('petGrid');
+  grid.innerHTML = '';
+  const list = appState.students.slice(0, 50);  // 显示50个宠物
+
+  list.forEach(s => {
+    const card = document.createElement('div');
+    card.className = `pet-card ${appState.selectedId === s.id ? 'selected' : ''}`;
+    if(s.group) card.classList.add(`team-${s.group}`);
+    if(s.isUltimate || appState.ultimateForms[s.id]) card.style.boxShadow = '0 0 40px rgba(241, 196, 15, 0.5)';
+    card.onclick = () => select(s.id, card);
+
+    const canvasDiv = document.createElement('div');
+    canvasDiv.className = 'canvas-container';
+    card.appendChild(canvasDiv);
+
+    const info = document.createElement('div');
+    info.className = 'info-area';
+    const pData = PET_TYPES[s.petIdx];
+    const isUlt = s.isUltimate || appState.ultimateForms[s.id];
+    info.innerHTML = `
+      <div class="level-badge" style="${isUlt ? 'background:linear-gradient(135deg,#f1c40f,#e67e22);box-shadow:0 0 20px rgba(241,196,15,0.8);' : ''}">${isUlt ? '⭐' : ''}Lv.${s.level}</div>
+      <div class="pet-name">${s.name}</div>
+      <div class="pet-role">${pData.role} • ${pData.name}${isUlt ? ' ★' : ''}</div>
+      <div class="xp-bar"><div class="xp-fill" style="width:${(s.xp/s.maxXp)*100}%"></div></div>
+    `;
+    card.appendChild(info);
+    grid.appendChild(card);
+
+    setTimeout(() => drawPet(canvasDiv, s, false), 10);
+  });
+}
+
+function select(id, card) {
+  appState.selectedId = id;
+  document.querySelectorAll('.pet-card').forEach(c=>c.classList.remove('selected'));
+  if(card) card.classList.add('selected');
+  
+  const s = appState.students.find(x=>x.id===id);
+  const panel = document.getElementById('selPanel');
+  panel.style.display = 'block';
+  document.getElementById('selName').innerText = s.name;
+  const gMap = {red:'🔴天天队',blue:'🔵阿奇队',yellow:'🟡小砾队',green:'🟢灰灰队',purple:'🟣路马队'};
+  document.getElementById('selGroup').innerText = s.group ? gMap[s.group] : '未分组';
+  document.getElementById('selPoints').innerText = s.points;
+  
+  const effectId = appState.equippedEffects[id];
+  const actionId = appState.equippedActions[id] || 'a1';
+  const gear = appState.equippedGear[id] || {};
+  
+  const effect = effectId ? EFFECTS_DATA.find(e => e.id === effectId) : null;
+  const action = ACTIONS_DATA.find(a => a.id === actionId);
+  
+  document.getElementById('selEffect').innerText = `特效：${effect ? effect.name : '无'}`;
+  document.getElementById('selAction').innerText = `动作：${action ? action.name : '站立'}`;
+  
+  const gearNames = Object.values(gear).map(gid => {
+    const g = EQUIPMENT_DATA.find(e => e.id === gid);
+    return g ? g.name : '';
+  }).filter(n => n).join(', ');
+  document.getElementById('selEquip').innerText = `装备：${gearNames || '无'}`;
+  document.getElementById('selAI').innerText = `AI：${s.aiImage ? '🤖 已换宠' : '原始形态'}`;
+}
+
+let tempKey = null, tempTarget = null;
+function showCustomInput(el, key) {
+  event.stopPropagation();
+  tempKey = key; tempTarget = el;
+  const val = Math.abs(appState.config[key].score);
+  const inp = document.getElementById('customInput');
+  const r = el.getBoundingClientRect();
+  inp.value = val;
+  inp.style.display = 'block';
+  inp.style.top = (r.top - 35) + 'px';
+  inp.style.left = r.left + 'px';
+  inp.focus();
+}
+
+function applyCustomScore() {
+  if(tempKey && tempTarget) {
+    const v = parseInt(document.getElementById('customInput').value);
+    if(v>=1 && v<=20) {
+      const isNeg = appState.config[tempKey].score < 0 ? -1 : 1;
+      appState.config[tempKey].score = isNeg * v;
+      tempTarget.innerText = isNeg ? '-'+v : v;
+      saveData();
+    }
+  }
+  document.getElementById('customInput').style.display = 'none';
+}
+
+function handleScore(key) {
+  if(!appState.selectedId) { alert("请先点击一个小朋友！"); return; }
+  const s = appState.students.find(x=>x.id===appState.selectedId);
+  const score = appState.config[key].score;
+  s.points += score;
+  
+  if(score > 0) {
+    s.xp += score;
+    appState.gold += Math.floor(score / 2);
+    appState.energy = Math.min(100, appState.energy + 2);
+    showFloat(`+${score}⭐ +${Math.floor(score/2)}💎`, event.clientX, event.clientY, "#2ecc71");
+  } else {
+    s.xp = Math.max(0, s.xp+score);
+    showFloat(`${score}⚠️`, event.clientX, event.clientY, "#e74c3c");
+  }
+
+  checkLevelUp(s);
+  saveData();
+  updateStatusDisplay();
+  renderGrid();
+  select(s.id, document.querySelector('.pet-card.selected'));
+}
+
+function useItem() {
+  if(!appState.selectedId) return;
+  const s = appState.students.find(x=>x.id===appState.selectedId);
+  s.hasItem = !s.hasItem;
+  showFloat(s.hasItem?"✨ 装备道具!":"❌ 卸下", event.clientX, event.clientY, "#f1c40f");
+  saveData(); renderGrid(); select(s.id, document.querySelector('.pet-card.selected'));
+}
+
+function checkLevelUp(s) {
+  if(s.xp >= s.maxXp && s.level < 10) {
+    s.level++; s.xp=0; s.maxXp = Math.floor(s.maxXp*1.4);
+    appState.gold += s.level * 15;
+    showFloat(`🎉 升级 Lv.${s.level}! +${s.level*15}💎`, window.innerWidth/2, window.innerHeight/2, "#f39c12");
+    
+    // 解锁奖励
+    if(s.level === 2) {
+      appState.unlockedEffects.push('e6', 'e7');
+      appState.unlockedActions.push('a6', 'a7', 'a8');
+    }
+    if(s.level === 3) {
+      appState.unlockedEffects.push('e16', 'e17');
+      appState.unlockedActions.push('a21', 'a22', 'a23');
+    }
+    if(s.level === 5) {
+      appState.unlockedEffects.push('e31', 'e32', 'e33');
+      appState.unlockedActions.push('a46', 'a47', 'a48');
+    }
+    if(s.level === 7) {
+      appState.unlockedEffects.push('e48', 'e49', 'e50');
+      appState.unlockedActions.push('a60', 'a61', 'a62');
+    }
+    if(s.level === 10) {
+      // 终极形态解锁
+      appState.ultimateForms[s.id] = true;
+      s.isUltimate = true;
+      showFloat(`🌟 终极觉醒!`, window.innerWidth/2, window.innerHeight/2 + 50, "#f1c40f");
+    }
+    
+    updateStatusDisplay();
+    renderGrid(); 
+    select(s.id, document.querySelector('.pet-card.selected'));
+  }
+}
+
+function showFloat(txt, x, y, color) {
+  const el = document.createElement('div');
+  el.className = 'float-text';
+  el.innerText = txt;
+  el.style.left = x+'px';
+  el.style.top = y+'px';
+  el.style.color = color;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 1000);
+}
+
+// ==================== 技能系统 ====================
+
+function useSkill() {
+  if(!appState.selectedId) {
+    alert("请先选择一个宠物！");
+    return;
+  }
+  openSkillsModal();
+}
+
+function openSkillsModal() {
+  renderSkillsList();
+  document.getElementById('skillsModal').classList.add('show');
+}
+
+function renderSkillsList() {
+  const content = document.getElementById('skillsContent');
+  const student = appState.students.find(s => s.id === appState.selectedId);
+  const petType = student ? PET_TYPES[student.petIdx].sub : null;
+  
+  // 获取可用技能
+  const availableSkills = SKILLS_DATA.filter(sk => 
+    sk.petType === 'all' || sk.petType === petType
+  );
+  
+  content.innerHTML = `
+    <p style="text-align:center; color:rgba(255,255,255,0.7); margin-bottom:20px;">
+      当前宠物：${student ? PET_TYPES[student.petIdx].name : '未选择'}
+    </p>
+    <div class="skill-panel">
+      ${availableSkills.map(sk => {
+        const unlocked = appState.unlockedSkills.includes(sk.id);
+        const cooldown = appState.skillCooldowns[sk.id] || 0;
+        const canUse = unlocked && cooldown <= 0 && appState.energy >= 20;
+        
+        return `
+          <div class="skill-card ${canUse ? '' : 'locked'}" 
+               onclick="${canUse ? `activateSkill('${sk.id}')` : ''}">
+            <div class="skill-icon">${sk.icon}</div>
+            <div class="skill-name">${sk.name}</div>
+            <div class="skill-desc">${sk.desc}</div>
+            <div class="skill-cooldown">
+              ${!unlocked ? '🔒 未解锁' : cooldown > 0 ? `⏳ ${cooldown}s` : '✅ 可用'}
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
+function activateSkill(skillId) {
+  const skill = SKILLS_DATA.find(sk => sk.id === skillId);
+  if(!skill) return;
+  
+  if(appState.energy < 20) {
+    showFloat("能量不足！", window.innerWidth/2, window.innerHeight/2, "#e74c3c");
+    return;
+  }
+  
+  appState.energy -= 20;
+  appState.skillCooldowns[skillId] = skill.cooldown;
+  
+  // 技能效果
+  switch(skill.effect) {
+    case 'points':
+      if(appState.selectedId) {
+        const s = appState.students.find(x => x.id === appState.selectedId);
+        s.points += skill.value;
+        s.xp += skill.value;
+        showFloat(`⚡ ${skill.name}! +${skill.value}⭐`, window.innerWidth/2, window.innerHeight/2, "#2ecc71");
+      }
+      break;
+    case 'team_points':
+      const group = appState.students.find(x => x.id === appState.selectedId)?.group;
+      if(group) {
+        appState.students.filter(s => s.group === group).forEach(s => {
+          s.points += skill.value;
+          s.xp += skill.value;
+        });
+        showFloat(`⚡ ${skill.name}! 全队+${skill.value}⭐`, window.innerWidth/2, window.innerHeight/2, "#3498db");
+      }
+      break;
+    case 'team_gold':
+      appState.gold += skill.value;
+      showFloat(`⚡ ${skill.name}! +${skill.value}💎`, window.innerWidth/2, window.innerHeight/2, "#f1c40f");
+      break;
+    case 'ultimate':
+      if(appState.selectedId) {
+        appState.ultimateForms[appState.selectedId] = true;
+        const s = appState.students.find(x => x.id === appState.selectedId);
+        if(s) s.isUltimate = true;
+        showFloat(`🌟 终极觉醒!`, window.innerWidth/2, window.innerHeight/2, "#f1c40f");
+      }
+      break;
+    case 'all_points':
+      appState.students.forEach(s => {
+        s.points += skill.value;
+        s.xp += skill.value;
+      });
+      showFloat(`⚡ 汪汪队集合! 全员+${skill.value}⭐`, window.innerWidth/2, window.innerHeight/2, "#e74c3c");
+      break;
+    case 'all_ultimate':
+      appState.students.forEach(s => {
+        appState.ultimateForms[s.id] = true;
+        s.isUltimate = true;
+      });
+      showFloat(`🌟 全员终极觉醒!`, window.innerWidth/2, window.innerHeight/2, "#f1c40f");
+      break;
+  }
+  
+  // 启动冷却计时器
+  const timer = setInterval(() => {
+    if(appState.skillCooldowns[skillId] > 0) {
+      appState.skillCooldowns[skillId]--;
+    } else {
+      clearInterval(timer);
+    }
+  }, 1000);
+  
+  saveData();
+  updateStatusDisplay();
+  renderGrid();
+  renderSkillsList();
+}
+
+function activateUltimate() {
+  if(!appState.selectedId) {
+    alert("请先选择一个宠物！");
+    return;
+  }
+  
+  if(appState.energy < 50) {
+    showFloat("能量不足！需要50能量", window.innerWidth/2, window.innerHeight/2, "#e74c3c");
+    return;
+  }
+  
+  const s = appState.students.find(x => x.id === appState.selectedId);
+  if(!s) return;
+  
+  // 如果已经有AI图片，直接终极觉醒
+  if(s.aiImage) {
+    appState.energy -= 50;
+    appState.ultimateForms[appState.selectedId] = true;
+    s.isUltimate = true;
+    showFloat(`🌟 终极觉醒!`, window.innerWidth/2, window.innerHeight/2, "#f1c40f");
+    saveData();
+    updateStatusDisplay();
+    renderGrid();
+    select(appState.selectedId, document.querySelector('.pet-card.selected'));
+  } else {
+    // 没有AI图片，打开AI换宠面板进行终极觉醒
+    appState.pendingUltimateId = appState.selectedId;
+    openAIModal();
+    // 设置终极觉醒模式
+    document.getElementById('aiDescription').value = '终极觉醒形态，闪耀金色光芒，更加强大酷炫';
+    document.getElementById('aiTitle').innerText = '🌟 终极觉醒 - AI生成';
+    showFloat("请生成终极觉醒形态！", window.innerWidth/2, window.innerHeight/2, "#f1c40f");
+  }
+}
+
+// ==================== 模态框功能 ====================
+
+function openEffectsModal() {
+  renderEffectsList();
+  document.getElementById('effectsModal').classList.add('show');
+}
+
+function openActionsModal() {
+  renderActionsList();
+  document.getElementById('actionsModal').classList.add('show');
+}
+
+function openShop() {
+  renderShopList();
+  document.getElementById('shopModal').classList.add('show');
+}
+
+function renderEffectsList(category = null) {
+  const tabs = document.getElementById('effectTabs');
+  const list = document.getElementById('effectsList');
+  
+  const categories = ['全部', '粒子', '光环', '动画'];
+  tabs.innerHTML = categories.map(c => 
+    `<button class="tab-btn ${c === category || (!category && c === '全部') ? 'active' : ''}" 
+            onclick="renderEffectsList('${c}')">${c}</button>`
+  ).join('');
+  
+  let effects = EFFECTS_DATA;
+  if(category && category !== '全部') {
+    effects = effects.filter(e => e.category === category);
+  }
+  
+  list.innerHTML = effects.map(e => {
+    const unlocked = appState.unlockedEffects.includes(e.id);
+    const equipped = appState.selectedId && appState.equippedEffects[appState.selectedId] === e.id;
+    return `
+      <div class="shop-item ${equipped ? 'equipped' : ''} ${!unlocked ? 'locked' : ''}" 
+           onclick="${unlocked ? `equipEffect('${e.id}')` : ''}">
+        <div class="item-preview" style="font-size:2rem;">${e.icon}</div>
+        <div class="item-name">${e.name}</div>
+        <div class="item-desc">${e.category}</div>
+        ${!unlocked ? '<div class="item-price" style="color:#999;">🔒 未解锁</div>' : ''}
+        ${equipped ? '<div class="item-price" style="color:#2ecc71;">✓ 已装备</div>' : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+function renderActionsList(category = null) {
+  const tabs = document.getElementById('actionTabs');
+  const list = document.getElementById('actionsList');
+  
+  const categories = ['全部', '基础', '情绪', '特殊', '组合'];
+  tabs.innerHTML = categories.map(c => 
+    `<button class="tab-btn ${c === category || (!category && c === '全部') ? 'active' : ''}" 
+            onclick="renderActionsList('${c}')">${c}</button>`
+  ).join('');
+  
+  let actions = ACTIONS_DATA;
+  if(category && category !== '全部') {
+    actions = actions.filter(a => a.category === category);
+  }
+  
+  list.innerHTML = actions.map(a => {
+    const unlocked = appState.unlockedActions.includes(a.id);
+    const equipped = appState.selectedId && appState.equippedActions[appState.selectedId] === a.id;
+    return `
+      <div class="shop-item ${equipped ? 'equipped' : ''} ${!unlocked ? 'locked' : ''}" 
+           onclick="${unlocked ? `equipAction('${a.id}')` : ''}">
+        <div class="item-preview" style="font-size:2rem;">${a.icon}</div>
+        <div class="item-name">${a.name}</div>
+        <div class="item-desc">${a.category}</div>
+        ${!unlocked ? '<div class="item-price" style="color:#999;">🔒 未解锁</div>' : ''}
+        ${equipped ? '<div class="item-price" style="color:#2ecc71;">✓ 已装备</div>' : ''}
+      </div>
+    `;
+  }).join('');
+}
+
+function renderShopList(category = null) {
+  const tabs = document.getElementById('shopTabs');
+  const list = document.getElementById('shopList');
+  
+  const categories = ['全部', '武器', '防具', '头盔', '饰品', '特殊'];
+  tabs.innerHTML = categories.map(c => 
+    `<button class="tab-btn ${c === category || (!category && c === '全部') ? 'active' : ''}" 
+            onclick="renderShopList('${c}')">${c}</button>`
+  ).join('');
+  
+  let equipment = EQUIPMENT_DATA;
+  if(category && category !== '全部') {
+    equipment = equipment.filter(e => e.category === category);
+  }
+  
+  const rarityColors = {
+    '普通': '#bdc3c7',
+    '稀有': '#3498db',
+    '史诗': '#9b59b6',
+    '传说': '#f39c12',
+    '神话': '#e74c3c'
+  };
+  
+  list.innerHTML = equipment.map(e => {
+    const owned = appState.unlockedEquipment.includes(e.id);
+    const gear = appState.equippedGear[appState.selectedId] || {};
+    const equipped = gear[e.slot] === e.id;
+    const canBuy = appState.gold >= e.price;
+    
+    return `
+      <div class="shop-item ${equipped ? 'equipped' : ''} ${!owned && !canBuy ? 'locked' : ''}">
+        <div class="item-preview" style="background:${e.color}30; color:${rarityColors[e.rarity]}; display:flex; align-items:center; justify-content:center; font-size:2rem;">${e.icon}</div>
+        <div class="item-name" style="color:${rarityColors[e.rarity]}">${e.name}</div>
+        <div class="item-desc">+${e.bonus} ${e.rarity}</div>
+        ${owned ? 
+          (equipped ? 
+            '<div class="item-price" style="color:#2ecc71;">✓ 已装备</div>' : 
+            `<button onclick="equipGear('${e.id}')" style="width:100%; margin-top:5px; padding:4px; background:linear-gradient(135deg,#3498db,#2980b9); color:white; border:none; border-radius:8px; cursor:pointer; font-weight:bold;">装备</button>`
+          ) : 
+          `<button onclick="buyEquipment('${e.id}')" style="width:100%; margin-top:5px; padding:4px; background:${canBuy ? 'linear-gradient(135deg,#2ecc71,#27ae60)' : 'rgba(255,255,255,0.1)'}; color:white; border:none; border-radius:8px; cursor:${canBuy ? 'pointer' : 'not-allowed'}; font-weight:bold;">💎 ${e.price}</button>`
+        }
+      </div>
+    `;
+  }).join('');
+}
+
+function equipEffect(effectId) {
+  if(!appState.selectedId) { alert("请先选择一个宠物！"); return; }
+  if(!appState.unlockedEffects.includes(effectId)) { alert("此特效尚未解锁！"); return; }
+  
+  appState.equippedEffects[appState.selectedId] = effectId;
+  saveData();
+  renderEffectsList();
+  renderGrid();
+  select(appState.selectedId, document.querySelector('.pet-card.selected'));
+  showFloat("✨ 特效已装备!", window.innerWidth/2, window.innerHeight/2, "#9b59b6");
+}
+
+function equipAction(actionId) {
+  if(!appState.selectedId) { alert("请先选择一个宠物！"); return; }
+  if(!appState.unlockedActions.includes(actionId)) { alert("此动作尚未解锁！"); return; }
+  
+  appState.equippedActions[appState.selectedId] = actionId;
+  saveData();
+  renderActionsList();
+  renderGrid();
+  select(appState.selectedId, document.querySelector('.pet-card.selected'));
+  showFloat("🎭 动作已装备!", window.innerWidth/2, window.innerHeight/2, "#3498db");
+}
+
+function buyEquipment(equipId) {
+  const equip = EQUIPMENT_DATA.find(e => e.id === equipId);
+  if(!equip) return;
+  
+  if(appState.gold < equip.price) { alert("金币不足！"); return; }
+  if(appState.unlockedEquipment.includes(equipId)) { alert("已拥有此装备！"); return; }
+  
+  appState.gold -= equip.price;
+  appState.unlockedEquipment.push(equipId);
+  saveData();
+  updateStatusDisplay();
+  renderShopList();
+  showFloat(`🛒 购买成功! -${equip.price}💎`, window.innerWidth/2, window.innerHeight/2, "#2ecc71");
+}
+
+function equipGear(equipId) {
+  if(!appState.selectedId) { alert("请先选择一个宠物！"); return; }
+  
+  const equip = EQUIPMENT_DATA.find(e => e.id === equipId);
+  if(!equip) return;
+  if(!appState.unlockedEquipment.includes(equipId)) { alert("尚未拥有此装备！"); return; }
+  
+  if(!appState.equippedGear[appState.selectedId]) {
+    appState.equippedGear[appState.selectedId] = {};
+  }
+  
+  appState.equippedGear[appState.selectedId][equip.slot] = equipId;
+  saveData();
+  renderShopList();
+  renderGrid();
+  select(appState.selectedId, document.querySelector('.pet-card.selected'));
+  showFloat("⚔️ 装备已穿上!", window.innerWidth/2, window.innerHeight/2, "#f39c12");
+}
+
+function randomEffect() {
+  if(!appState.selectedId) { alert("请先选择一个宠物！"); return; }
+  const unlocked = appState.unlockedEffects;
+  if(unlocked.length === 0) return;
+  equipEffect(unlocked[Math.floor(Math.random() * unlocked.length)]);
+}
+
+function randomAction() {
+  if(!appState.selectedId) { alert("请先选择一个宠物！"); return; }
+  const unlocked = appState.unlockedActions;
+  if(unlocked.length === 0) return;
+  equipAction(unlocked[Math.floor(Math.random() * unlocked.length)]);
+}
+
+function randomEquipment() {
+  if(!appState.selectedId) { alert("请先选择一个宠物！"); return; }
+  const owned = appState.unlockedEquipment;
+  if(owned.length === 0) { alert("你还没有任何装备！快去商店购买吧！"); return; }
+  equipGear(owned[Math.floor(Math.random() * owned.length)]);
+}
+// ==================== 展示馆系统 ====================
+
+function showGallery() {
+  renderGalleryContent('all');
+  document.getElementById('galleryModal').classList.add('show');
+  renderUltimateShowcase();
+}
+
+function showGalleryTab(tab) {
+  // 更新标签状态
+  document.querySelectorAll('#galleryModal .tab-btn').forEach(btn => btn.classList.remove('active'));
+  event.target.classList.add('active');
+  renderGalleryContent(tab);
+}
+
+function renderGalleryContent(tab) {
+  const content = document.getElementById('galleryContent');
+  let students = [...appState.students];
+  
+  if(tab === 'ultimate') {
+    students = students.filter(s => s.isUltimate || appState.ultimateForms[s.id] || s.level >= 8);
+  } else if(tab === 'max') {
+    students = students.filter(s => s.level >= 7);
+  } else if(tab === 'team') {
+    students = students.filter(s => s.group);
+  }
+  
+  content.innerHTML = `
+    <div style="display:grid; grid-template-columns:repeat(6, 1fr); gap:15px; max-height:50vh; overflow-y:auto; padding:10px;">
+      ${students.map(s => {
+        const pData = PET_TYPES[s.petIdx];
+        const isUlt = s.isUltimate || appState.ultimateForms[s.id];
+        return `
+          <div class="pet-card ${s.group ? 'team-' + s.group : ''}" 
+               style="${isUlt ? 'box-shadow:0 0 30px rgba(241,196,15,0.5);' : ''}">
+            <div class="canvas-container" id="gallery-${s.id}"></div>
+            <div class="info-area">
+              <div class="level-badge" style="${isUlt ? 'background:linear-gradient(135deg,#f1c40f,#e67e22);' : ''}">${isUlt ? '⭐' : ''}Lv.${s.level}</div>
+              <div class="pet-name">${s.name}</div>
+              <div class="pet-role">${pData.name}${isUlt ? ' ★' : ''}</div>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+  
+  // 渲染宠物
+  setTimeout(() => {
+    students.forEach(s => {
+      const container = document.getElementById(`gallery-${s.id}`);
+      if(container) drawPet(container, s, false);
+    });
+  }, 100);
+}
+
+function renderUltimateShowcase() {
+  const grid = document.getElementById('ultimateGrid');
+  
+  // 获取终极形态宠物
+  const ultimatePets = appState.students.filter(s => s.isUltimate || appState.ultimateForms[s.id] || s.level >= 8);
+  
+  if(ultimatePets.length === 0) {
+    grid.innerHTML = `
+      <div style="grid-column:1/-1; text-align:center; padding:40px; color:rgba(255,255,255,0.5);">
+        <div style="font-size:3rem; margin-bottom:15px;">🌟</div>
+        <p>还没有宠物达到终极形态</p>
+        <p style="font-size:0.85rem; margin-top:10px;">升级到 Lv.10 或使用终极技能解锁</p>
+      </div>
+    `;
+    return;
+  }
+  
+  grid.innerHTML = ultimatePets.map(s => {
+    const pData = PET_TYPES[s.petIdx];
+    return `
+      <div class="ultimate-card">
+        <div class="ultimate-canvas" id="ultimate-${s.id}"></div>
+        <div class="ultimate-info">
+          <div class="ultimate-name">${s.name}</div>
+          <div style="font-size:0.9rem; color:rgba(255,255,255,0.8); margin:5px 0;">${pData.name} · ${pData.role}</div>
+          <div class="ultimate-level">Lv.${s.level} 终极形态</div>
+          <div style="margin-top:10px; font-size:0.75rem; color:rgba(255,255,255,0.6);">
+            积分: ${s.points} | ${pData.ultimate}
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+  
+  // 渲染终极形态宠物
+  setTimeout(() => {
+    ultimatePets.forEach(s => {
+      const container = document.getElementById(`ultimate-${s.id}`);
+      if(container) drawPet(container, s, false);
+    });
+  }, 100);
+}
+
+// ==================== 管理功能 ====================
+
+function applyConfig() {
+  const list = document.getElementById('configList');
+  list.innerHTML = '';
+  const keys = ['labor','study','eat','sleep','listen','talk','manner','clean'];
+  keys.forEach(k => {
+    const c = appState.config[k];
+    const row = document.createElement('div');
+    row.className = 'config-row';
+    row.innerHTML = `
+      <span class="cfg-label">${c.label}:</span>
+      <input type="text" class="cfg-input" id="cfg-lbl-${k}" value="${c.label}">
+      <input type="number" class="cfg-score" id="cfg-sc-${k}" value="${Math.abs(c.score)}">
+    `;
+    list.appendChild(row);
+    
+    document.getElementById(`lbl-${k}`).innerText = c.label;
+    const bubbles = document.querySelectorAll(`.s-val[onclick*="'${k}'"]`);
+    bubbles.forEach(b => b.innerText = c.score > 0 ? c.score : '-'+Math.abs(c.score));
+  });
+}
+
+function saveConfig() {
+  const keys = ['labor','study','eat','sleep','listen','talk','manner','clean'];
+  keys.forEach(k => {
+    const lbl = document.getElementById(`cfg-lbl-${k}`).value;
+    const sc = parseInt(document.getElementById(`cfg-sc-${k}`).value);
+    const oldSign = appState.config[k].score < 0 ? -1 : 1;
+    appState.config[k] = { label: lbl, score: oldSign * sc };
+  });
+  saveData();
+  applyConfig();
+  alert("✅ 规则已保存！");
+}
+
+function openSettings() {
+  applyConfig();
+  renderGroups();
+  document.getElementById('studentList').value = appState.students.map(s=>s.name).join('\n');
+  document.getElementById('settingsModal').classList.add('show');
+  drawCaptain();
+}
+
+function renderGroups() {
+  ['red','blue','yellow','green','purple'].forEach(c => {
+    const div = document.getElementById(`list-${c}`);
+    div.innerHTML = '';
+    appState.students.filter(s=>s.group===c).forEach(s => {
+      const chip = document.createElement('div');
+      chip.className = 'student-chip';
+      chip.innerHTML = `<span>${s.name}</span><button onclick="removeGrp('${s.id}',event)">×</button>`;
+      chip.onclick = (e)=>{ if(e.target.tagName!='BUTTON') cycleGrp(s.id); };
+      div.appendChild(chip);
+    });
+  });
+  const ug = document.getElementById('ungrouped');
+  ug.innerHTML = '<div style="text-align:center;font-size:0.75rem;color:rgba(255,255,255,0.5);margin-bottom:8px;">待分配 (点我进红队)</div>';
+  appState.students.filter(s=>!s.group).forEach(s => {
+    const chip = document.createElement('div');
+    chip.className = 'student-chip';
+    chip.innerText = s.name;
+    chip.onclick = () => { s.group='red'; saveData(); renderGroups(); renderGrid(); };
+    ug.appendChild(chip);
+  });
+}
+
+function cycleGrp(id) {
+  const s = appState.students.find(x=>x.id===id);
+  const order = ['red','blue','yellow','green','purple',null];
+  s.group = order[(order.indexOf(s.group)+1)%order.length];
+  saveData(); renderGroups(); renderGrid();
+}
+
+function removeGrp(id, e) {
+  e.stopPropagation();
+  const s = appState.students.find(x=>x.id===id);
+  s.group = null;
+  saveData(); renderGroups(); renderGrid();
+}
+
+function autoBalance() {
+  const cols = ['red','blue','yellow','green','purple'];
+  appState.students.forEach((s,i)=> s.group = cols[i%5]);
+  saveData(); renderGroups(); renderGrid();
+}
+
+function clearGroups() {
+  appState.students.forEach(s=>s.group=null);
+  saveData(); renderGroups(); renderGrid();
+}
+
+function saveStudents() {
+  const names = document.getElementById('studentList').value.split('\n').filter(n=>n.trim());
+  if(!names.length) return;
+  const newS = names.map((n,i) => {
+    const old = appState.students.find(x=>x.name===n);
+    return old ? old : createStudent(n,i);
+  });
+  appState.students = newS;
+  appState.groups = {red:[],blue:[],yellow:[],green:[],purple:[]};
+  saveData(); renderGrid(); closeModal('settingsModal');
+  showFloat("🐾 汪汪队集结完毕!", window.innerWidth/2, window.innerHeight/2, "#2ecc71");
+}
+
+function resetAll() {
+  if(confirm("确定清空所有数据吗？")) {
+    appState.students = [];
+    appState.gold = 100;
+    appState.energy = 100;
+    appState.unlockedEffects = ['e1', 'e2', 'e3', 'e4', 'e5'];
+    appState.unlockedActions = ['a1', 'a2', 'a3', 'a4', 'a5'];
+    appState.unlockedEquipment = [];
+    appState.unlockedSkills = ['sk1', 'sk4', 'sk7', 'sk10', 'sk13', 'sk16'];
+    appState.equippedEffects = {};
+    appState.equippedActions = {};
+    appState.equippedGear = {};
+    appState.skillCooldowns = {};
+    appState.ultimateForms = {};
+    saveData(); renderGrid(); closeModal('settingsModal'); updateStatusDisplay();
+  }
+}
+
+function updateClassName() {
+  appState.className = document.getElementById('classNameInput').value;
+  saveData();
+}
+
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+function showPK() {
+  const teams = [
+    {id:'red', n:'🔴 天天队', c:'#e74c3c'},
+    {id:'blue', n:'🔵 阿奇队', c:'#3498db'},
+    {id:'yellow', n:'🟡 小砾队', c:'#f1c40f'},
+    {id:'green', n:'🟢 灰灰队', c:'#2ecc71'},
+    {id:'purple', n:'🟣 路马队', c:'#9b59b6'}
+  ];
+  const scores = {red:0,blue:0,yellow:0,green:0,purple:0};
+  appState.students.forEach(s=>{ if(s.group) scores[s.group]+=s.points; });
+  
+  const sorted = teams.sort((a,b)=>scores[b.id]-scores[a.id]);
+  const max = Math.max(...Object.values(scores), 1);
+  
+  const con = document.getElementById('pkList');
+  con.innerHTML = '';
+  sorted.forEach((t,i) => {
+    const pct = (scores[t.id]/max)*100;
+    const row = document.createElement('div');
+    row.style.cssText = "display:flex; align-items:center; background:rgba(255,255,255,0.05); padding:15px; margin-bottom:12px; border-radius:15px; border:1px solid rgba(255,255,255,0.1);";
+    row.innerHTML = `
+      <div style="font-weight:bold; width:100px; text-align:left; color:#fff;">${i===0?'👑 ':''}${t.n}</div>
+      <div style="flex:1; height:18px; background:rgba(255,255,255,0.1); border-radius:10px; overflow:hidden; margin:0 15px;">
+        <div style="height:100%; width:${pct}%; background:linear-gradient(90deg,${t.c},${t.c}88); transition:width 1s; box-shadow:0 0 20px ${t.c}50;"></div>
+      </div>
+      <div style="font-weight:bold; width:50px; text-align:right; color:#fff; font-size:1.1rem;">${scores[t.id]}</div>
+    `;
+    con.appendChild(row);
+  });
+  document.getElementById('pkModal').classList.add('show');
+}
+
+// ==================== AI换宠功能 ====================
+let aiUploadedImage = null;
+let aiGeneratedImages = [];
+
+// 打开AI模态框
+function openAIModal() {
+  // 重置标题
+  const aiTitle = document.getElementById('aiTitle');
+  if(aiTitle) aiTitle.innerText = '🤖 AI智能换宠';
+  // 重置终极觉醒模式
+  appState.pendingUltimateId = null;
+  // 更新目标宠物信息
+  updateAITargetInfo();
+  document.getElementById('aiModal').classList.add('show');
+}
+
+// 更新目标宠物信息
+function updateAITargetInfo() {
+  const targetEl = document.getElementById('aiTargetName');
+  if (appState.selectedId) {
+    const student = appState.students.find(s => s.id === appState.selectedId);
+    if (student) {
+      const petType = PET_TYPES[student.petIdx];
+      const isUltimate = student.isUltimate || appState.ultimateForms[student.id];
+      targetEl.innerHTML = `当前选中：<strong>${student.name}</strong> (宠物: ${petType.name} - ${petType.role})${isUltimate ? ' ⭐终极' : ''}${student.aiImage ? ' 🤖AI' : ''}`;
+      targetEl.style.color = '#2ecc71';
+    }
+  } else {
+    targetEl.innerHTML = '请先在主页面选择一个宠物';
+    targetEl.style.color = '#f39c12';
+  }
+}
+
+// 处理图片上传
+function handleAIImageUpload(event) {
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      aiUploadedImage = e.target.result;
+      document.getElementById('aiPreviewImg').src = aiUploadedImage;
+      document.getElementById('aiImagePreview').style.display = 'block';
+    };
+    reader.readAsDataURL(file);
+  }
+}
+
+// 清除上传的图片
+function clearAIImage() {
+  aiUploadedImage = null;
+  document.getElementById('aiImageInput').value = '';
+  document.getElementById('aiImagePreview').style.display = 'none';
+}
+
+// 生成AI宠物图片
+async function generateAIPet() {
+  if (!appState.selectedId) {
+    alert('请先在主页面选择一个宠物！');
+    return;
+  }
+  
+  const petType = document.getElementById('aiPetType').value;
+  const description = document.getElementById('aiDescription').value;
+  
+  // 显示加载状态
+  document.getElementById('aiGenerateBtn').disabled = true;
+  document.getElementById('aiGenerateBtn').innerHTML = '⏳ 生成中...';
+  document.getElementById('aiLoading').style.display = 'block';
+  document.getElementById('aiResult').style.display = 'none';
+  
+  try {
+    // 构建提示词
+    const prompt = description || `汪汪队立大功风格的${petType}，可爱卡通形象`;
+    
+    // 调用后端API生成图片
+    const data = await callAPI('/api/generate-pet', {
+      prompt: prompt,
+      petName: petType,
+      style: '电影级3D卡通风格'
+    });
+    
+    if (data.success && data.imageUrl) {
+      aiGeneratedImages = [data.imageUrl];
+      displayAIResults([data.imageUrl]);
+    } else {
+      throw new Error(data.error || '生成失败');
+    }
+  } catch (error) {
+    console.error('AI生成失败:', error);
+    alert('AI生成失败: ' + error.message);
+  } finally {
+    // 恢复按钮状态
+    document.getElementById('aiGenerateBtn').disabled = false;
+    document.getElementById('aiGenerateBtn').innerHTML = '🎨 开始生成';
+    document.getElementById('aiLoading').style.display = 'none';
+  }
+}
+
+// 显示AI生成结果
+function displayAIResults(imageUrls) {
+  const resultContainer = document.getElementById('aiResultImages');
+  resultContainer.innerHTML = '';
+  
+  imageUrls.forEach((url, index) => {
+    const imgWrapper = document.createElement('div');
+    imgWrapper.style.cssText = 'position:relative; border-radius:10px; overflow:hidden; border:2px solid rgba(255,255,255,0.2);';
+    
+    imgWrapper.innerHTML = `
+      <img src="${url}" style="width:100%; height:auto; display:block;">
+      <div style="position:absolute; bottom:0; left:0; right:0; padding:10px; background:linear-gradient(transparent, rgba(0,0,0,0.8)); display:flex; gap:8px; justify-content:center;">
+        <button onclick="applyAIImage('${url}')" style="padding:8px 15px; background:linear-gradient(135deg, #2ecc71 0%, #27ae60 100%); border:none; border-radius:8px; color:#fff; cursor:pointer; font-weight:bold;">应用到宠物</button>
+        <button onclick="downloadAIImage('${url}')" style="padding:8px 15px; background:linear-gradient(135deg, #3498db 0%, #2980b9 100%); border:none; border-radius:8px; color:#fff; cursor:pointer;">下载图片</button>
+      </div>
+    `;
+    
+    resultContainer.appendChild(imgWrapper);
+  });
+  
+  document.getElementById('aiResult').style.display = 'block';
+}
+
+// 应用AI图片到宠物
+function applyAIImage(imageUrl) {
+  if (!appState.selectedId) {
+    alert('请先选择一个宠物！');
+    return;
+  }
+  
+  const student = appState.students.find(s => s.id === appState.selectedId);
+  if (student) {
+    // 保存AI生成的图片URL到学生对象
+    student.aiImage = imageUrl;
+    
+    // 检查是否是终极觉醒模式
+    if (appState.pendingUltimateId === appState.selectedId) {
+      if(appState.energy < 50) {
+        showFloat("能量不足！需要50能量", window.innerWidth/2, window.innerHeight/2, "#e74c3c");
+        return;
+      }
+      appState.energy -= 50;
+      appState.ultimateForms[appState.selectedId] = true;
+      student.isUltimate = true;
+      appState.pendingUltimateId = null;
+      showFloat("🌟 AI终极觉醒成功!", window.innerWidth/2, window.innerHeight/2, "#f1c40f");
+      // 重置AI模态框标题
+      const aiTitle = document.getElementById('aiTitle');
+      if(aiTitle) aiTitle.innerText = '🤖 AI智能换宠';
+    } else {
+      showFloat("🖼️ AI换宠成功!", window.innerWidth/2, window.innerHeight/2, "#667eea");
+    }
+    
+    saveData();
+    // 刷新显示
+    renderGrid();
+    select(student.id, document.querySelector('.pet-card.selected'));
+    closeModal('aiModal');
+    updateStatusDisplay();
+  }
+}
+
+// 移除AI图片，恢复原始宠物形态
+function removeAIImage() {
+  if (!appState.selectedId) {
+    alert('请先选择一个宠物！');
+    return;
+  }
+  
+  const student = appState.students.find(s => s.id === appState.selectedId);
+  if (student && student.aiImage) {
+    delete student.aiImage;
+    saveData();
+    alert(`已恢复 ${student.name} 的原始形态！`);
+    renderGrid();
+    select(student.id, document.querySelector('.pet-card.selected'));
+    showFloat("🐾 恢复原始形态!", window.innerWidth/2, window.innerHeight/2, "#2ecc71");
+  } else {
+    alert('该宠物没有应用AI图片！');
+  }
+}
+
+// 打开指挥官AI换头像模态框
+function openCaptainAIModal() {
+  const modal = document.getElementById('captainAIModal');
+  if (modal) {
+    modal.classList.add('show');
+    // 预填充描述
+    document.getElementById('captainDescription').value = '莱德队长，穿着指挥官制服，帅气逼人，电影级质感';
+  }
+}
+
+// 关闭指挥官AI模态框
+function closeCaptainAIModal() {
+  document.getElementById('captainAIModal').classList.remove('show');
+}
+
+// 生成指挥官AI头像
+async function generateCaptainAI() {
+  const description = document.getElementById('captainDescription').value || '莱德队长，指挥官形象';
+  
+  const btn = document.getElementById('captainGenerateBtn');
+  btn.disabled = true;
+  btn.innerHTML = '⏳ 生成中...';
+  
+  try {
+    const response = await fetch('/api/generate-pet', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        petName: '莱德队长',
+        petRole: '指挥官',
+        description: description + '，英俊帅气，电影级3D效果'
+      })
+    });
+    
+    const data = await response.json();
+    
+    if (data.success && data.imageUrls && data.imageUrls.length > 0) {
+      appState.captainAIImage = data.imageUrls[0];
+      saveData();
+      drawCaptain();
+      showFloat("🤖 指挥官头像已更新!", window.innerWidth/2, window.innerHeight/2, "#667eea");
+      closeCaptainAIModal();
+    } else {
+      alert('生成失败：' + (data.errors?.join(', ') || data.error || '未知错误'));
+    }
+  } catch (error) {
+    console.error('生成失败:', error);
+    alert('生成失败，请检查网络连接');
+  } finally {
+    btn.disabled = false;
+    btn.innerHTML = '🎨 开始生成';
+  }
+}
+
+// 恢复指挥官原始头像
+function resetCaptainAI() {
+  if (appState.captainAIImage) {
+    appState.captainAIImage = null;
+    saveData();
+    drawCaptain();
+    showFloat("🔄 恢复原始头像!", window.innerWidth/2, window.innerHeight/2, "#2ecc71");
+  }
+}
+
+// 下载AI图片
+async function downloadAIImage(url) {
+  try {
+    const response = await fetch(url);
+    const blob = await response.blob();
+    const blobUrl = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = blobUrl;
+    link.download = `ai-pet-${Date.now()}.png`;
+    link.click();
+    window.URL.revokeObjectURL(blobUrl);
+  } catch (error) {
+    console.error('下载失败:', error);
+    alert('下载失败，请重试');
+  }
+}
+
+// 添加动画样式
+const style = document.createElement('style');
+style.textContent = `
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes aiGlow { 
+  0%, 100% { transform: scale(1); opacity: 0.3; } 
+  50% { transform: scale(1.1); opacity: 0.5; } 
+}
+@keyframes aiFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+@keyframes aiGlowPulse {
+  0%, 100% { filter: drop-shadow(0 0 15px rgba(102,126,234,0.5)); }
+  50% { filter: drop-shadow(0 0 30px rgba(102,126,234,0.8)); }
+}
+@keyframes aiScan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+@keyframes ultimateRotate {
+  to { transform: rotate(360deg); }
+}
+@keyframes labelPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); box-shadow: 0 0 25px rgba(102,126,234,0.8); }
+}
+@keyframes effectPulse {
+  0%, 100% { transform: scale(1); opacity: 0.8; }
+  50% { transform: scale(1.2); opacity: 1; }
+}
+@keyframes effectOverlay {
+  0%, 100% { opacity: 0.5; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(1.05); }
+}
+@keyframes particleFloat {
+  0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
+  50% { transform: translateY(-10px) scale(1.5); opacity: 0.5; }
+}
+/* AI宠物动作动画 */
+@keyframes aiBounce {
+  0%, 100% { transform: translateY(0) scaleY(1); }
+  30% { transform: translateY(-15px) scaleY(1.1); }
+  50% { transform: translateY(0) scaleY(0.9); }
+  70% { transform: translateY(-8px) scaleY(1); }
+}
+@keyframes aiSpin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+@keyframes aiShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px) rotate(-2deg); }
+  75% { transform: translateX(5px) rotate(2deg); }
+}
+@keyframes aiDance {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  25% { transform: translateY(-5px) rotate(-5deg); }
+  50% { transform: translateY(0) rotate(0deg); }
+  75% { transform: translateY(-5px) rotate(5deg); }
+}
+@keyframes aiWave {
+  0%, 100% { transform: rotate(0deg); }
+  25% { transform: rotate(-10deg); }
+  75% { transform: rotate(10deg); }
+}
+@keyframes aiJump {
+  0%, 100% { transform: translateY(0) scaleY(1); }
+  20% { transform: translateY(0) scaleY(0.8); }
+  40% { transform: translateY(-25px) scaleY(1.1); }
+  60% { transform: translateY(-25px) scaleY(1.1); }
+  80% { transform: translateY(0) scaleY(0.9); }
+}
+@keyframes aiFlip {
+  0% { transform: rotateY(0deg); }
+  100% { transform: rotateY(360deg); }
+}
+/* AI宠物表情动画 */
+@keyframes aiBlink {
+  0%, 45%, 55%, 100% { filter: brightness(1); }
+  50% { filter: brightness(0.3); }
+}
+@keyframes aiSmile {
+  0%, 100% { transform: scaleY(1) translateY(0); }
+  50% { transform: scaleY(1.03) translateY(-2%); }
+}
+@keyframes aiBlush {
+  0%, 100% { filter: sepia(0) saturate(1) brightness(1); }
+  50% { filter: sepia(0.3) saturate(1.5) brightness(1.05) hue-rotate(-10deg); }
+}
+@keyframes aiShy {
+  0%, 100% { transform: scale(1) rotate(0deg); filter: sepia(0); }
+  25% { transform: scale(0.97) rotate(-3deg); filter: sepia(0.2); }
+  50% { transform: scale(0.95) rotate(0deg); filter: sepia(0.3); }
+  75% { transform: scale(0.97) rotate(3deg); filter: sepia(0.2); }
+}
+@keyframes aiHappy {
+  0%, 100% { transform: scale(1) translateY(0); }
+  25% { transform: scale(1.02) translateY(-3px); }
+  50% { transform: scale(1.04) translateY(0); }
+  75% { transform: scale(1.02) translateY(-3px); }
+}
+/* 表情叠加层动画 */
+@keyframes eyeBlink {
+  0%, 40%, 60%, 100% { opacity: 0; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(0.1); }
+}
+@keyframes blushGlow {
+  0%, 100% { opacity: 0; }
+  50% { opacity: 0.6; }
+}
+@keyframes smileCurve {
+  0%, 100% { transform: scaleX(1); }
+  50% { transform: scaleX(1.05); }
+}
+/* 指挥官动画 */
+@keyframes captainFloat {
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-5px) scale(1.02); }
+}
+@keyframes captainRing {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+`;
+document.head.appendChild(style);
+</script>
+</body>
+</html>
+

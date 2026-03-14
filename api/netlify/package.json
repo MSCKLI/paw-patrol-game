@@ -1,0 +1,18 @@
+{
+  "name": "paw-patrol-ai-netlify",
+  "version": "1.0.0",
+  "description": "汪汪队立大功 AI API - Netlify Functions 版本",
+  "scripts": {
+    "dev": "netlify dev",
+    "build": "echo 'No build required'",
+    "deploy": "netlify deploy --prod"
+  },
+  "dependencies": {
+    "coze-coding-dev-sdk": "^0.7.17"
+  },
+  "devDependencies": {
+    "@netlify/functions": "^2.4.0",
+    "netlify-cli": "^17.0.0",
+    "typescript": "^5.3.3"
+  }
+}

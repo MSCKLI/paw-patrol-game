@@ -1,0 +1,19 @@
+{
+  "name": "paw-patrol-ai-cloudflare",
+  "version": "1.0.0",
+  "description": "汪汪队立大功 AI API - Cloudflare Workers 版本",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "start": "wrangler dev"
+  },
+  "dependencies": {
+    "coze-coding-dev-sdk": "^0.7.17"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20240117.0",
+    "typescript": "^5.3.3",
+    "wrangler": "^3.24.0"
+  }
+}

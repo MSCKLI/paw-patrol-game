@@ -1,0 +1,17 @@
+{
+  "name": "paw-patrol-game",
+  "version": "1.0.0",
+  "description": "汪汪队立大功：电影级救援行动 - AI 换宠功能",
+  "main": "server.js",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "coze-coding-dev-sdk": "^0.7.17",
+    "express": "^4.18.2"
+  },
+  "engines": {
+    "node": ">=18.x"
+  }
+}
