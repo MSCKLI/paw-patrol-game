@@ -1109,10 +1109,10 @@ const EQUIPMENT_DATA = [
 // Cloudflare Workers: 'https://your-worker.your-subdomain.workers.dev'
 // Netlify Functions: 'https://your-site.netlify.app'
 // 本地开发: '' (空字符串，使用相对路径)
-// API 基础地址
-// Cloudflare Workers (线上): 'https://paw-patrol-ai.812217700.workers.dev'
-// 本地测试: '' (空字符串)
-const API_BASE_URL = 'https://paw-patrol-ai.812217700.workers.dev';
+// API 基础地址 - Vercel 部署（国内访问稳定）
+// Cloudflare Workers: 'https://paw-patrol-ai.812217700.workers.dev'
+// Vercel: 'https://paw-patrol-game-2lb3.vercel.app'
+const API_BASE_URL = 'https://paw-patrol-game-2lb3.vercel.app';
 
 // API 辅助函数
 async function callAPI(endpoint, data) {
