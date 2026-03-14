@@ -1,115 +1,187 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <title>API 测试</title>
-  <style>
-    body { font-family: Arial, sans-serif; max-width: 800px; margin: 50px auto; padding: 20px; }
-    .test-box { background: #f5f5f5; padding: 20px; margin: 20px 0; border-radius: 8px; }
-    button { padding: 10px 20px; font-size: 16px; cursor: pointer; margin: 5px; }
-    #result { background: #000; color: #0f0; padding: 15px; border-radius: 5px; overflow-x: auto; font-family: monospace; white-space: pre-wrap; }
-    .success { color: #0f0; }
-    .error { color: #f00; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>汪汪队 AI 换宠测试</title>
+<style>
+  body { 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    max-width: 600px; margin: 50px auto; padding: 20px;
+    background: #1a1a2e; color: #fff;
+  }
+  h1 { color: #00ffff; text-align: center; }
+  .box { 
+    background: rgba(255,255,255,0.1); 
+    padding: 20px; margin: 15px 0; 
+    border-radius: 12px;
+    border: 1px solid rgba(0,255,255,0.3);
+  }
+  button { 
+    width: 100%; padding: 15px; font-size: 16px; 
+    cursor: pointer; margin: 10px 0;
+    background: linear-gradient(135deg, #00ffff, #0077ff);
+    border: none; border-radius: 8px; color: #000;
+    font-weight: bold;
+  }
+  button:hover { opacity: 0.9; }
+  button:disabled { opacity: 0.5; cursor: not-allowed; }
+  #result { 
+    background: #000; color: #0f0; padding: 15px; 
+    border-radius: 8px; font-family: monospace;
+    font-size: 12px; white-space: pre-wrap; max-height: 300px;
+    overflow-y: auto;
+  }
+  #imageResult img { 
+    max-width: 100%; border-radius: 12px; 
+    margin-top: 15px;
+  }
+  .error { color: #ff4444; }
+  .success { color: #00ff00; }
+  select, input { 
+    width: 100%; padding: 12px; margin: 10px 0;
+    border-radius: 8px; border: 1px solid #00ffff;
+    background: rgba(0,0,0,0.5); color: #fff;
+  }
+</style>
 </head>
 <body>
-  <h1>🔧 AI API 测试工具</h1>
+  <h1>🐕 汪汪队 AI 换宠</h1>
   
-  <div class="test-box">
-    <h3>API 地址</h3>
-    <input id="apiUrl" value="https://paw-patrol-ai.812217700.workers.dev" style="width: 100%; padding: 10px; font-size: 14px;">
+  <div class="box">
+    <h3>选择宠物类型</h3>
+    <select id="petType">
+      <option value="消防犬毛毛">🔥 消防犬毛毛（达尔马提亚犬）</option>
+      <option value="警犬阿奇">👮 警犬阿奇（德国牧羊犬）</option>
+      <option value="工程犬小砾">🚧 工程犬小砾（英国斗牛犬）</option>
+      <option value="医护犬灰灰">💚 医护犬灰灰（混种犬）</option>
+      <option value="水上救援犬路马">🌊 水上救援犬路马（拉布拉多犬）</option>
+      <option value="航空犬天天">🚁 航空犬天天（可卡犬）</option>
+      <option value="丛林救援犬 Tracker">🌴 丛林救援犬 Tracker（吉娃娃）</option>
+      <option value="雪山救援犬 Everest">❄️ 雪山救援犬 Everest（哈士奇）</option>
+    </select>
+    
+    <h3>自定义描述（可选）</h3>
+    <input id="description" placeholder="例如：穿着超级英雄服装的毛毛">
   </div>
   
-  <div class="test-box">
-    <h3>测试按钮</h3>
-    <button onclick="testHealth()">1. 测试健康检查</button>
-    <button onclick="testGenerate()">2. 测试图片生成</button>
-    <button onclick="testCORS()">3. 测试 CORS 预检</button>
+  <div class="box">
+    <button onclick="generatePet()" id="generateBtn">
+      🎨 开始生成 AI 宠物图片
+    </button>
   </div>
   
-  <div class="test-box">
-    <h3>结果</h3>
-    <div id="result">点击按钮开始测试...</div>
-  </div>
-  
-  <div class="test-box">
-    <h3>生成的图片</h3>
+  <div class="box">
+    <h3>生成结果</h3>
+    <div id="result">等待生成...</div>
     <div id="imageResult"></div>
   </div>
 
   <script>
+    // API 地址配置
+    const API_URLS = [
+      'https://paw-patrol-ai.812217700.workers.dev',  // Cloudflare Workers
+      // 如果上面的不可用，会尝试本地服务器
+    ];
+    
+    let currentUrlIndex = 0;
+    
     function log(msg, isError = false) {
       const result = document.getElementById('result');
       const time = new Date().toLocaleTimeString();
-      result.innerHTML += `\n[${time}] ${msg}`;
-      if (isError) {
-        result.innerHTML = result.innerHTML.replace(msg, `<span class="error">${msg}</span>`);
-      }
+      const color = isError ? 'error' : 'success';
+      result.innerHTML += `<span class="${color}">[${time}] ${msg}</span>\n`;
+      result.scrollTop = result.scrollHeight;
     }
-
-    async function testHealth() {
-      const url = document.getElementById('apiUrl').value;
-      log('测试健康检查...');
+    
+    async function tryApiRequest(endpoint, data) {
+      const url = `${API_URLS[currentUrlIndex]}${endpoint}`;
+      log(`尝试: ${url}`);
+      
       try {
-        const response = await fetch(url + '/');
-        log(`状态码: ${response.status}`);
-        const data = await response.json();
-        log(`响应: ${JSON.stringify(data, null, 2)}`);
-      } catch (error) {
-        log(`错误: ${error.message}`, true);
-      }
-    }
-
-    async function testCORS() {
-      const url = document.getElementById('apiUrl').value;
-      log('测试 CORS 预检...');
-      try {
-        const response = await fetch(url + '/api/generate-pet', {
-          method: 'OPTIONS',
-          headers: {
-            'Origin': window.location.origin,
-            'Access-Control-Request-Method': 'POST'
-          }
-        });
-        log(`预检状态码: ${response.status}`);
-        log(`CORS 头: ${JSON.stringify(Object.fromEntries(response.headers), null, 2)}`);
-      } catch (error) {
-        log(`错误: ${error.message}`, true);
-      }
-    }
-
-    async function testGenerate() {
-      const url = document.getElementById('apiUrl').value;
-      log('开始生成图片...');
-      try {
-        log('发送请求到: ' + url + '/api/generate-pet');
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 30000);
         
-        const response = await fetch(url + '/api/generate-pet', {
+        const response = await fetch(url, {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            prompt: '可爱的小狗',
-            petName: '测试宠物'
-          })
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data),
+          signal: controller.signal,
         });
         
-        log(`状态码: ${response.status}`);
+        clearTimeout(timeoutId);
         
-        const data = await response.json();
-        log(`响应: ${JSON.stringify(data, null, 2)}`);
+        if (!response.ok) {
+          const text = await response.text();
+          throw new Error(`HTTP ${response.status}: ${text}`);
+        }
+        
+        return await response.json();
+      } catch (error) {
+        // 如果当前 URL 失败，尝试下一个
+        if (currentUrlIndex < API_URLS.length - 1) {
+          currentUrlIndex++;
+          log(`切换到备用地址...`);
+          return tryApiRequest(endpoint, data);
+        }
+        throw error;
+      }
+    }
+    
+    async function generatePet() {
+      const btn = document.getElementById('generateBtn');
+      const petType = document.getElementById('petType').value;
+      const description = document.getElementById('description').value;
+      
+      btn.disabled = true;
+      btn.textContent = '⏳ 生成中，请稍候...';
+      document.getElementById('result').innerHTML = '';
+      document.getElementById('imageResult').innerHTML = '';
+      
+      log('开始生成 AI 宠物图片...');
+      log(`宠物类型: ${petType}`);
+      
+      const prompt = description 
+        ? `${petType}，${description}，汪汪队立大功风格`
+        : `汪汪队立大功风格的${petType}，可爱卡通形象，电影级3D风格`;
+      
+      try {
+        log('正在调用 AI API...');
+        
+        const data = await tryApiRequest('/api/generate-pet', {
+          prompt: prompt,
+          petName: petType,
+          style: '电影级3D卡通风格'
+        });
         
         if (data.success && data.imageUrl) {
-          document.getElementById('imageResult').innerHTML = 
-            `<img src="${data.imageUrl}" style="max-width: 100%; border-radius: 8px;">`;
-          log('✅ 图片生成成功！');
+          log('✅ 生成成功！');
+          document.getElementById('imageResult').innerHTML = `
+            <img src="${data.imageUrl}" alt="AI生成的${petType}">
+            <p style="text-align:center;margin-top:10px;">
+              <a href="${data.imageUrl}" target="_blank" style="color:#00ffff;">
+                🔗 查看原图
+              </a>
+            </p>
+          `;
         } else {
-          log(`❌ 生成失败: ${data.error}`, true);
+          throw new Error(data.error || '生成失败');
         }
       } catch (error) {
         log(`❌ 错误: ${error.message}`, true);
-        log(`错误堆栈: ${error.stack}`, true);
+        
+        if (error.message.includes('Failed to fetch') || error.message.includes('abort')) {
+          log('', true);
+          log('💡 提示：网络请求失败，可能的原因：', true);
+          log('1. Cloudflare Workers 在您的网络环境下无法访问', true);
+          log('2. 请尝试使用 VPN 或切换网络', true);
+          log('', true);
+          log('如果问题持续，请联系开发者获取帮助', true);
+        }
+      } finally {
+        btn.disabled = false;
+        btn.textContent = '🎨 开始生成 AI 宠物图片';
+        currentUrlIndex = 0; // 重置
       }
     }
   </script>
