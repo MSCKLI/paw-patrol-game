@@ -27,6 +27,7 @@ function jsonResponse(data: any, status = 200, origin = '*'): Response {
 // 使用原生 fetch 调用 Coze API 生成图片
 async function generateImage(prompt: string, apiKey: string): Promise<{ success: boolean; imageUrl?: string; error?: string }> {
   try {
+    // 使用正确的 API 地址
     const response = await fetch('https://api.coze.cn/v3/images/generations', {
       method: 'POST',
       headers: {
@@ -74,22 +75,27 @@ async function generatePet(request: Request, env: any): Promise<Response> {
       return jsonResponse({ error: '请提供生成提示词' }, 400, origin);
     }
 
-    const apiKey = env.COZE_API_KEY || env.COZE_WORKLOAD_IDENTITY_API_KEY;
+    const apiKey = env.COZE_API_KEY;
     if (!apiKey) {
-      return jsonResponse({ error: 'API Key 未配置' }, 500, origin);
+      console.error('API Key 未配置');
+      return jsonResponse({ error: 'API Key 未配置，请联系管理员' }, 500, origin);
     }
+
+    console.log('开始生成图片，提示词:', prompt);
 
     const enhancedPrompt = `可爱的卡通宠物角色，${prompt}，汪汪队立大功风格，Q版可爱风格，适合儿童，高质量插画，鲜艳色彩，${style || '卡通风格'}`;
 
     const result = await generateImage(enhancedPrompt, apiKey);
 
     if (result.success && result.imageUrl) {
+      console.log('生成成功:', result.imageUrl);
       return jsonResponse({
         success: true,
         imageUrl: result.imageUrl,
         petName: petName || 'AI宠物',
       }, 200, origin);
     } else {
+      console.error('生成失败:', result.error);
       return jsonResponse({ error: result.error || '图像生成失败' }, 500, origin);
     }
   } catch (error) {
@@ -106,7 +112,7 @@ async function generateCaptain(request: Request, env: any): Promise<Response> {
     const body = await request.json() as any;
     const { style } = body;
 
-    const apiKey = env.COZE_API_KEY || env.COZE_WORKLOAD_IDENTITY_API_KEY;
+    const apiKey = env.COZE_API_KEY;
     if (!apiKey) {
       return jsonResponse({ error: 'API Key 未配置' }, 500, origin);
     }
@@ -156,7 +162,8 @@ export default {
         status: 'ok', 
         service: 'Paw Patrol AI API', 
         timestamp: new Date().toISOString(),
-        hasApiKey: !!(env.COZE_API_KEY || env.COZE_WORKLOAD_IDENTITY_API_KEY)
+        hasApiKey: !!env.COZE_API_KEY,
+        apiEndpoint: 'https://api.coze.cn/v3/images/generations'
       }, 200, origin);
     }
 

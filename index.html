@@ -1118,27 +1118,35 @@ const API_BASE_URL = 'https://paw-patrol-ai.812217700.workers.dev';
 async function callAPI(endpoint, data) {
   const url = API_BASE_URL ? `${API_BASE_URL}${endpoint}` : endpoint;
   
+  console.log('📡 API 调用:', url);
+  console.log('📦 请求数据:', data);
+  
   // 添加超时控制
   const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), 60000); // 60秒超时
+  const timeoutId = setTimeout(() => controller.abort(), 90000); // 90秒超时
   
   try {
     const response = await fetch(url, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(data),
-      signal: controller.signal
+      signal: controller.signal,
+      mode: 'cors', // 明确指定 CORS 模式
     });
     
     clearTimeout(timeoutId);
     
+    console.log('📥 HTTP 状态:', response.status);
+    
     // 检查HTTP状态
     if (!response.ok) {
       const errorText = await response.text();
+      console.error('❌ 错误响应:', errorText);
       throw new Error(`HTTP ${response.status}: ${errorText || '请求失败'}`);
     }
     
     const result = await response.json();
+    console.log('✅ 响应数据:', result);
     
     // 检查API返回的错误
     if (result.error) {
@@ -1148,8 +1156,9 @@ async function callAPI(endpoint, data) {
     return result;
   } catch (error) {
     clearTimeout(timeoutId);
+    console.error('❌ 请求异常:', error);
     if (error.name === 'AbortError') {
-      throw new Error('请求超时，请稍后重试');
+      throw new Error('请求超时（90秒），请稍后重试');
     }
     throw error;
   }
