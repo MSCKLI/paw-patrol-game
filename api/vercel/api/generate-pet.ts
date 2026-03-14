@@ -1,12 +1,5 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 
-// CORS 头
-const corsHeaders = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-};
-
 // 生成图片
 async function generateImage(prompt: string, apiKey: string): Promise<{ success: boolean; imageUrl?: string; error?: string }> {
   try {
@@ -26,7 +19,7 @@ async function generateImage(prompt: string, apiKey: string): Promise<{ success:
 
     if (!response.ok) {
       const errorText = await response.text();
-      return { success: false, error: `API 错误 ${response.status}: ${errorText}` };
+      return { success: false, error: `API 错误 ${response.status}` };
     }
 
     const data = await response.json() as any;
@@ -34,9 +27,9 @@ async function generateImage(prompt: string, apiKey: string): Promise<{ success:
     if (data.data && data.data.length > 0 && data.data[0].url) {
       return { success: true, imageUrl: data.data[0].url };
     } else if (data.error) {
-      return { success: false, error: data.error.message || JSON.stringify(data.error) };
+      return { success: false, error: data.error.message || '生成失败' };
     } else {
-      return { success: false, error: '未返回图片 URL' };
+      return { success: false, error: '未返回图片' };
     }
   } catch (error) {
     return { success: false, error: error instanceof Error ? error.message : '请求失败' };
@@ -53,32 +46,42 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     return res.status(204).end();
   }
 
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
-  const { prompt, petName, style } = req.body;
-
-  if (!prompt) {
-    return res.status(400).json({ error: '请提供生成提示词' });
-  }
-
-  const apiKey = process.env.COZE_API_KEY;
-  if (!apiKey) {
-    return res.status(500).json({ error: 'API Key 未配置' });
-  }
-
-  const enhancedPrompt = `可爱的卡通宠物角色，${prompt}，汪汪队立大功风格，Q版可爱风格，适合儿童，高质量插画，鲜艳色彩，${style || '卡通风格'}`;
-
-  const result = await generateImage(enhancedPrompt, apiKey);
-
-  if (result.success && result.imageUrl) {
+  // 健康检查
+  if (req.method === 'GET') {
     return res.status(200).json({
-      success: true,
-      imageUrl: result.imageUrl,
-      petName: petName || 'AI宠物',
+      status: 'ok',
+      service: 'Paw Patrol AI API',
+      hasApiKey: !!process.env.COZE_API_KEY,
     });
-  } else {
-    return res.status(500).json({ error: result.error || '图像生成失败' });
   }
+
+  // 生成图片
+  if (req.method === 'POST') {
+    const { prompt, petName, style } = req.body;
+
+    if (!prompt) {
+      return res.status(400).json({ error: '请提供生成提示词' });
+    }
+
+    const apiKey = process.env.COZE_API_KEY;
+    if (!apiKey) {
+      return res.status(500).json({ error: 'API Key 未配置，请在 Vercel 后台设置环境变量 COZE_API_KEY' });
+    }
+
+    const enhancedPrompt = `可爱的卡通宠物角色，${prompt}，汪汪队立大功风格，Q版可爱风格，适合儿童，高质量插画，鲜艳色彩，${style || '卡通风格'}`;
+
+    const result = await generateImage(enhancedPrompt, apiKey);
+
+    if (result.success && result.imageUrl) {
+      return res.status(200).json({
+        success: true,
+        imageUrl: result.imageUrl,
+        petName: petName || 'AI宠物',
+      });
+    } else {
+      return res.status(500).json({ error: result.error || '图像生成失败' });
+    }
+  }
+
+  return res.status(405).json({ error: 'Method not allowed' });
 }
