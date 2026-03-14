@@ -1114,12 +1114,42 @@ const API_BASE_URL = 'https://paw-patrol-ai.812217700.workers.dev';
 // API 辅助函数
 async function callAPI(endpoint, data) {
   const url = API_BASE_URL ? `${API_BASE_URL}${endpoint}` : endpoint;
-  const response = await fetch(url, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(data)
-  });
-  return response.json();
+  
+  // 添加超时控制
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), 60000); // 60秒超时
+  
+  try {
+    const response = await fetch(url, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+      signal: controller.signal
+    });
+    
+    clearTimeout(timeoutId);
+    
+    // 检查HTTP状态
+    if (!response.ok) {
+      const errorText = await response.text();
+      throw new Error(`HTTP ${response.status}: ${errorText || '请求失败'}`);
+    }
+    
+    const result = await response.json();
+    
+    // 检查API返回的错误
+    if (result.error) {
+      throw new Error(result.error);
+    }
+    
+    return result;
+  } catch (error) {
+    clearTimeout(timeoutId);
+    if (error.name === 'AbortError') {
+      throw new Error('请求超时，请稍后重试');
+    }
+    throw error;
+  }
 }
 
 // ==================== 应用程序状态 ====================

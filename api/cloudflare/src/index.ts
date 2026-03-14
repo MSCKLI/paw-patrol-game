@@ -5,8 +5,9 @@
  * 1. cd api/cloudflare
  * 2. npm install
  * 3. npx wrangler login  (登录 Cloudflare 账号)
- * 4. npx wrangler deploy
- * 5. 复制输出的 URL，更新 index.html 中的 API_BASE_URL
+ * 4. 设置密钥: npx wrangler secret put COZE_API_KEY
+ * 5. npx wrangler deploy
+ * 6. 复制输出的 URL，更新 index.html 中的 API_BASE_URL
  */
 
 import { ImageGenerationClient, Config } from 'coze-coding-dev-sdk';
@@ -30,7 +31,7 @@ function jsonResponse(data: any, status = 200): Response {
 }
 
 // 生成宠物图片
-async function generatePet(request: Request): Promise<Response> {
+async function generatePet(request: Request, env: any): Promise<Response> {
   try {
     const body = await request.json() as any;
     const { prompt, petName, style } = body;
@@ -39,7 +40,10 @@ async function generatePet(request: Request): Promise<Response> {
       return jsonResponse({ error: '请提供生成提示词' }, 400);
     }
 
-    const config = new Config();
+    // 使用环境变量配置
+    const config = new Config({
+      apiKey: env.COZE_API_KEY || env.COZE_WORKLOAD_IDENTITY_API_KEY,
+    });
     const client = new ImageGenerationClient(config);
 
     const enhancedPrompt = `可爱的卡通宠物角色，${prompt}，汪汪队立大功风格，Q版可爱风格，适合儿童，高质量插画，鲜艳色彩，${style || '卡通风格'}`;
@@ -68,12 +72,15 @@ async function generatePet(request: Request): Promise<Response> {
 }
 
 // 生成指挥官头像
-async function generateCaptain(request: Request): Promise<Response> {
+async function generateCaptain(request: Request, env: any): Promise<Response> {
   try {
     const body = await request.json() as any;
     const { style } = body;
 
-    const config = new Config();
+    // 使用环境变量配置
+    const config = new Config({
+      apiKey: env.COZE_API_KEY || env.COZE_WORKLOAD_IDENTITY_API_KEY,
+    });
     const client = new ImageGenerationClient(config);
 
     const prompt = `汪汪队立大功指挥官莱德Ryder头像，可爱卡通男孩，带着科技感头盔，勇敢自信的表情，${style || '电影级3D风格'}，高质量角色设计，适合做头像`;
@@ -110,16 +117,21 @@ export default {
 
     // 路由处理
     if (path === '/api/generate-pet' && request.method === 'POST') {
-      return generatePet(request);
+      return generatePet(request, env);
     }
 
     if (path === '/api/generate-captain' && request.method === 'POST') {
-      return generateCaptain(request);
+      return generateCaptain(request, env);
     }
 
     // 健康检查
     if (path === '/api/health' || path === '/') {
-      return jsonResponse({ status: 'ok', service: 'Paw Patrol AI API', timestamp: new Date().toISOString() });
+      return jsonResponse({ 
+        status: 'ok', 
+        service: 'Paw Patrol AI API', 
+        timestamp: new Date().toISOString(),
+        hasApiKey: !!(env.COZE_API_KEY || env.COZE_WORKLOAD_IDENTITY_API_KEY)
+      });
     }
 
     return jsonResponse({ error: 'Not Found' }, 404);
