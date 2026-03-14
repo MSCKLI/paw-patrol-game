@@ -1,0 +1,12 @@
+{
+  "name": "paw-patrol-ai-vercel",
+  "version": "1.0.0",
+  "description": "Paw Patrol AI API for Vercel",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod"
+  },
+  "dependencies": {
+    "@vercel/node": "^3.0.0"
+  }
+}
