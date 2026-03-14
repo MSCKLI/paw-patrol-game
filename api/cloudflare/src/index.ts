@@ -1,16 +1,7 @@
 /**
  * Cloudflare Workers API - AI 宠物图像生成
- * 
- * 部署步骤：
- * 1. cd api/cloudflare
- * 2. npm install
- * 3. npx wrangler login  (登录 Cloudflare 账号)
- * 4. 设置密钥: npx wrangler secret put COZE_API_KEY
- * 5. npx wrangler deploy
- * 6. 复制输出的 URL，更新 index.html 中的 API_BASE_URL
+ * 使用原生 fetch 调用 Coze API
  */
-
-import { ImageGenerationClient, Config } from 'coze-coding-dev-sdk';
 
 // CORS 头
 const corsHeaders = {
@@ -30,6 +21,39 @@ function jsonResponse(data: any, status = 200): Response {
   });
 }
 
+// 使用原生 fetch 调用 Coze API 生成图片
+async function generateImage(prompt: string, apiKey: string): Promise<{ success: boolean; imageUrl?: string; error?: string }> {
+  const response = await fetch('https://api.coze.cn/v3/images/generations', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${apiKey}`,
+    },
+    body: JSON.stringify({
+      model: 'doubao-seedream-4-5-251128',
+      prompt: prompt,
+      size: '2048x2048',
+      response_format: 'url',
+    }),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error('API 错误:', response.status, errorText);
+    return { success: false, error: `API 错误 ${response.status}: ${errorText}` };
+  }
+
+  const data = await response.json() as any;
+  
+  if (data.data && data.data.length > 0 && data.data[0].url) {
+    return { success: true, imageUrl: data.data[0].url };
+  } else if (data.error) {
+    return { success: false, error: data.error.message || JSON.stringify(data.error) };
+  } else {
+    return { success: false, error: '未返回图片 URL' };
+  }
+}
+
 // 生成宠物图片
 async function generatePet(request: Request, env: any): Promise<Response> {
   try {
@@ -40,30 +64,23 @@ async function generatePet(request: Request, env: any): Promise<Response> {
       return jsonResponse({ error: '请提供生成提示词' }, 400);
     }
 
-    // 使用环境变量配置
-    const config = new Config({
-      apiKey: env.COZE_API_KEY || env.COZE_WORKLOAD_IDENTITY_API_KEY,
-    });
-    const client = new ImageGenerationClient(config);
+    const apiKey = env.COZE_API_KEY || env.COZE_WORKLOAD_IDENTITY_API_KEY;
+    if (!apiKey) {
+      return jsonResponse({ error: 'API Key 未配置' }, 500);
+    }
 
     const enhancedPrompt = `可爱的卡通宠物角色，${prompt}，汪汪队立大功风格，Q版可爱风格，适合儿童，高质量插画，鲜艳色彩，${style || '卡通风格'}`;
 
-    const response = await client.generate({
-      prompt: enhancedPrompt,
-      size: '2K',
-      watermark: false,
-    });
+    const result = await generateImage(enhancedPrompt, apiKey);
 
-    const helper = client.getResponseHelper(response);
-
-    if (helper.success && helper.imageUrls.length > 0) {
+    if (result.success && result.imageUrl) {
       return jsonResponse({
         success: true,
-        imageUrl: helper.imageUrls[0],
+        imageUrl: result.imageUrl,
         petName: petName || 'AI宠物',
       });
     } else {
-      return jsonResponse({ error: helper.errorMessages.join(', ') || '图像生成失败' }, 500);
+      return jsonResponse({ error: result.error || '图像生成失败' }, 500);
     }
   } catch (error) {
     console.error('图像生成错误:', error);
@@ -77,26 +94,19 @@ async function generateCaptain(request: Request, env: any): Promise<Response> {
     const body = await request.json() as any;
     const { style } = body;
 
-    // 使用环境变量配置
-    const config = new Config({
-      apiKey: env.COZE_API_KEY || env.COZE_WORKLOAD_IDENTITY_API_KEY,
-    });
-    const client = new ImageGenerationClient(config);
+    const apiKey = env.COZE_API_KEY || env.COZE_WORKLOAD_IDENTITY_API_KEY;
+    if (!apiKey) {
+      return jsonResponse({ error: 'API Key 未配置' }, 500);
+    }
 
     const prompt = `汪汪队立大功指挥官莱德Ryder头像，可爱卡通男孩，带着科技感头盔，勇敢自信的表情，${style || '电影级3D风格'}，高质量角色设计，适合做头像`;
 
-    const response = await client.generate({
-      prompt,
-      size: '2K',
-      watermark: false,
-    });
+    const result = await generateImage(prompt, apiKey);
 
-    const helper = client.getResponseHelper(response);
-
-    if (helper.success && helper.imageUrls.length > 0) {
-      return jsonResponse({ success: true, imageUrl: helper.imageUrls[0] });
+    if (result.success && result.imageUrl) {
+      return jsonResponse({ success: true, imageUrl: result.imageUrl });
     } else {
-      return jsonResponse({ error: helper.errorMessages.join(', ') || '图像生成失败' }, 500);
+      return jsonResponse({ error: result.error || '图像生成失败' }, 500);
     }
   } catch (error) {
     console.error('指挥官头像生成错误:', error);
